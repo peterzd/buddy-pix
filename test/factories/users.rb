@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :user do
+    username "peterzd"
   end
 end
