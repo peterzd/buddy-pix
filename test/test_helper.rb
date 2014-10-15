@@ -5,6 +5,9 @@ require "minitest/rails"
 require "minitest/rails/capybara"
 require "minitest/pride"
 require "database_cleaner"
+require "minitest/reporters"
+
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 DatabaseCleaner.strategy = :transaction
 
