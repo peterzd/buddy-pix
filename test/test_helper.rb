@@ -9,6 +9,7 @@ require "database_cleaner"
 DatabaseCleaner.strategy = :transaction
 
 class ActiveSupport::TestCase
+  include FactoryGirl::Syntax::Methods
   ActiveRecord::Migration.check_pending!
 
   fixtures :all
