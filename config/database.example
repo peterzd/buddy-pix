@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user_name:
+  password:
+
+development:
+  <<: *default
+  database: photo_share_development
+
+test:
+  <<: *default
+  database: photo_share_test
+
+production:
+  <<: *default
+  database: photo_share_production
+  username: photo_share
+  password: <%= ENV['PHOTO_SHARE_DATABASE_PASSWORD'] %>
