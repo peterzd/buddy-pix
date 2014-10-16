@@ -20,9 +20,12 @@ ActiveRecord::Schema.define(version: 20141016030840) do
     t.string   "name"
     t.boolean  "private"
     t.text     "caption"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "albums", ["creator_id"], name: "index_albums_on_creator_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
