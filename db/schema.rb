@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015080535) do
+ActiveRecord::Schema.define(version: 20141016114829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: true do |t|
+    t.string   "name"
+    t.boolean  "private"
+    t.text     "caption"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "albums", ["creator_id"], name: "index_albums_on_creator_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -30,9 +41,23 @@ ActiveRecord::Schema.define(version: 20141015080535) do
     t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_albums", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "album_id"
+    t.integer  "access_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users_albums", ["album_id"], name: "index_users_albums_on_album_id", using: :btree
+  add_index "users_albums", ["user_id"], name: "index_users_albums_on_user_id", using: :btree
 
 end
