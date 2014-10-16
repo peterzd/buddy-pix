@@ -11,13 +11,15 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'haml-rails'
 gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'devise'
 
 gem 'spring',        group: :development
 
 group :development, :test do
   gem 'minitest-rails'
+  gem 'minitest-reporters'
   gem 'pry-rails'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', "~> 4.0"
   gem 'minitest-rails-capybara'
 end
