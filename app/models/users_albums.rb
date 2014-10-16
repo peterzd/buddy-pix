@@ -1,5 +1,5 @@
 class UsersAlbums < ActiveRecord::Base
-  ACCESS_TYPE = { creator: 1, access: 2, uploaded: 3, visited: 4 }
+  ACCESS_TYPE = { joined: 1, uploaded: 2, visited: 3 }
 
   belongs_to :user
   belongs_to :album
