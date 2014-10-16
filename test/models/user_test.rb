@@ -10,4 +10,9 @@ describe User do
   it "has a username" do
     user.username.must_equal "peterzd"
   end
+
+  it "creates a record in DB" do
+    user
+    User.count.must_equal 1
+  end
 end
