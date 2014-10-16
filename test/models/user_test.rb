@@ -15,4 +15,5 @@ describe User do
     user
     User.count.must_equal 1
   end
+
 end
