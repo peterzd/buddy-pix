@@ -2,7 +2,7 @@ require "test_helper"
 
 describe AlbumsController do
 
-  let(:album) { albums :one }
+  let(:album) { create :album, caption: "album caption", name: "first album", private: true }
 
   it "gets index" do
     get :index
@@ -17,7 +17,7 @@ describe AlbumsController do
 
   it "creates album" do
     assert_difference('Album.count') do
-      post :create, album: { caption: @album.caption, name: @album.name, private: @album.private }
+      post :create, album: attributes_for(:album, caption: "album caption", name: "first album", private: true)
     end
 
     assert_redirected_to album_path(assigns(:album))
@@ -34,11 +34,15 @@ describe AlbumsController do
   end
 
   it "updates album" do
-    put :update, id: album, album: { caption: @album.caption, name: @album.name, private: @album.private }
-    assert_redirected_to album_path(assigns(:album))
+    patch :update, id: album, album: attributes_for(:album, caption: "chaged caption", private: false)
+    album.reload
+    album.wont_be :private?
+    album.caption.must_equal "chaged caption"
+
   end
 
   it "destroys album" do
+    album
     assert_difference('Album.count', -1) do
       delete :destroy, id: album
     end
