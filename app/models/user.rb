@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :album_relations, class_name: "UsersAlbums"
   has_many :joined_albums, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :album_relations, source: :album
 
+  has_many :cover_images, as: :imageable, class_name: "Image"
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
