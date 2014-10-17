@@ -30,4 +30,22 @@ describe User do
       album.followers.must_include user
     end
   end
+
+  describe "relations with profile image" do
+    it "cteates the image and set it as the user's profile image" do
+      image = create :image, imageable: user
+      user.set_profile_cover image
+      user.profile_cover.must_equal image
+      image.covered_user.must_equal user
+    end
+
+    it "only can has one profile image" do
+      image_1 = create :image, imageable: user
+      image_2 = create :image, imageable: user
+      user.set_profile_cover image_1
+      user.set_profile_cover image_2
+
+      user.profile_cover.must_equal image_2
+    end
+  end
 end
