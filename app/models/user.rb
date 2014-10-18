@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def set_profile_cover(image)
+    cover_images << image unless cover_images.include?(image)
     update cover_image_id: image.id
   end
 end

@@ -33,19 +33,25 @@ describe User do
 
   describe "relations with profile image" do
     it "cteates the image and set it as the user's profile image" do
-      image = create :image, imageable: user
+      image = create :image
       user.set_profile_cover image
       user.profile_cover.must_equal image
       image.covered_user.must_equal user
     end
 
     it "only can has one profile image" do
-      image_1 = create :image, imageable: user
-      image_2 = create :image, imageable: user
+      image_1 = create :image
+      image_2 = create :image
       user.set_profile_cover image_1
       user.set_profile_cover image_2
 
       user.profile_cover.must_equal image_2
+    end
+
+    it "adds the image into the user's cover_images" do
+      image = create :image
+      user.set_profile_cover image
+      user.cover_images.must_include image
     end
   end
 end
