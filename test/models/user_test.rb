@@ -32,7 +32,7 @@ describe User do
   end
 
   describe "relations with profile image" do
-    it "cteates the image and set it as the user's profile image" do
+    it "creates the image and set it as the user's profile image" do
       image = create :image
       user.set_profile_cover image
       user.profile_cover.must_equal image
