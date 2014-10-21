@@ -10,7 +10,7 @@ class Image < ActiveRecord::Base
 
   # relations with likes
   has_many :likes, foreign_key: :likeable_id
-  has_many :likers, through: :likes, source: :likers
+  has_many :likers, through: :likes, source: :liker
 
   has_attached_file :picture, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/

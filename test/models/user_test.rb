@@ -70,7 +70,7 @@ describe User do
       it "sets the mood to the like" do
         peter.like_image image, mood: Like::MOOD[:cool]
         Like.count.must_equal 1
-        Like.last.mood.must_equal Like::MOOD[:cool]
+        peter.likes.last.mood.must_equal Like::MOOD[:cool]
       end
     end
   end
