@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
 
   belongs_to :profile_cover, class_name: "Image", foreign_key: :cover_image_id
 
+  has_many :comments, foreign_key: :commenter_id
+  has_many :commented_images, through: :comments, source: :commentable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
