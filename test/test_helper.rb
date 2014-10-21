@@ -7,6 +7,8 @@ require "minitest/pride"
 require "database_cleaner"
 require "minitest/reporters"
 
+Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
+
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new(color: true)
 
 DatabaseCleaner.strategy = :transaction
