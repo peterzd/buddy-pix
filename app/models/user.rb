@@ -8,8 +8,13 @@ class User < ActiveRecord::Base
 
   belongs_to :profile_cover, class_name: "Image", foreign_key: :cover_image_id
 
+  # relations with comments
   has_many :comments, foreign_key: :commenter_id
   has_many :commented_images, through: :comments, source: :commentable
+
+  # relations with like
+  has_many :likes, foreign_key: :liker_id
+  has_many :liked_images, through: :likes, source: :likeable
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -21,5 +26,9 @@ class User < ActiveRecord::Base
   def set_profile_cover(image)
     cover_images << image unless cover_images.include?(image)
     update cover_image_id: image.id
+  end
+
+  def like_image(image, mood: Like::MOOD[:happy])
+    like = Like.create liker: self, likeable: image, mood: mood
   end
 end
