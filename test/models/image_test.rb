@@ -10,13 +10,15 @@ describe Image do
 
   describe "relations with likes" do
     describe "user likes an image" do
+      before do
+        peter.like_image image, mood: Like::MOOD[:cool]
+      end
+
       it "adds a record to the image's likers list" do
-        peter.like_image image, mood: Like::MOOD[:happy]
         image.likers.must_include peter
       end
 
       it "sets the mood to the like" do
-        peter.like_image image, mood: Like::MOOD[:cool]
         image.likes.last.mood.must_equal Like::MOOD[:cool]
       end
     end
