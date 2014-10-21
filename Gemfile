@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'devise'
 
 gem 'spring',        group: :development
+gem "paperclip", "~> 4.2"
 
 group :development, :test do
   gem 'minitest-rails'
