@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   controller "welcome" do
     get :index
     get :about_us
+    get :privacy
     get :terms
     get :blog
     get :support

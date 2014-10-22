@@ -13,4 +13,7 @@ class WelcomeController < ApplicationController
 
   def support
   end
+
+  def privacy
+  end
 end
