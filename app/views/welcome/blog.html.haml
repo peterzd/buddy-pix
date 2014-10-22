@@ -1,2 +1,22 @@
-%h1 Welcome#blog
-%p Find me in app/views/welcome/blog.html.haml
+%section.clearfix.inner_body
+  .pc.cm.mt20
+    %hgroup.ac
+      %h2 Blog
+    %article.mt20.cover_box.clearfix
+      - @blogs.each do |blog|
+        .p20.blog_post.fl.w100
+          %aside.fr.social_share.mt20
+            Share With:  
+            %a.fb{:href => "#"}
+              %i.fa.fa-facebook
+            %a.tt{:href => "#"}
+              %i.fa.fa-twitter
+            %a.mail{:href => "#"}
+              %i.fa.fa-envelope
+          %aside.head_side
+            %h1
+              %small= blog.created_at.strftime("%m.%d.%Y")
+              = blog.title
+          .fl.w100.figure_img
+            = sanitize blog.content
+            %a.continue_link{:href => "#"} Continue Reading ...

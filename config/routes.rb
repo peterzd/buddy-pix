@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :blogs
+
   resources :albums
 
   devise_for :users
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   root to: "welcome#index"
-  controller "welcome" do
+  controller "welcome", as: "welcome" do
     get :index
     get :about_us
     get :privacy
