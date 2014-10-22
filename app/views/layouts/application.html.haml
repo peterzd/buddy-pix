@@ -1,0 +1,48 @@
+!!!
+/[if lt IE 7 ] <html class="ie ie6" lang="en">
+/[if IE 7 ] <html class="ie ie7" lang="en">
+/[if IE 8 ] <html class="ie ie8" lang="en">
+/ [if (gte IE 9)|!(IE)]><!
+%html{:lang => "en"}
+  / <![endif]
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "iPhone developer UK, Android developer UK, Mobile Apps developer London, Apps Developer London, Game Developer Europe, Mobile Developer UK, Cloud Solution, Startup Consulting, Prototype Developer london, Minimum Viable Product, Application Developer London", :name => "keywords"}/
+    %meta{:content => "Sybite Technologies provides mobile solutions to startups and large enterprise, we are a leading web agencies from UK & Europe with more than 300 satisfied clients.", :name => "description"}/
+    -# Mobile Specific Metas
+    %meta{:content => "width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1, user-scalable=0", :name => "viewport"}/
+    %title Mobile Application Development Company London | iPhone & Android Developer London
+    -# main css
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+    -# %link{:href => "assets/css/responsive_tabs/easy-responsive-tabs.css", :media => "all", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/font-awesome/font-awesome.min.css", :media => "all", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/owlslider/owl.carousel.css", :media => "all", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/icon/pe-icon-7-stroke.css", :rel => "stylesheet"}/
+    -# Optional - Adds useful class to manipulate icon font display
+    -# %link{:href => "assets/css/icon/helper.css", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/animate.css", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/chossen/chosen.min.css", :media => "all", :rel => "stylesheet"}/
+    -# %link{:href => "assets/css/style.css", :media => "all", :rel => "stylesheet"}/
+    /[if lt IE 9] <script src="assets/js/html5.js"></script><script src="assets/js/css3-mediaqueries.js"></script>
+
+  %body
+    = render "shared/header"
+    = yield
+    = render "shared/footer"
+
+%script{:src => "assets/js/jquery-1.9.0.min.js", :type => "text/javascript"}
+%script{:src => "assets/js/waypoints.min.js"}
+%script{:src => "assets/js/img_liquid/imgLiquid-min.js"}
+%script{:src => "assets/js/chossen/chosen.jquery.js"}
+%script{:src => "assets/js/responsive_tabs/easyResponsiveTabs.js"}
+%script{:src => "assets/js/mscrollar/jquery.mCustomScrollbar.js"}
+%script{:src => "assets/js/jquery-ui-1.9.2.custom.min.js"}
+%script{:src => "assets/js/icheck/icheck.min.js"}
+%script{:src => "assets/js/grid_gallery/modernizr.custom.js"}
+%script{:src => "assets/js/grid_gallery/imagesloaded.pkgd.min.js"}
+%script{:src => "assets/js/grid_gallery/masonry.pkgd.min.js"}
+%script{:src => "assets/js/grid_gallery/classie.js"}
+%script{:src => "assets/js/grid_gallery/cbpGridGallery.js"}
+%script{:src => "assets/js/functions.js"}
+
