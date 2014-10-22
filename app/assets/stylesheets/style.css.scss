@@ -257,7 +257,7 @@ header .logo{margin-top:7px;}
 
 /*slide images*/
 .home_img{background:image-url("home_banner_img.jpg") no-repeat; background-size:cover; color:#fff; margin-top:60px; position:relative;}
-.home_img:before{position:absolute; height:10px; background:url(../img/triangle_border.png) repeat 0px 0px; width:100%; left:0px; bottom:0px; z-index:100;}
+.home_img:before{position:absolute; height:10px; background:image-url("triangle_border.png") repeat 0px 0px; width:100%; left:0px; bottom:0px; z-index:100;}
 
 .article_side{margin-top:150px; padding-left:40px;}
 
