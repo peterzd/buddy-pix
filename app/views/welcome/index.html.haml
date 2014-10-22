@@ -3,19 +3,17 @@
     %figure.fl.logo
       = image_tag "buddypix_logo.png", alt: "Logo"
     -# logo
-    %nav.fr.hide
+    %nav.fr
       -# navigation side
       = link_to "Login", "#"
     -# navigation side
-    %nav.fr
+    %nav.fr.hide
       -# navigation side
       %aside.fl.mr10.hide_less_1024
-        %a{:href => "#"}> Profile
-          |  
-        %a.mr10{:href => "#"} My card
-        %a.btn.inline.mr10{:href => "#"} Create New cARD
-        %a.btn.inline.search-btn.mr10{:href => "#"}
-          %i.fa.fa-search
+        = link_to(sanitize("Profile &nbsp;|&nbsp;"), "#")
+        = link_to "My card", "#", class: "mr10"
+        = link_to "Create New CARD", "#", class: "btn inline mr10"
+        = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
       %aside.fl.drop_nav
         .expand_nav_point.hide_less_480
           %figure.round.mt10.mr10.fl.img_fill
@@ -31,28 +29,28 @@
                 = image_tag "dummy_img/profile_pic.jpg"
               %span.name.mr10 Hi! Malisa
           %li.hide.view_less_1024
-            %a{:href => "#"} Profile
+            = link_to "Profile", "#"
           %li.hide.view_less_1024
-            %a{:href => "#"} My Card
+            = link_to "My Card", "#"
           %li.hide.view_less_1024
-            %a{:href => "#"} Create New Card
+            = link_to "Create New Card", "#"
           %li.hide.view_less_1024
-            %a{:href => "#"} Search
+            = link_to "Search"
           %li
-            %a{:href => "#"} Account Setting
+            = link_to "Account Setting", "#"
           %li
-            %a{:href => "#"} Alerts
+            = link_to "Alerts", "#"
           %li
-            %a{:href => "#"} Support
+            = link_to "Support", "#"
           %li
-            %a{:href => "#"} Sign Out
+            = link_to "Sign Out", "#"
     -# navigation side
 %section.home_img.clearfix.scale
   .pc.cm
     %aside.fl.w50.article_side.bs
       %h1 Share your story
       %h2 Share experiences together with photo groups for hobbies, events, or everyday life.
-      %a{:href => "#"}
+      = link_to image_tag("app_icon.png") + image_tag("app_store_icon.png"), "#"
     %aside.fl.w50.img_side.ac.figure_img
       = image_tag "iphone_app_on_hand.png", alt: "app demo"
 %section.clearfix
@@ -86,7 +84,6 @@
         %article.tab_cell.p10
           %h2 Massa urna vestibulum erat erat nec odio
           %p Fusce nisl turpis, consequat sed leo vitae, lacinia cursus ex. In enim metus, convallis ut risus ac, ultricies placerat leo. Suspendisse at lectus sit amet leo dictum euismod et quis nunc.
-     -# table row
     .table_row
       -# table row
       %figure.fr.w50
@@ -97,3 +94,4 @@
           %h2 Massa urna vestibulum erat erat nec odio
           %p Fusce nisl turpis, consequat sed leo vitae, lacinia cursus ex. In enim metus, convallis ut risus ac, ultricies placerat leo. Suspendisse at lectus sit amet leo dictum euismod et quis nunc.
     -# table row
+
