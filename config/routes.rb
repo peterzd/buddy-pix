@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :supports
+
   resources :blogs
 
   resources :albums

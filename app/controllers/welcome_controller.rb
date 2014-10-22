@@ -13,6 +13,7 @@ class WelcomeController < ApplicationController
   end
 
   def support
+    @support = Support.new
   end
 
   def privacy
