@@ -2,7 +2,7 @@ require "test_helper"
 
 describe BlogsController do
 
-  let(:blog) { blogs :one }
+  let(:blog) { create :blog, title: "test blog", content: "this is content of the blog" }
 
   it "gets index" do
     get :index
@@ -17,7 +17,7 @@ describe BlogsController do
 
   it "creates blog" do
     assert_difference('Blog.count') do
-      post :create, blog: { content: @blog.content }
+      post :create, blog: attributes_for(:blog, title: "test blog", content: "this is content of the blog")
     end
 
     assert_redirected_to blog_path(assigns(:blog))
@@ -34,11 +34,13 @@ describe BlogsController do
   end
 
   it "updates blog" do
-    put :update, id: blog, blog: { content: @blog.content }
+    patch :update, id: blog, blog: attributes_for(:blog, content: "update content")
+    blog.reload.content.must_equal "update content"
     assert_redirected_to blog_path(assigns(:blog))
   end
 
   it "destroys blog" do
+    blog.save
     assert_difference('Blog.count', -1) do
       delete :destroy, id: blog
     end
