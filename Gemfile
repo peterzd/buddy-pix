@@ -15,6 +15,7 @@ gem 'devise'
 
 gem 'spring',        group: :development
 gem "paperclip", "~> 4.2"
+gem "pundit"
 
 group :development, :test do
   gem 'minitest-rails'
