@@ -2,7 +2,7 @@ require "test_helper"
 
 describe SupportsController do
 
-  let(:support) { supports :one }
+  let(:support) { create :support, sender_name: "peter zhao", subject: "test support", email: "peter@test.com", message: "this is a test support message" }
 
   it "gets index" do
     get :index
@@ -17,10 +17,10 @@ describe SupportsController do
 
   it "creates support" do
     assert_difference('Support.count') do
-      post :create, support: { email: @support.email, message: @support.message, sender_name: @support.sender_name, subject: @support.subject }
+      post :create, support: (attributes_for :support, sender_name: "peter zhao", subject: "test support", email: "peter@test.com", message: "this is a test support message")
     end
 
-    assert_redirected_to support_path(assigns(:support))
+    assert_redirected_to welcome_support_path
   end
 
   it "shows support" do
@@ -31,19 +31,6 @@ describe SupportsController do
   it "gets edit" do
     get :edit, id: support
     assert_response :success
-  end
-
-  it "updates support" do
-    put :update, id: support, support: { email: @support.email, message: @support.message, sender_name: @support.sender_name, subject: @support.subject }
-    assert_redirected_to support_path(assigns(:support))
-  end
-
-  it "destroys support" do
-    assert_difference('Support.count', -1) do
-      delete :destroy, id: support
-    end
-
-    assert_redirected_to supports_path
   end
 
 end

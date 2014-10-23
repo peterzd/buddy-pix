@@ -27,16 +27,6 @@ class SupportsController < ApplicationController
     end
   end
 
-  def update
-    @support.update(support_params)
-    respond_with(@support)
-  end
-
-  def destroy
-    @support.destroy
-    respond_with(@support)
-  end
-
   private
     def set_support
       @support = Support.find(params[:id])
