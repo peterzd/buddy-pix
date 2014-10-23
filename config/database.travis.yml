@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user_name: postgres
+  password:
+
+development:
+  <<: *default
+  database: buddy_pix_dev
+
+test:
+  <<: *default
+  database: buddy_pix_test
+
