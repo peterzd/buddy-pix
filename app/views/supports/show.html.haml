@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Sender name:
+  = @support.sender_name
+%p
+  %b Email:
+  = @support.email
+%p
+  %b Subject:
+  = @support.subject
+%p
+  %b Message:
+  = @support.message
+
+= link_to 'Edit', edit_support_path(@support)
+\|
+= link_to 'Back', supports_path

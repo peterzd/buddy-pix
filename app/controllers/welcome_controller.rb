@@ -9,9 +9,11 @@ class WelcomeController < ApplicationController
   end
 
   def blog
+    @blogs = Blog.order(:created_at)
   end
 
   def support
+    @support = Support.new
   end
 
   def privacy

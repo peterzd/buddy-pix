@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021081003) do
+ActiveRecord::Schema.define(version: 20141022133404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20141021081003) do
 
   add_index "albums", ["cover_image_id"], name: "index_albums_on_cover_image_id", using: :btree
   add_index "albums", ["creator_id"], name: "index_albums_on_creator_id", using: :btree
+
+  create_table "blogs", force: true do |t|
+    t.text     "content"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.integer  "commenter_id"
@@ -65,6 +72,15 @@ ActiveRecord::Schema.define(version: 20141021081003) do
 
   add_index "likes", ["likeable_id"], name: "index_likes_on_likeable_id", using: :btree
   add_index "likes", ["liker_id"], name: "index_likes_on_liker_id", using: :btree
+
+  create_table "supports", force: true do |t|
+    t.string   "sender_name"
+    t.string   "email"
+    t.string   "subject"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

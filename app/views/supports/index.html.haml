@@ -1,0 +1,25 @@
+%h1 Listing supports
+
+%table
+  %tr
+    %th Sender name
+    %th Email
+    %th Subject
+    %th Message
+    %th
+    %th
+    %th
+
+  - @supports.each do |support|
+    %tr
+      %td= support.sender_name
+      %td= support.email
+      %td= support.subject
+      %td= support.message
+      %td= link_to 'Show', support
+      %td= link_to 'Edit', edit_support_path(support)
+      %td= link_to 'Destroy', support, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Support', new_support_path
