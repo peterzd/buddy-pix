@@ -1,6 +1,6 @@
 %section.clearfix.inner_body
   .pc.cm
-    = form_for @user, html: { class: "mt20" }, multipart: true do |f|
+    = form_for @user, html: { class: "mt20" }, multipart: true, url: update_account_settings_user_path(@user) do |f|
       %h4.ph10 Account Settings
       %aside.fl.w50
         .ph10

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      post :update_account_settings
+      patch :update_account_settings
     end
 
   end
