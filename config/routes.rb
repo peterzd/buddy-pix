@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :albums
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :images do
     resources :comments
