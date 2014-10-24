@@ -20,6 +20,11 @@ class UsersController < ApplicationController
   def update_account_settings
     user = User.find params[:id]
     user.update user_params
+
+    if params[:profile_cover]
+      image = Image.create picture: params[:profile_cover]
+      user.set_profile_cover image
+    end
     render nothing: true
   end
 
