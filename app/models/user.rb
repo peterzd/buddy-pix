@@ -31,4 +31,14 @@ class User < ActiveRecord::Base
   def like_image(image, mood: Like::MOOD[:happy])
     like = Like.create liker: self, likeable: image, mood: mood
   end
+
+  def profile_cover_url(format)
+    return "" if profile_cover.nil?
+    profile_cover.picture.url(format)
+  end
+
+  def show_name
+    return email if first_name.nil?
+    first_name
+  end
 end
