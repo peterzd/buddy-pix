@@ -15,7 +15,6 @@ DatabaseCleaner.strategy = :transaction
 
 class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
-  include Devise::TestHelpers
   ActiveRecord::Migration.check_pending!
 
   fixtures :all
@@ -29,3 +28,6 @@ class ActiveSupport::TestCase
   end
 end
 
+class ActionController::TestCase
+  include Devise::TestHelpers
+end
