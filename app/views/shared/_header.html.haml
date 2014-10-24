@@ -3,44 +3,46 @@
     %figure.fl.logo
       = image_tag "buddypix_logo.png", alt: "Logo"
     -# logo
-    %nav.fr.hide
+    - unless user_signed_in?
+      %nav.fr
+        -# navigation side
+        = link_to "Login", new_user_session_path
       -# navigation side
-      = link_to "Login", "#"
-    -# navigation side
-    %nav.fr
-      -# navigation side
-      %aside.fl.mr10.hide_less_1024
-        = link_to(sanitize("Profile &nbsp;|&nbsp;"), "#")
-        = link_to "My card", "#", class: "mr10"
-        = link_to "Create New CARD", "#", class: "btn inline mr10"
-        = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
-      %aside.fl.drop_nav
-        .expand_nav_point.hide_less_480
-          %figure.round.mt10.mr10.fl.img_fill
-            = image_tag "dummy_img/profile_pic.jpg"
-          %span.name.mr10 Hi! Malisa
-          %i.pe-7s-angle-down
-        .fr.hide.view_less_480
-          %i.fa.fa-navicon.min_nav_btn
-        %ul.drop_nav_links.hide
-          %li.hide.view_less_480.p10
-            .expand_nav_point
-              %figure.round.mr10.img_fill
-                = image_tag "dummy_img/profile_pic.jpg"
-              %span.name.mr10 Hi! Malisa
-          %li.hide.view_less_1024
-            = link_to "Profile", "#"
-          %li.hide.view_less_1024
-            = link_to "My Card", "#"
-          %li.hide.view_less_1024
-            = link_to "Create New Card", "#"
-          %li.hide.view_less_1024
-            = link_to "Search"
-          %li
-            = link_to "Account Setting", "#"
-          %li
-            = link_to "Alerts", "#"
-          %li
-            = link_to "Support", "#"
-          %li
-            = link_to "Sign Out", "#"
+    - else
+      %nav.fr
+        -# navigation side
+        %aside.fl.mr10.hide_less_1024
+          = link_to(sanitize("Profile &nbsp;|&nbsp;"), "#")
+          = link_to "My card", "#", class: "mr10"
+          = link_to "Create New CARD", "#", class: "btn inline mr10"
+          = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
+        %aside.fl.drop_nav
+          .expand_nav_point.hide_less_480
+            %figure.round.mt10.mr10.fl.img_fill
+              = image_tag "dummy_img/profile_pic.jpg"
+            %span.name.mr10 Hi! Malisa
+            %i.pe-7s-angle-down
+          .fr.hide.view_less_480
+            %i.fa.fa-navicon.min_nav_btn
+          %ul.drop_nav_links.hide
+            %li.hide.view_less_480.p10
+              .expand_nav_point
+                %figure.round.mr10.img_fill
+                  = image_tag "dummy_img/profile_pic.jpg"
+                %span.name.mr10 Hi! Malisa
+            %li.hide.view_less_1024
+              = link_to "Profile", "#"
+            %li.hide.view_less_1024
+              = link_to "My Card", "#"
+            %li.hide.view_less_1024
+              = link_to "Create New Card", "#"
+            %li.hide.view_less_1024
+              = link_to "Search"
+            %li
+              = link_to "Account Setting", "#"
+            %li
+              = link_to "Alerts", "#"
+            %li
+              = link_to "Support", "#"
+            %li
+              = link_to "Sign Out", "#"
