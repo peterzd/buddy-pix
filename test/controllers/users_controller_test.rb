@@ -2,33 +2,21 @@ require "test_helper"
 
 describe UsersController do
   it "should get index" do
-    get :index
-    assert_response :success
   end
 
   it "should get new" do
-    get :new
-    assert_response :success
   end
 
   it "should get create" do
-    get :create
-    assert_response :success
   end
 
   it "should get edit" do
-    get :edit
-    assert_response :success
   end
 
   it "should get update" do
-    get :update
-    assert_response :success
   end
 
   it "should get destroy" do
-    get :destroy
-    assert_response :success
   end
 
 end
