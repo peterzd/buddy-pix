@@ -19,13 +19,19 @@ class UsersController < ApplicationController
 
   def update_account_settings
     user = User.find params[:id]
-    user.update user_params
+    user.update user_params.except(:profile_cover, :cover_photo)
 
-    if params[:profile_cover]
-      image = Image.create picture: params[:profile_cover]
+    if user_params[:profile_cover]
+      image = Image.create user_params[:profile_cover]
       user.set_profile_cover image
     end
-    render nothing: true
+
+    if user_params[:cover_photo]
+      image = Image.create user_params[:cover_photo]
+      user.set_cover_photo image
+    end
+    # render nothing: true
+    redirect_to dashboard_account_settings_path
   end
 
   private
@@ -34,6 +40,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:id, :first_name, :last_name, :email, :phone_number)
+    params.require(:user).permit(:id, :first_name, :last_name, :email, { profile_cover: [:picture] }, { cover_photo: [:picture] }, :phone_number)
   end
 end

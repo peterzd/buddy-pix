@@ -36,13 +36,14 @@
           %small Cover Photo
         %figure.uplaod.cover_img
         .btn.browse_btn.inline.mt20
-          = f.fields_for :profile_cover do |photo|
-            = photo.file_field "cover_photo"
+          = f.fields_for :cover_photo do |photo|
+            = photo.file_field "picture"
           Browse Images
         %h4.ph10.mt10.al
           %small Profile Photo
         %figure.uplaod.round.profile_photo.cm
         .btn.browse_btn.inline.mt20
-          = file_field_tag "profile_cover"
+          = f.fields_for :profile_cover do |photo|
+            = photo.file_field "picture"
           Browse Images
 
