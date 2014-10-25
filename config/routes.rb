@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :supports, :blogs, :albums
+  resources :supports, :blogs
+
+  resources :albums, as: :cards, path: :cards
 
   devise_for :users, controllers: { sessions: "users/sessions" }
 
