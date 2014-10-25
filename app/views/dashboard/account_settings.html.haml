@@ -1,0 +1,49 @@
+%section.clearfix.inner_body
+  .pc.cm
+    = form_for @user, html: { class: "mt20" }, multipart: true, url: update_account_settings_user_path(@user) do |f|
+      %h4.ph10 Account Settings
+      %aside.fl.w50
+        .ph10
+          = f.text_field :first_name, placeholder: "First Name"
+        .p10.mt10
+          = f.text_field :last_name, placeholder: "Last Name"
+        .p10
+          = f.email_field :email, placeholder: "Email id"
+        .p10
+          = f.phone_field :phone_number, placeholder: "Photo No."
+        %h4.ph10.mt10
+          %small Change Password
+        .ph10
+          = password_field_tag "current_password", nil, placeholder: "Current Password"
+        .p10.mt10
+          = password_field_tag "new_password", nil, placeholder: "New Password"
+        .p10
+          = password_field_tag "confirm_password", nil, placeholder: "Confirm Password"
+        .box_link.p10.ac.fl.w50
+          %a.fb{:href => "#"}
+            %i.fa.fa-facebook
+            Connect To Facebook
+        .box_link.p10.ac.fl.w50
+          %a.g{:href => "#"}
+            %i.fa.fa-google
+            Disconnect To Google
+        .p10.fl
+          = f.submit "Save Changes"
+        .p10.fl.white_btn
+          = f.submit "Delete Account"
+      %aside.fl.w50.p10.ac
+        %h4.ph10.mt10.al
+          %small Cover Photo
+        %figure.uplaod.cover_img
+        .btn.browse_btn.inline.mt20
+          = f.fields_for :cover_photo do |photo|
+            = photo.file_field "picture"
+          Browse Images
+        %h4.ph10.mt10.al
+          %small Profile Photo
+        %figure.uplaod.round.profile_photo.cm
+        .btn.browse_btn.inline.mt20
+          = f.fields_for :profile_cover do |photo|
+            = photo.file_field "picture"
+          Browse Images
+

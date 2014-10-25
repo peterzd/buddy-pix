@@ -19,8 +19,9 @@
         %aside.fl.drop_nav
           .expand_nav_point.hide_less_480
             %figure.round.mt10.mr10.fl.img_fill
-              = image_tag "dummy_img/profile_pic.jpg"
-            %span.name.mr10 Hi! Malisa
+              = image_tag current_user.profile_cover_url(:thumb)
+            %span.name.mr10
+              = "Hi! #{current_user.show_name}"
             %i.pe-7s-angle-down
           .fr.hide.view_less_480
             %i.fa.fa-navicon.min_nav_btn
@@ -39,7 +40,7 @@
             %li.hide.view_less_1024
               = link_to "Search"
             %li
-              = link_to "Account Setting", "#"
+              = link_to "Account Setting", dashboard_account_settings_path
             %li
               = link_to "Alerts", "#"
             %li
