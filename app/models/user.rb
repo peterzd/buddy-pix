@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   has_many :joined_albums, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :album_relations, source: :album
 
   has_many :cover_images, as: :imageable, class_name: "Image"
-
   belongs_to :profile_cover, class_name: "Image", foreign_key: :cover_image_id
+  belongs_to :cover_photo, class_name: "Image", foreign_key: :cover_photo_id
 
   # relations with comments
   has_many :comments, foreign_key: :commenter_id
@@ -26,6 +26,11 @@ class User < ActiveRecord::Base
   def set_profile_cover(image)
     cover_images << image unless cover_images.include?(image)
     update cover_image_id: image.id
+  end
+
+  def set_cover_photo(image)
+    cover_images << image unless cover_images.include?(image)
+    update cover_photo_id: image.id
   end
 
   def like_image(image, mood: Like::MOOD[:happy])
