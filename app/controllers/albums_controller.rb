@@ -22,6 +22,7 @@ class AlbumsController < ApplicationController
 
   def create
     @album = Album.new(album_params.except(:cover_image))
+    authorize @album
     @album.save
 
     if album_params[:cover_image]
