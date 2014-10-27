@@ -47,4 +47,31 @@ class User < ActiveRecord::Base
     return email if first_name.nil?
     first_name
   end
+
+  def user_name
+    "#{first_name} #{last_name}"
+  end
+
+  def total_photos
+    created_albums.inject([]) do |total_images, album|
+      if album.images
+        total_images << album.images
+      else
+        total_images
+      end
+    end
+    .flatten
+  end
+
+  def total_likes
+    total_photos.inject(0) do |sum, image|
+      sum += image.likers.count
+    end
+  end
+
+  def total_comments
+    total_photos.inject(0) do |sum, image|
+      sum += image.commenters.count
+    end
+  end
 end

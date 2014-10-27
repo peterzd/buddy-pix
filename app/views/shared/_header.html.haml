@@ -12,7 +12,7 @@
       %nav.fr
         -# navigation side
         %aside.fl.mr10.hide_less_1024
-          = link_to(sanitize("Profile &nbsp;|&nbsp;"), "#")
+          = link_to(sanitize("Profile &nbsp;|&nbsp;"), user_profile_path(current_user))
           = link_to "My card", "#", class: "mr10"
           = link_to "Create New CARD", new_card_path, class: "btn inline mr10"
           = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
