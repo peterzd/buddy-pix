@@ -30,15 +30,10 @@ class UsersController < ApplicationController
       image = Image.create user_params[:cover_photo]
       user.set_cover_photo image
     end
-    # render nothing: true
     redirect_to dashboard_account_settings_path
   end
 
   private
-  def permitted_params
-    params.permit(:user, :current_password, :new_password, :confirm_password, :commit, :profile_cover, :id )
-  end
-
   def user_params
     params.require(:user).permit(:id, :first_name, :last_name, :email, { profile_cover: [:picture] }, { cover_photo: [:picture] }, :phone_number)
   end

@@ -14,7 +14,7 @@
         %aside.fl.mr10.hide_less_1024
           = link_to(sanitize("Profile &nbsp;|&nbsp;"), "#")
           = link_to "My card", "#", class: "mr10"
-          = link_to "Create New CARD", "#", class: "btn inline mr10"
+          = link_to "Create New CARD", new_card_path, class: "btn inline mr10"
           = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
         %aside.fl.drop_nav
           .expand_nav_point.hide_less_480
@@ -36,7 +36,7 @@
             %li.hide.view_less_1024
               = link_to "My Card", "#"
             %li.hide.view_less_1024
-              = link_to "Create New Card", "#"
+              = link_to "Create New Card", new_card_path
             %li.hide.view_less_1024
               = link_to "Search"
             %li
