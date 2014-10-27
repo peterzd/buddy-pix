@@ -13,6 +13,7 @@ class AlbumsController < ApplicationController
 
   def new
     @album = Album.new
+    authorize @album
     respond_with(@album)
   end
 
