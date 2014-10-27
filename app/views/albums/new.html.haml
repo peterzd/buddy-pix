@@ -21,6 +21,7 @@
           %small Cover Photo
         %figure.uplaod.cover_img
         .btn.browse_btn.inline.mt20
-          = file_field_tag "photo"
+          = f.fields_for :cover_image do |cover|
+            = cover.file_field "picture"
           Browse Images
 

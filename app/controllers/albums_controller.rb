@@ -20,9 +20,15 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = Album.new(album_params)
+    @album = Album.new(album_params.except(:cover_image))
     @album.save
-    respond_with(@album)
+
+    if album_params[:cover_image]
+      image = Image.create album_params[:cover_image]
+      @album.set_cover_image image
+    end
+
+    render nothing: true
   end
 
   def update
@@ -41,6 +47,6 @@ class AlbumsController < ApplicationController
     end
 
     def album_params
-      params.require(:album).permit(:name, :private, :caption)
+      params.require(:album).permit(:name, :private, :caption, { cover_image: [:picture] })
     end
 end
