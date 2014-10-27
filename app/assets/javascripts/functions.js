@@ -45,11 +45,11 @@ jQuery(function($) {
     });
     
     //Select Box customization	
-    $('input[type="checkbox"],input[type="radio"]').iCheck({
-        checkboxClass: 'icheckbox_square',
-        radioClass: 'iradio_square',
-        increaseArea: '20%' // optional
-    });
+    // $('input[type="checkbox"],input[type="radio"]').iCheck({
+    //     checkboxClass: 'icheckbox_square',
+    //     radioClass: 'iradio_square',
+    //     increaseArea: '20%' // optional
+    // });
     
     //option click btn
     $('.option_drop span').click(function(){
@@ -58,11 +58,11 @@ jQuery(function($) {
     
     
     //Select Box customization	
-    var config = {
-      'select'           : {disable_search_threshold: 5, width:"100%"}};
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
+    // var config = {
+    //   'select'           : {disable_search_threshold: 5, width:"100%"}};
+    // for (var selector in config) {
+    //   $(selector).chosen(config[selector]);
+    // }
 
 
     /***************** Waypoints ******************/
@@ -99,8 +99,8 @@ jQuery(function($) {
     });
     
     //img liquid
-    $('.img_fill').imgLiquid({fill: true});
-    $('.img_set').imgLiquid({fill:false});
+    // $('.img_fill').imgLiquid({fill: true});
+    // $('.img_set').imgLiquid({fill:false});
 
 
 });
