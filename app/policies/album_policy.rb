@@ -4,5 +4,6 @@ class AlbumPolicy < ApplicationPolicy
   end
 
   def create?
+    user && user.persisted?
   end
 end
