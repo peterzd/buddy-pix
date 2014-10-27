@@ -13,4 +13,20 @@ class Album < ActiveRecord::Base
   def set_cover_image(image)
     update cover_image_id: image.id
   end
+
+  def cover_image_url(format=:original)
+    cover_image ? cover_image.picture.url(format) : ""
+  end
+
+  def total_likes
+    images.inject(0) do |sum, image|
+      sum += image.likers.count
+    end
+  end
+
+  def total_comments
+    images.inject(0) do |sum, image|
+      sum += image.commenters.count
+    end
+  end
 end
