@@ -39,7 +39,8 @@
               %figure.img_fill.round.fl
                 = image_tag @user.profile_cover_url(:medium)
               .info_side
-                %h3= album.name
+                = link_to content_tag(:h3, album.name), card_path(album)
+                -# %h3= album.name
                 %p
                   = "#{time_ago_in_words album.created_at} ago"
             %aside.fr.p10.h3.ar
