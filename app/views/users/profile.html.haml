@@ -2,9 +2,9 @@
   .pc.cm
     .p10.fl.w100
       %figure.profile_pic.round.img_fill
-        = image_tag @user.profile_cover.picture.url(:medium)
+        = image_tag @user.profile_cover_url(:medium)
       %figure.profile_cover.img_fill.fl.w100
-        = image_tag @user.cover_photo.picture.url
+        = image_tag @user.cover_photo_url
         %hgroup.head_row.bs
           %h2= @user.user_name
         .info_row

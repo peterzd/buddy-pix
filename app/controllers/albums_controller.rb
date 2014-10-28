@@ -3,6 +3,7 @@ class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :album, :index?
     @albums = current_user.created_albums
     @user = current_user
     respond_with @albums

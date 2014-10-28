@@ -5,11 +5,24 @@ describe AlbumsController do
   let(:album) { create :album, caption: "album caption", name: "first album", private: true }
   let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
 
-  it "gets index" do
-    # get "/cards/index"
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:albums)
+  describe "GET index" do
+    describe "not logged in user" do
+      it "can not access the page" do
+        get :index
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "logged in user" do
+      before do
+        sign_in peter
+      end
+
+      it "can access the page" do
+        get :index
+        assert_response :success
+      end
+    end
   end
 
   describe "GET new" do

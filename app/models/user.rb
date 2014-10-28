@@ -38,9 +38,14 @@ class User < ActiveRecord::Base
     like = Like.create liker: self, likeable: image, mood: mood
   end
 
-  def profile_cover_url(format)
+  def profile_cover_url(format=:original)
     return "" if profile_cover.nil?
     profile_cover.picture.url(format)
+  end
+
+  def cover_photo_url(format=:original)
+    return "" if cover_photo.nil?
+    cover_photo.picture.url(format)
   end
 
   def show_name
