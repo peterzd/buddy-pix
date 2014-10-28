@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+    get :profile
     member do
       patch :update_account_settings
     end

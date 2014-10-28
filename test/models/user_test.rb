@@ -76,4 +76,49 @@ describe User do
       end
     end
   end
+
+  describe ".set_cover_photo" do
+    before do
+      peter.set_cover_photo image
+    end
+
+    it "sets the image as the user's cover photo" do
+      peter.cover_photo.must_equal image
+    end
+
+    it "adds the image to the user's cover_images list" do
+      peter.cover_images.must_include image
+    end
+  end
+
+  describe ".show_name" do
+    describe "not set first_name and last_name yet" do
+      it "shows the user's email as the show name" do
+        user = create :user, email: "test@test.com", password: "password"
+        user.show_name.must_equal "test@test.com"
+      end
+    end
+
+    describe "has first_name and last_name" do
+      it "show's the user's first_name as show_name" do
+        peter.show_name.must_equal "peter"
+      end
+    end
+  end
+
+  describe ".total_photos" do
+    it "returns all photos belongs to the albums which the user created" do
+      image_2 = create :image
+      album.images << [image, image_2]
+      album.update creator: peter
+      peter.total_photos.must_match_array [image, image_2]
+    end
+
+    it "returns 0 if the user has no created albums" do
+      image_2 = create :image
+      album.images << [image, image_2]
+      peter.total_photos.must_match_array []
+      peter.total_photos.count.must_equal 0
+    end
+  end
 end

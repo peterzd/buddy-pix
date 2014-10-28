@@ -17,6 +17,10 @@ class UsersController < ApplicationController
   def destroy
   end
 
+  def profile
+    @user = current_user
+  end
+
   def update_account_settings
     user = User.find params[:id]
     user.update user_params.except(:profile_cover, :cover_photo)
