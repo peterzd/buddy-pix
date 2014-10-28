@@ -1,15 +1,66 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @album.name
-%p
-  %b Private:
-  = @album.private
-%p
-  %b Caption:
-  = @album.caption
-
-= link_to 'Edit', edit_album_path(@album)
-\|
-= link_to 'Back', albums_path
+%section.clearfix.inner_body
+  .pc.cm
+    .p10
+      %figure.profile_cover.img_fill.fl.w100.album_cover
+        = image_tag @album.cover_image_url
+        %hgroup.head_row.bs
+          %h2.fl= @user.user_name
+          %p.fr.count.bs
+            %i.fa.fa-user
+            = sanitize "#{@album.followers.count} &nbsp;|&nbsp;"
+            %i.fa.fa-user
+            25
+      .album_bar.fl.w100
+        %aside.p20.fr.invite_btn
+          %a.btn{:href => "#"} Invite user
+        %aside.p20.para
+          = @album.caption
+    .upload_btn.ac.bs.fl.w100
+      %input{:type => "file"}/
+      = image_tag "upload_img_btn.png", alt: "upload Image"
+    #m-container.fl.w100.clearfix
+      - @album.images.each do |image|
+        .p10.feed_box.fl.w50
+          .top_row.clearfix
+            %aside.fl.p10.user_info
+              %figure.img_fill.round.fl
+                = image_tag @user.profile_cover_url(:medium)
+              .info_side
+                %h3
+                  = @album.name
+                %p
+                  = "#{time_ago_in_words image.created_at} ago"
+            %aside.fr.p10.h3.ar
+              %h3 Basketball
+              %p
+                = "what is this time? 20 minutes ago"
+          %figure.post_img.img_fill.clearfix
+            = image_tag image.picture.url(:medium), alt: "post img"
+          .f_bottom.clearfix.fl.w100
+            %aside.fl
+              %a.p10.inline.like_btn{:href => "#"}
+                %i.pe-7s-like
+                %strong= image.likes.count
+              %a.p10.inline{:href => "#"}
+                %i.pe-7s-chat
+                %strong= image.comments.count
+            %aside.fr.p10 110 Followers
+            .fl.w100.like_box.bs.hide
+              %a.like_icon.happy{:href => "#", :title => "happy"}
+              %a.like_icon.like{:href => "#", :title => "like"}
+              %a.like_icon.cool{:href => "#", :title => "cool"}
+              %a.like_icon.sad{:href => "#", :title => "sad"}
+              %a.like_icon.cheer{:href => "#", :title => "cheer up"}
+:javascript
+  jQuery(function($) {
+      var container = document.querySelector('#m-container');
+      var msnry =  new Masonry( container, {
+          itemSelector: '.feed_box'
+      });
+      $('.like_btn').click(function(){
+          $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
+              msnry.layout();// this is masonry layout reset function we can user with other events
+          });
+          return false;
+      });
+  });
