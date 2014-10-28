@@ -13,7 +13,7 @@
         -# navigation side
         %aside.fl.mr10.hide_less_1024
           = link_to(sanitize("Profile &nbsp;|&nbsp;"), user_profile_path(current_user))
-          = link_to "My card", "#", class: "mr10"
+          = link_to "My card", cards_path, class: "mr10"
           = link_to "Create New CARD", new_card_path, class: "btn inline mr10"
           = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
         %aside.fl.drop_nav
@@ -32,9 +32,9 @@
                   = image_tag "dummy_img/profile_pic.jpg"
                 %span.name.mr10 Hi! Malisa
             %li.hide.view_less_1024
-              = link_to "Profile", "#"
+              = link_to "Profile", user_profile_path(current_user)
             %li.hide.view_less_1024
-              = link_to "My Card", "#"
+              = link_to "My Card", cards_path
             %li.hide.view_less_1024
               = link_to "Create New Card", new_card_path
             %li.hide.view_less_1024

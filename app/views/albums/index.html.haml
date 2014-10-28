@@ -1,23 +1,71 @@
-%h1 Listing albums
-
-%table
-  %tr
-    %th Name
-    %th Private
-    %th Caption
-    %th
-    %th
-    %th
-
-  - @albums.each do |album|
-    %tr
-      %td= album.name
-      %td= album.private
-      %td= album.caption
-      -# %td= link_to 'Show', album
-      -# %td= link_to 'Edit', edit_album_path(album)
-      -# %td= link_to 'Destroy', album, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
--# = link_to 'New Album', new_album_path
+%section.clearfix.inner_body
+  .pc.cm
+    .p10
+      %figure.profile_pic.round.img_fill
+        = image_tag @user.profile_cover.picture.url(:medium)
+      %figure.profile_cover.img_fill.fl.w100
+        = image_tag @user.cover_photo.picture.url
+        %hgroup.head_row.bs
+          %h2= @user.user_name
+        .info_row
+          .info_cell.bs
+            %i.pe-7s-albums
+            %span= @user.created_albums.count
+          .info_cell.bs
+            %i.pe-7s-photo-gallery
+            %span= @user.total_photos.count
+          .info_cell.bs
+            %i.pe-7s-like
+            %span= @user.total_likes
+          .info_cell.bs
+            %i.pe-7s-chat
+            %span= @user.total_comments
+    %form.search_row.fl.w100.p10
+      .fl.select
+        %select
+          %option Card View
+          %option List View
+      .fl.input
+        %input{:placeholder => "Search ...", :type => "text"}/
+      .btn_box.fr
+        %button{:type => "submit"}
+          %i.pe-7s-search
+    .fl.w100
+      - @albums.each do |album|
+        .p10.feed_box.fl.w50
+          / feed box
+          .top_row.clearfix
+            %aside.fl.p10.user_info
+              %figure.img_fill.round.fl
+                = image_tag @user.profile_cover_url(:medium)
+              .info_side
+                %h3= album.name
+                %p
+                  = "#{time_ago_in_words album.created_at} ago"
+            %aside.fr.p10.h3.ar
+              %h3 Basketball
+              %p
+                = "what's this time? 20 minutes ago"
+          %figure.post_img.img_fill.clearfix
+            = image_tag album.cover_image_url
+            %span.tag
+              - private_text = album.private? ? "private" : "public"
+              = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
+            .post_shadow
+              %h3.fl Basketball
+              %p.fr.count.bs
+                %i.fa.fa-user
+                  = sanitize "#{album.followers.count} &nbsp;|&nbsp;"
+                %i.fa.fa-user
+                  = "what is this count for users? 25"
+          .f_bottom.clearfix.event_link
+            %a{:href => "#"}
+              %img{:src => "assets/img/eye_icon.png"}>/
+              Hide Card
+            %a{:href => "#"}
+              %img{:src => "assets/img/invite_user.png"}>/
+              Invite Users
+            %a{:href => "#"}
+              %img{:src => "assets/img/add_image.png"}>/
+              Add Images
+        / feed box

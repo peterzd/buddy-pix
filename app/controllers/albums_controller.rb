@@ -3,8 +3,9 @@ class AlbumsController < ApplicationController
   before_action :set_album, only: [:show, :edit, :update, :destroy]
 
   def index
-    @albums = Album.all
-    respond_with(@albums)
+    @albums = current_user.created_albums
+    @user = current_user
+    respond_with @albums
   end
 
   def show
