@@ -20,7 +20,7 @@
       = image_tag "upload_img_btn.png", alt: "upload Image"
     #m-container.fl.w100.clearfix
       - @album.images.each do |image|
-        .p10.feed_box.fl.w50
+        .p10.feed_box.fl.w50{ id: dom_id(image) }
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
@@ -46,11 +46,12 @@
                 %strong= image.comments.count
             %aside.fr.p10 110 Followers
             .fl.w100.like_box.bs.hide
-              %a.like_icon.happy{:href => "#", :title => "happy"}
-              %a.like_icon.like{:href => "#", :title => "like"}
-              %a.like_icon.cool{:href => "#", :title => "cool"}
-              %a.like_icon.sad{:href => "#", :title => "sad"}
-              %a.like_icon.cheer{:href => "#", :title => "cheer up"}
+              = link_to "", like_image_path(image, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+              = link_to "", like_image_path(image, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+              = link_to "", like_image_path(image, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+              = link_to "", like_image_path(image, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+              = link_to "", like_image_path(image, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+
 :javascript
   jQuery(function($) {
       var container = document.querySelector('#m-container');

@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :images do
+    member do
+      get :like
+    end
     resources :comments
   end
 
