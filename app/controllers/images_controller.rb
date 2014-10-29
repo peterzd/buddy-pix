@@ -2,6 +2,7 @@ class ImagesController < ApplicationController
   before_action :set_image
 
   def like
+    authorize :image, :like?
     current_user.like_image @image, mood: params[:mood]
   end
 
