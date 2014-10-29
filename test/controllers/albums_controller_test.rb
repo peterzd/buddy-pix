@@ -87,7 +87,7 @@ describe AlbumsController do
 
       it "can not hide this card" do
         post :hide_card, id: album.id
-        album.reload.hidden.must_equal false
+        album.reload.wont_be :hidden
       end
     end
 
@@ -98,7 +98,7 @@ describe AlbumsController do
 
       it "can hide the card" do
         post :hide_card, id: album.id
-        album.reload.hidden.must_equal true
+        album.reload.must_be :hidden
       end
     end
 
@@ -109,7 +109,7 @@ describe AlbumsController do
 
       it "can hide the card" do
         post :hide_card, id: album.id
-        album.reload.hidden.must_equal true
+        album.reload.must_be :hidden
       end
     end
   end

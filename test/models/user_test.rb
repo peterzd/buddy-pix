@@ -21,11 +21,11 @@ describe User do
 
   describe ".admin?" do
     it "returns true if the user is AdminUser" do
-      admin.admin?.must_equal true
+      admin.must_be :admin?
     end
 
     it "returns false is the user is not an AdminUser" do
-      peter.admin?.must_equal false
+      peter.wont_be :admin?
     end
   end
 
