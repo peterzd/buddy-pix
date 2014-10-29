@@ -22,4 +22,10 @@ describe Album do
       image.covered_album.must_equal public_album
     end
   end
+
+  describe "album's default hidden is false" do
+    it "sets the hidden to false when create a new albume" do
+      private_album.hidden.must_equal false
+    end
+  end
 end
