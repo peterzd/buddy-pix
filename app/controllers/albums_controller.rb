@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   respond_to :html, :json
-  before_action :set_album, only: [:show, :edit, :update, :destroy]
+  before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card]
 
   def index
     authorize :album, :index?
@@ -44,6 +44,12 @@ class AlbumsController < ApplicationController
   def destroy
     @album.destroy
     respond_with(@album)
+  end
+
+  def hide_card
+    authorize @album
+    @album.update hidden: true
+    render nothing: true
   end
 
   private

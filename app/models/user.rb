@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def admin?
+    instance_of? AdminUser
+  end
+
   def joins_album(album)
     UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
   end
@@ -80,3 +84,4 @@ class User < ActiveRecord::Base
     end
   end
 end
+

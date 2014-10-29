@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :supports, :blogs
 
-  resources :albums, as: :cards, path: :cards
+  resources :albums, as: :cards, path: :cards do
+    member do
+      post :hide_card
+    end
+  end
 
   devise_for :users, controllers: { sessions: "users/sessions" }
 
