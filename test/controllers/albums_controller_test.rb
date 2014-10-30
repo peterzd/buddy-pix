@@ -71,8 +71,6 @@ describe AlbumsController do
         assert_difference('Album.count') do
           post :create, album: attributes_for(:album, caption: "album caption", name: "first album", private: true)
         end
-
-        # assert_redirected_to album_path(assigns(:album))
       end
     end
   end
@@ -93,7 +91,7 @@ describe AlbumsController do
       end
 
       it "can not hide this card" do
-        post :hide_card, id: album.id
+        xhr :post, :hide_card, id: album.id
         album.reload.wont_be :hidden
       end
     end
@@ -104,7 +102,7 @@ describe AlbumsController do
       end
 
       it "can hide the card" do
-        post :hide_card, id: album.id
+        xhr :post, :hide_card, id: album.id
         album.reload.must_be :hidden
       end
     end
@@ -115,7 +113,7 @@ describe AlbumsController do
       end
 
       it "can hide the card" do
-        post :hide_card, id: album.id
+        xhr :post, :hide_card, id: album.id
         album.reload.must_be :hidden
       end
     end

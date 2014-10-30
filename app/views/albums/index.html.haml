@@ -32,7 +32,7 @@
           %i.pe-7s-search
     .fl.w100
       - @albums.each do |album|
-        .p10.feed_box.fl.w50
+        .p10.feed_box.fl.w50{ id: dom_id(album) }
           / feed box
           .top_row.clearfix
             %aside.fl.p10.user_info

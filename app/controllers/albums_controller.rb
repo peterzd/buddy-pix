@@ -50,7 +50,6 @@ class AlbumsController < ApplicationController
   def hide_card
     authorize @album
     @album.update hidden: true
-    render nothing: true
   end
 
   private
