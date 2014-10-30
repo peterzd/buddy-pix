@@ -25,7 +25,7 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = Album.new(album_params.except(:cover_image), creator: current_user)
+    @album = Album.new(album_params.except(:cover_image).merge(creator: current_user))
     authorize @album
     @album.save
 
@@ -34,7 +34,7 @@ class AlbumsController < ApplicationController
       @album.set_cover_image image
     end
 
-    render nothing: true
+    redirect_to cards_path
   end
 
   def update

@@ -71,14 +71,15 @@ describe AlbumsController do
         assert_difference('Album.count') do
           post :create, album: attributes_for(:album, caption: "album caption", name: "first album", private: true)
         end
+        assert_redirected_to cards_path
+      end
+
+      it "sets the creator as the current_user" do
+        post :create, album: attributes_for(:album, caption: "album caption", name: "first album", private: true)
+        Album.last.creator.must_equal peter
       end
     end
   end
-
-  # it "shows album" do
-  #   get :show, id: album
-  #   assert_response :success
-  # end
 
   describe "POST hide_card" do
     before do
