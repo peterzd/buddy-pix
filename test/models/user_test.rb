@@ -1,6 +1,7 @@
 require "test_helper"
 
 describe User do
+  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god" }
   let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
   let(:album) { create :album, name: "first album", private: false, hidden: false }
   let(:image) { create :image }
@@ -16,6 +17,16 @@ describe User do
   it "creates a record in DB" do
     peter
     User.count.must_equal 1
+  end
+
+  describe ".admin?" do
+    it "returns true if the user is AdminUser" do
+      admin.must_be :admin?
+    end
+
+    it "returns false is the user is not an AdminUser" do
+      peter.wont_be :admin?
+    end
   end
 
   describe "joins an album" do

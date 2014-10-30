@@ -1,13 +1,17 @@
 class AlbumsController < ApplicationController
+  protect_from_forgery except: :hide_card
   respond_to :html, :json
-  before_action :set_album, only: [:show, :edit, :update, :destroy]
+  before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card]
 
   def index
-    @albums = Album.all
-    respond_with(@albums)
+    authorize :album, :index?
+    @albums = policy_scope(current_user.created_albums)
+    @user = current_user
+    respond_with @albums
   end
 
   def show
+    @user = current_user
     respond_with(@album)
   end
 
@@ -21,7 +25,7 @@ class AlbumsController < ApplicationController
   end
 
   def create
-    @album = Album.new(album_params.except(:cover_image), creator: current_user)
+    @album = Album.new(album_params.except(:cover_image).merge(creator: current_user))
     authorize @album
     @album.save
 
@@ -30,7 +34,7 @@ class AlbumsController < ApplicationController
       @album.set_cover_image image
     end
 
-    render nothing: true
+    redirect_to cards_path
   end
 
   def update
@@ -41,6 +45,11 @@ class AlbumsController < ApplicationController
   def destroy
     @album.destroy
     respond_with(@album)
+  end
+
+  def hide_card
+    authorize @album
+    @album.update hidden: true
   end
 
   private
