@@ -10,6 +10,7 @@ class Album < ActiveRecord::Base
   has_many :images, as: :imageable, class_name: "Image"
 
   after_initialize :set_default_value
+  default_scope { order created_at: :asc }
 
   def set_cover_image(image)
     update cover_image_id: image.id

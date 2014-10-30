@@ -5,7 +5,7 @@ class AlbumsController < ApplicationController
 
   def index
     authorize :album, :index?
-    @albums = current_user.created_albums
+    @albums = policy_scope(current_user.created_albums)
     @user = current_user
     respond_with @albums
   end

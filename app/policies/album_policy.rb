@@ -1,4 +1,10 @@
 class AlbumPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      scope.where(hidden: [false, nil])
+    end
+  end
+
   def index?
     user && user.persisted?
   end
