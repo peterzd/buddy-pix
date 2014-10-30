@@ -60,9 +60,7 @@
                 %i.fa.fa-user
                   = "what is this count for users? 25"
           .f_bottom.clearfix.event_link
-            %a{:href => "#"}
-              = image_tag "eye_icon.png"
-              Hide Card
+            = link_to image_tag("eye_icon.png") + "Hide Card", hide_card_card_path(album), method: :post, remote: true
             %a{:href => "#"}
               = image_tag "invite_user.png"
               Invite Users

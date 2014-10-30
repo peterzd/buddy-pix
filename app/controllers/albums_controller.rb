@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  protect_from_forgery except: :hide_card
   respond_to :html, :json
   before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card]
 
