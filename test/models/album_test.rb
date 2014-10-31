@@ -1,8 +1,7 @@
 require "test_helper"
 
 describe Album do
-  let(:private_album) { create :album, name: "private album", private: true }
-  let(:public_album) { create :album, name: "public album", private: false }
+  helper_objects
 
   it "creates two record in DB" do
     [private_album, public_album]

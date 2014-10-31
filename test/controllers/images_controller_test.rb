@@ -1,8 +1,7 @@
 require "test_helper"
 
 describe ImagesController do
-  let(:image) { create :image }
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
+  helper_objects
 
   describe "GET like" do
     describe "not logged in user" do

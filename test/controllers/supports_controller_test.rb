@@ -2,7 +2,7 @@ require "test_helper"
 
 describe SupportsController do
 
-  let(:support) { create :support, sender_name: "peter zhao", subject: "test support", email: "peter@test.com", message: "this is a test support message" }
+  helper_objects
 
   it "gets index" do
     get :index

@@ -1,11 +1,6 @@
 class BlogPolicy < ApplicationPolicy
   def index?
+    user && user.admin?
   end
 
-  def new?
-  end
-
-  def create?
-
-  end
 end

@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe DashboardController do
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
+  helper_objects
 
   describe "GET account_settings" do
     describe "did not sign in" do

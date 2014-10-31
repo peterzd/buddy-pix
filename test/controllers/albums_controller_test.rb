@@ -1,11 +1,7 @@
 require "test_helper"
 
 describe AlbumsController do
-
-  let(:album) { create :album, caption: "album caption", name: "first album", private: true }
-  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god" }
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
-  let(:allen) { create :user, email: "allen@test.com", password: "11111111", first_name: "allen", last_name: "wang" }
+  helper_objects
 
   describe "GET index" do
     describe "not logged in user" do
