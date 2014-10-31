@@ -3,6 +3,7 @@ class BlogsController < ApplicationController
   respond_to :html, :json, :xml
 
   def index
+    authorize :blog, :index?
     @blogs = Blog.all
     respond_with(@blogs)
   end
