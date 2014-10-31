@@ -1,4 +1,4 @@
-class ImagePolicy < ApplicationPolicy
+class PhotoPolicy < ApplicationPolicy
   def like?
     user && user.persisted?
   end

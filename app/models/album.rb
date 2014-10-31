@@ -37,3 +37,4 @@ class Album < ActiveRecord::Base
     self.hidden ||= false
   end
 end
+

@@ -4,3 +4,4 @@ class Like < ActiveRecord::Base
   belongs_to :liker, class_name: "User", foreign_key: :liker_id
   belongs_to :likeable, class_name: "Photo", foreign_key: :likeable_id
 end
+

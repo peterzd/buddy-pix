@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :supports, :blogs
 
   resources :albums, as: :cards, path: :cards do
@@ -9,7 +10,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: "users/sessions" }
 
-  resources :images do
+  resources :photos do
     member do
       get :like
     end
