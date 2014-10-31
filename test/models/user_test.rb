@@ -1,10 +1,7 @@
 require "test_helper"
 
 describe User do
-  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god" }
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
-  let(:album) { create :album, name: "first album", private: false, hidden: false }
-  let(:image) { create :image }
+  helper_objects
 
   it "must be valid" do
     peter.must_be :valid?

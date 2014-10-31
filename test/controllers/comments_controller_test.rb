@@ -1,8 +1,7 @@
 require "test_helper"
 
 describe CommentsController do
-  let(:image) { create :image }
-  let(:peter) { create :user, first_name: "peter", last_name: "zhao", email: "peter@test.com", password: "11111111" }
+  helper_objects
 
   describe "GET index" do
     it "lists all the comments for the photo" do

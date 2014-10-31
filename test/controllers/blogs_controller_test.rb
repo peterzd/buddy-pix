@@ -1,10 +1,7 @@
 require "test_helper"
 
 describe BlogsController do
-
-  let(:blog) { create :blog, title: "test blog", content: "this is content of the blog" }
-  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god" }
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
+  helper_objects
 
   it "gets index" do
     get :index
