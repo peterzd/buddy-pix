@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    false
+    only_admin
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    only_admin
   end
 
   def edit?
@@ -31,7 +31,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    only_admin
   end
 
   def scope
@@ -49,6 +49,11 @@ class ApplicationPolicy
     def resolve
       scope
     end
+  end
+
+  private
+  def only_admin
+    user && (user.admin?) ## only for admin
   end
 end
 
