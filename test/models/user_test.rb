@@ -71,11 +71,11 @@ describe User do
   describe "relations with likes" do
     describe "user likes an image" do
       before do
-        peter.like_image image, mood: Like::MOOD[:cool]
+        peter.like_photo photo, mood: Like::MOOD[:cool]
       end
 
       it "adds a record to the user's liked_images list" do
-        peter.liked_images.must_include image
+        peter.liked_photos.must_include photo
       end
 
       it "sets the mood to the like" do
@@ -115,16 +115,17 @@ describe User do
   end
 
   describe ".total_photos" do
+    before do
+      @photo_2 = create :photo
+      album.photos << [photo, @photo_2]
+    end
+
     it "returns all photos belongs to the albums which the user created" do
-      image_2 = create :image
-      album.images << [image, image_2]
       album.update creator: peter
-      peter.total_photos.must_match_array [image, image_2]
+      peter.total_photos.must_match_array [photo, @photo_2]
     end
 
     it "returns 0 if the user has no created albums" do
-      image_2 = create :image
-      album.images << [image, image_2]
       peter.total_photos.must_match_array []
       peter.total_photos.count.must_equal 0
     end

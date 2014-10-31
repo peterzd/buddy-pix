@@ -76,9 +76,12 @@ ActiveRecord::Schema.define(version: 20141031074302) do
   create_table "photos", force: true do |t|
     t.string   "title"
     t.text     "description"
+    t.integer  "album_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "photos", ["album_id"], name: "index_photos_on_album_id", using: :btree
 
   create_table "supports", force: true do |t|
     t.string   "sender_name"

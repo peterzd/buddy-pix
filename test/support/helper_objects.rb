@@ -17,4 +17,7 @@ def helper_objects
 
   # support
   let(:support) { create :support, sender_name: "peter zhao", subject: "test support", email: "peter@test.com", message: "this is a test support message" }
+
+  # photos
+  let(:photo) { create :photo, title: "test photo", description: "this is a new photo" }
 end

@@ -7,7 +7,7 @@ class Album < ActiveRecord::Base
 
   # relations with images
   belongs_to :cover_image, class_name: "Image"
-  has_many :images, as: :imageable, class_name: "Image"
+  has_many :photos
 
   after_initialize :set_default_value
   default_scope { order created_at: :asc }
