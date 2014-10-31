@@ -24,4 +24,5 @@
 //= require html5
 //= require masonry.pkgd.min
 //= require waypoints.min
+//= require ckeditor-jquery
 //= require_tree .
