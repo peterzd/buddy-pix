@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   end
 
   def index
-    image = Image.find params[:image_id]
-    @comments = image.comments
+    photo = Photo.find params[:photo_id]
+    @comments = photo.comments
   end
 
   private

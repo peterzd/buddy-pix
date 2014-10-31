@@ -4,11 +4,6 @@ class Image < ActiveRecord::Base
   has_one :covered_user, class_name: "User", foreign_key: :cover_image_id
   has_one :covered_album, class_name: "Album", foreign_key: :cover_image_id
 
-  # relations with comments
-  # Note: should move to photos
-  has_many :comments, foreign_key: :commentable_id
-  has_many :commenters, through: :comments, source: :commenter
-
   has_attached_file :picture, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 end
