@@ -3,10 +3,36 @@ require "test_helper"
 describe BlogsController do
   helper_objects
 
-  it "gets index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:blogs)
+  describe "GET index" do
+    describe "not logged in user" do
+      it "can not access the page" do
+        get :index
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "logged in as normal user" do
+      before do
+        sign_in peter
+      end
+
+      it "can not access the page" do
+        get :index
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "logged in as Admin" do
+      before do
+        sign_in admin
+      end
+
+      it "can access the page" do
+        get :index
+        assert_response :success
+        assert_not_nil assigns(:blogs)
+      end
+    end
   end
 
   describe "GET new" do
