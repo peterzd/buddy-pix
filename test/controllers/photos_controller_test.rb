@@ -81,4 +81,60 @@ describe PhotosController do
     end
   end
 
+  describe "POST create" do
+    before do
+      album.update creator: peter
+    end
+
+    describe "logged in as other user" do
+      before do
+        sign_in allen
+      end
+
+      it "can not create a new photo for the card" do
+        post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+        assert_redirected_to root_path
+      end
+
+    end
+
+    describe "logged in as the card's owner" do
+      before do
+        sign_in peter
+      end
+
+      it "can create a new photo for the card" do
+        assert_difference("Photo.count") do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+        end
+        assert_redirected_to cards_path
+      end
+
+      it "adds one photo for the card" do
+        assert_difference("album.photos.count") do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+        end
+      end
+    end
+
+    describe "logged in as Admin" do
+      before do
+        sign_in admin
+      end
+
+      it "can create a new photo for the card" do
+        assert_difference("Photo.count") do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+        end
+        assert_redirected_to cards_path
+      end
+
+      it "adds one photo for the card" do
+        assert_difference("album.photos.count") do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+        end
+      end
+    end
+  end
+
 end

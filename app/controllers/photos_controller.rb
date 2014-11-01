@@ -15,6 +15,7 @@ class PhotosController < ApplicationController
   def create
     set_card
     @photo = @card.photos.build photo_params.except(:image)
+    authorize @photo
 
     if @photo.save
       if photo_params[:image]
