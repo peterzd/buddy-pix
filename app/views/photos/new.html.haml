@@ -1,0 +1,25 @@
+%section.clearfix.inner_body
+  .pc.cm
+    = form_for @photo, url: card_photos_path(@card) do |f|
+      %h4 Create New Card
+      %aside.fl.w50.p10
+        .p10
+          = f.text_field :title, placeholder: "Image Title"
+        .p10
+          = f.text_area :description, placeholder: "Description(optional)"
+        .box_link.p10.ac.w50
+          %a.fb{:href => "#"}
+            %i.fa.fa-facebook
+            Share on Facebook
+        .p10
+          = f.submit "Post Now"
+      %aside.fl.w50.p10.al
+        %h4.ph10.mt10.al
+          %small Card Images
+          -# list of three recent photos of the card
+        -# %figure.uplaod.cover_img
+        .btn.browse_btn.inline
+          = f.fields_for :image do |img|
+            = img.file_field "picture"
+          Browse Images
+

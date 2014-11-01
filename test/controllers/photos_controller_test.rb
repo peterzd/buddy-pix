@@ -3,11 +3,11 @@ require "test_helper"
 describe PhotosController do
   helper_objects
 
-  before do
-    photo.album = album
-  end
-
   describe "GET like" do
+    before do
+      photo.album = album
+    end
+
     describe "not logged in user" do
       it "can not like the photo" do
         xhr :get, :like, mood: Like::MOOD[:cool], id: photo.id, card_id: album.id
@@ -31,6 +31,52 @@ describe PhotosController do
 
       it "sets the mood for the like record" do
         photo.likes.first.mood.must_equal "cool"
+      end
+    end
+  end
+
+  describe "GET new" do
+    before do
+      album.update creator: peter
+    end
+
+    describe "not logged in user" do
+      it "can not access the page" do
+        get :new, card_id: album.id
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "logged in as other user" do
+      before do
+        sign_in allen
+      end
+
+      it "can not access the page" do
+        get :new, card_id: album.id
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "logged in as the card's owner" do
+      before do
+        sign_in peter
+      end
+
+      it "can access the page" do
+        get :new, card_id: album.id
+        assert_response :success
+      end
+    end
+
+    describe "logged in as Admin" do
+      before do
+        sign_in admin
+      end
+
+      it "can access the page" do
+        get :new, card_id: album.id
+        assert_response :success
       end
     end
   end
