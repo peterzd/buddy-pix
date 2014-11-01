@@ -9,4 +9,9 @@ class Photo < ActiveRecord::Base
   # relations with likes
   has_many :likes, foreign_key: :likeable_id
   has_many :likers, through: :likes, source: :liker
+
+  def picture_url(format=:original)
+    return "" if image.nil?
+    image.picture.url format
+  end
 end

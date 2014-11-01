@@ -10,4 +10,8 @@ class PhotosController < ApplicationController
   def set_photo
     @photo = Photo.find params[:id]
   end
+
+  def set_card
+    @album = Album.find params[:card_id]
+  end
 end

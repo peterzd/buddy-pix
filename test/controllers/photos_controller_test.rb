@@ -3,10 +3,14 @@ require "test_helper"
 describe PhotosController do
   helper_objects
 
+  before do
+    photo.album = album
+  end
+
   describe "GET like" do
     describe "not logged in user" do
       it "can not like the photo" do
-        xhr :get, :like, mood: Like::MOOD[:cool], id: photo.id
+        xhr :get, :like, mood: Like::MOOD[:cool], id: photo.id, card_id: album.id
         photo.likes.count.must_equal 0
       end
     end
@@ -14,7 +18,7 @@ describe PhotosController do
     describe "logged in user" do
       before do
         sign_in peter
-        xhr :get, :like, mood: Like::MOOD[:cool], id: photo.id
+        xhr :get, :like, mood: Like::MOOD[:cool], id: photo.id, card_id: album.id
       end
 
       it "adds a like to the user" do
