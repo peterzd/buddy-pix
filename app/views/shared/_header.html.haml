@@ -44,6 +44,9 @@
               = link_to "Account Setting", dashboard_account_settings_path
             %li
               = link_to "Alerts", "#"
+            - if policy(:album).hidden_cards?
+              %li
+                = link_to "Hidden Cards", hidden_cards_cards_path
             %li
               = link_to "Support", welcome_support_path
             %li
