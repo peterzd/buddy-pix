@@ -116,6 +116,18 @@ describe AlbumsController do
     end
   end
 
+  describe "POST view_card" do
+    before do
+      album.update creator: peter, hidden: true
+    end
+
+    it "makes a hidden card to be visible to world" do
+      sign_in peter
+      xhr :post, :view_card, id: album.id
+      album.reload.wont_be :hidden
+    end
+  end
+
   describe "GET hidden cards" do
     before do
       @cards = create_list :album, 5, caption: "non hidden card", name: "new card", private: false, creator: peter

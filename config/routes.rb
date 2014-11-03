@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     member do
       post :hide_card
+      post :view_card
     end
 
     resources :photos do

@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
   protect_from_forgery except: :hide_card
   respond_to :html, :json
-  before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card]
+  before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card, :view_card]
 
   # Peter at 11.3: can the two methods extract the same code into another method?
   def index
@@ -60,6 +60,10 @@ class AlbumsController < ApplicationController
   def hide_card
     authorize @album
     @album.update hidden: true
+  end
+
+  def view_card
+    @album.update hidden: false
   end
 
   private
