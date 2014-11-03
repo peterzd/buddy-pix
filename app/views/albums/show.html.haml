@@ -16,41 +16,42 @@
         %aside.p20.para
           = @album.caption
     .upload_btn.ac.bs.fl.w100
-      %input{:type => "file"}/
-      = image_tag "upload_img_btn.png", alt: "upload Image"
+      = link_to image_tag("upload_img_btn.png", alt: "upload Image"), new_card_photo_path(@album)
+      -# %input{:type => "file"}/
+      -# = image_tag "upload_img_btn.png", alt: "upload Image"
     #m-container.fl.w100.clearfix
-      - @album.images.each do |image|
-        .p10.feed_box.fl.w50{ id: dom_id(image) }
+      - @album.photos.each do |photo|
+        .p10.feed_box.fl.w50{ id: dom_id(photo) }
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
                 = image_tag @user.profile_cover_url(:medium)
               .info_side
                 %h3
-                  = @album.name
+                  = photo.title
                 %p
-                  = "#{time_ago_in_words image.created_at} ago"
+                  = "#{time_ago_in_words photo.created_at} ago"
             %aside.fr.p10.h3.ar
               %h3 Basketball
               %p
                 = "what is this time? 20 minutes ago"
           %figure.post_img.img_fill.clearfix
-            = image_tag image.picture.url(:medium), alt: "post img"
+            = image_tag photo.picture_url(:medium), alt: "post img"
           .f_bottom.clearfix.fl.w100
             %aside.fl
               %a.p10.inline.like_btn{:href => "#"}
                 %i.pe-7s-like
-                %strong= image.likes.count
+                %strong= photo.likes.count
               %a.p10.inline{:href => "#"}
                 %i.pe-7s-chat
-                %strong= image.comments.count
+                %strong= photo.comments.count
             %aside.fr.p10 110 Followers
             .fl.w100.like_box.bs.hide
-              = link_to "", like_image_path(image, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
-              = link_to "", like_image_path(image, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
-              = link_to "", like_image_path(image, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
-              = link_to "", like_image_path(image, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
-              = link_to "", like_image_path(image, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
 
 :javascript
   jQuery(function($) {

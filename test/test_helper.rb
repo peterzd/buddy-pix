@@ -29,8 +29,10 @@ class ActiveSupport::TestCase
   def teardown
     DatabaseCleaner.clean
   end
+
 end
 
 class ActionController::TestCase
   include Devise::TestHelpers
 end
+

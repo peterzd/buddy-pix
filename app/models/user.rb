@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # relations with like
   has_many :likes, foreign_key: :liker_id
-  has_many :liked_images, through: :likes, source: :likeable
+  has_many :liked_photos, through: :likes, source: :likeable
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -38,8 +38,8 @@ class User < ActiveRecord::Base
     update cover_photo_id: image.id
   end
 
-  def like_image(image, mood: Like::MOOD[:happy])
-    like = Like.create liker: self, likeable: image, mood: mood
+  def like_photo(photo, mood: Like::MOOD[:happy])
+    like = Like.create liker: self, likeable: photo, mood: mood
   end
 
   def profile_cover_url(format=:original)
@@ -62,11 +62,11 @@ class User < ActiveRecord::Base
   end
 
   def total_photos
-    created_albums.inject([]) do |total_images, album|
-      if album.images
-        total_images << album.images
+    created_albums.inject([]) do |total_photos, album|
+      if album.photos
+        total_photos << album.photos
       else
-        total_images
+        total_photos
       end
     end
     .flatten
