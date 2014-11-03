@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :albums, as: :cards, path: :cards do
+    collection do
+      get :hidden_cards
+    end
+
     member do
       post :hide_card
     end

@@ -115,4 +115,38 @@ describe AlbumsController do
       end
     end
   end
+
+  describe "GET hidden cards" do
+    before do
+      @cards = create_list :album, 5, caption: "non hidden card", name: "new card", private: false, creator: peter
+    end
+
+    describe "the user does not have any hidden cards" do
+      before do
+        sign_in peter
+      end
+
+      it "redirects to the root page" do
+        get :hidden_cards
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "the user has some hidden cards" do
+      before do
+        @hidden_cards = create_list :album, 5, caption: "non hidden card", name: "new card", private: false, hidden: true, creator: peter
+        sign_in peter
+      end
+
+      it "access the page" do
+        get :hidden_cards
+        assert_response :success
+      end
+
+      it "lists all the user's hidden cards" do
+        get :hidden_cards
+        assigns[:albums].must_match_array @hidden_cards
+      end
+    end
+  end
 end
