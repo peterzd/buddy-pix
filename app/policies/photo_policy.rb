@@ -9,6 +9,8 @@ class PhotoPolicy < ApplicationPolicy
 
   def create?
     return false if user.nil?
-    record.album.creator == user || user.admin?
+
+    card = record.album
+    card.creator == user || user.admin? || !card.private || user.joined_albums.include?(card)
   end
 end
