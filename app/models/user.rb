@@ -76,6 +76,8 @@ class User < ActiveRecord::Base
     .flatten
   end
 
+  # Peter at 11.3: these total methods are the same with the ones in model/album.rb
+  # maybe we can extract them out into another file
   def total_likes
     total_photos.inject(0) do |sum, image|
       sum += image.likers.count

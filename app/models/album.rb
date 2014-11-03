@@ -21,14 +21,14 @@ class Album < ActiveRecord::Base
   end
 
   def total_likes
-    images.inject(0) do |sum, image|
-      sum += image.likers.count
+    photos.inject(0) do |sum, photo|
+      sum += photo.likers.count
     end
   end
 
   def total_comments
-    images.inject(0) do |sum, image|
-      sum += image.commenters.count
+    photos.inject(0) do |sum, photo|
+      sum += photo.commenters.count
     end
   end
 
