@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-  protect_from_forgery except: :hide_card
+  protect_from_forgery except: [ :hide_card, :view_card ]
   respond_to :html, :json
   before_action :set_album, only: [:show, :edit, :update, :destroy, :hide_card, :view_card]
 
@@ -60,10 +60,16 @@ class AlbumsController < ApplicationController
   def hide_card
     authorize @album
     @album.update hidden: true
+    respond_with @album do |format|
+      format.js { render "hide_view_card" }
+    end
   end
 
   def view_card
     @album.update hidden: false
+    respond_with @album do |format|
+      format.js { render "hide_view_card" }
+    end
   end
 
   private
