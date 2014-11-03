@@ -15,7 +15,9 @@ class AlbumsController < ApplicationController
     authorize :album, :hidden_cards?
     @user = current_user
     @albums = current_user.hidden_cards
-    respond_with @albums
+    respond_with @albums do |format|
+      format.html { render :index }
+    end
   end
 
   def show
