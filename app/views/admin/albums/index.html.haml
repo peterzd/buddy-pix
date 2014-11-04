@@ -8,6 +8,7 @@
       = link_to "New Card", new_admin_album_path
   %table.table.table-striped
     %tr
+      %th Card ID
       %th Card Name
       %th Creator
       %th Crated_at
@@ -16,14 +17,15 @@
       %th Actions
     - @cards.each do |card|
       %tr
-        %th= card.name
-        %th= card.creator.user_name
-        %th= card.created_at
-        %th= card.private? ? "Private" : "Public"
-        %th= card.hidden?
+        %td= card.id
+        %td= card.name
+        %td= card.creator.user_name
+        %td= card.created_at
+        %td= card.private? ? "Private" : "Public"
+        %td= card.hidden?
 
         %th
-          = link_to "destroy", admin_album_path(card), method: :delete
+          = link_to "destroy", admin_album_path(card), method: :delete, data: { confirm: "sure to destroy this card?" }
           = link_to "hide card", "#"
 
 
