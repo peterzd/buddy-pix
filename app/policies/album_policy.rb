@@ -20,4 +20,8 @@ class AlbumPolicy < ApplicationPolicy
   def hide_card?
     (record.creator == user) || user.admin?
   end
+
+  def hidden_cards?
+    !(user.nil? || user.hidden_cards.empty?)
+  end
 end

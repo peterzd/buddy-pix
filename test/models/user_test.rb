@@ -40,6 +40,15 @@ describe User do
     end
   end
 
+  describe ".hidden_cards" do
+    it "lists all the user's hidden cards" do
+      cards = create_list :album, 5, creator: peter, hidden: false
+      hidden_cards = create_list :album, 5, creator: peter, hidden: true
+      peter.hidden_cards.must_match_array hidden_cards
+    end
+
+  end
+
   describe "relations with profile image" do
     it "creates the image and set it as the user's profile image" do
       image = create :image

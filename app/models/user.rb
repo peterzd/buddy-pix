@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
   end
 
+  def hidden_cards
+    created_albums.where hidden: true
+  end
+
   def set_profile_cover(image)
     cover_images << image unless cover_images.include?(image)
     update cover_image_id: image.id
@@ -72,6 +76,8 @@ class User < ActiveRecord::Base
     .flatten
   end
 
+  # Peter at 11.3: these total methods are the same with the ones in model/album.rb
+  # maybe we can extract them out into another file
   def total_likes
     total_photos.inject(0) do |sum, image|
       sum += image.likers.count

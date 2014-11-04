@@ -29,8 +29,9 @@
             %li.hide.view_less_480.p10
               .expand_nav_point
                 %figure.round.mr10.img_fill
-                  = image_tag "dummy_img/profile_pic.jpg"
-                %span.name.mr10 Hi! Malisa
+                  = image_tag current_user.profile_cover_url(:thumb)
+                %span.name.mr10
+                  = "Hi! #{current_user.show_name}"
             %li.hide.view_less_1024
               = link_to "Profile", user_profile_path(current_user)
             %li.hide.view_less_1024
@@ -43,7 +44,10 @@
               = link_to "Account Setting", dashboard_account_settings_path
             %li
               = link_to "Alerts", "#"
+            - if policy(:album).hidden_cards?
+              %li
+                = link_to "Hidden Cards", hidden_cards_cards_path
             %li
-              = link_to "Support", "#"
+              = link_to "Support", welcome_support_path
             %li
               = link_to "Sign Out", destroy_user_session_path, method: :delete
