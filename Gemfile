@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'devise'
 gem "bootstrap-sass"
 gem 'autoprefixer-rails'
+gem "simple_form"
 
 gem 'spring',        group: :development
 gem "paperclip", "~> 4.2"
