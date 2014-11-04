@@ -4,12 +4,13 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 
-module PhotoShare
+module BuddyPix
   class Application < Rails::Application
 
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
-    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
+    # config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
 
+    config.assets.precompile += %w[admin.css]
     config.generators do |g|
       g.javascripts false
       g.stylesheets false

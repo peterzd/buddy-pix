@@ -1,0 +1,29 @@
+!!!
+/[if lt IE 7 ] <html class="ie ie6" lang="en">
+/[if IE 7 ] <html class="ie ie7" lang="en">
+/[if IE 8 ] <html class="ie ie8" lang="en">
+/ [if (gte IE 9)|!(IE)]><!
+%html{:lang => "en"}
+  / <![endif]
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "iPhone developer UK, Android developer UK, Mobile Apps developer London, Apps Developer London, Game Developer Europe, Mobile Developer UK, Cloud Solution, Startup Consulting, Prototype Developer london, Minimum Viable Product, Application Developer London", :name => "keywords"}/
+    %meta{:content => "Sybite Technologies provides mobile solutions to startups and large enterprise, we are a leading web agencies from UK & Europe with more than 300 satisfied clients.", :name => "description"}/
+    -# Mobile Specific Metas
+    %meta{:content => "width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1, user-scalable=0", :name => "viewport"}/
+    %title Mobile Application Development Company London | iPhone & Android Developer London
+    -# main css
+    = stylesheet_link_tag "admin", media: "all"
+    = javascript_include_tag "admin"
+    /[if lt IE 9] <script src="assets/js/html5.js"></script><script src="assets/js/css3-mediaqueries.js"></script>
+
+  %body
+    %nav.navbar.navbar-default.navbar-fixed-top{ role: "navigation" }
+      .container-fluid
+        = yield
+
+
+    -# = render "shared/header"
+    -# = yield
+    -# = render "shared/footer"
+

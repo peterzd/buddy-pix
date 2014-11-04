@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require turbolinks
 //= require_directory ../../../vendor/assets/javascripts/grid_gallery
 //= require_directory ../../../vendor/assets/javascripts/icheck

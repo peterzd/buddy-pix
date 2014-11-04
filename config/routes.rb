@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :supports, :blogs
+  namespace :admin do
+    get "", to: "dashboard#index", as: "/"
+    resources :albums
+  end
 
+  resources :supports, :blogs
 
   devise_for :users, controllers: { sessions: "users/sessions" }
 
@@ -46,4 +50,5 @@ Rails.application.routes.draw do
       get :account_settings
     end
   end
+
 end
