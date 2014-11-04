@@ -1,4 +1,28 @@
 # Use this setup block to configure all options available in SimpleForm.
+inputs = %w[
+  CollectionSelectInput
+  DateTimeInput
+  FileInput
+  GroupedCollectionSelectInput
+  NumericInput
+  PasswordInput
+  RangeInput
+  StringInput
+  TextInput
+]
+
+inputs.each do |input_type|
+  superclass = "SimpleForm::Inputs::#{input_type}".constantize
+
+  new_class = Class.new(superclass) do
+    def input_html_classes
+      super.push('form-control')
+    end
+  end
+
+  Object.const_set(input_type, new_class)
+end
+
 SimpleForm.setup do |config|
   config.wrappers :bootstrap, tag: 'div', class: 'control-group', error_class: 'error' do |b|
     b.use :html5
@@ -34,6 +58,18 @@ SimpleForm.setup do |config|
       end
       input.use :hint,  wrap_with: { tag: 'span', class: 'help-block' }
       input.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
+    end
+  end
+
+  config.wrappers :bootstrap_horizontal, tag: "div", class: "form-group", error_class: "error" do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label
+
+    b.wrapper tag: 'div', class: 'col-sm-10' do |ba|
+      ba.use :input
+      ba.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
+      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
 

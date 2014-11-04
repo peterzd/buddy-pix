@@ -10,7 +10,7 @@ module BuddyPix
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
     # config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
 
-    config.assets.precompile += %w[admin.css]
+    config.assets.precompile += %w[admin.css admin.js]
     config.generators do |g|
       g.javascripts false
       g.stylesheets false

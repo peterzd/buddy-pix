@@ -1,0 +1,32 @@
+
+%h3 Admin Cards index page
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left All cards list
+    .pull-right
+      = link_to "New Card", new_admin_album_path
+  %table.table.table-striped
+    %tr
+      %th Card Name
+      %th Creator
+      %th Crated_at
+      %th Public/Private
+      %th Hidden
+      %th Actions
+    - @cards.each do |card|
+      %tr
+        %th= card.name
+        %th= card.creator.user_name
+        %th= card.created_at
+        %th= card.private? ? "Private" : "Public"
+        %th= card.hidden?
+
+        %th
+          = link_to "destroy", admin_album_path(card), method: :delete
+          = link_to "hide card", "#"
+
+
+
+
+
