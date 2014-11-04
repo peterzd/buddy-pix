@@ -14,16 +14,28 @@
     %title Mobile Application Development Company London | iPhone & Android Developer London
     -# main css
     = stylesheet_link_tag "admin", media: "all"
-    = javascript_include_tag "admin"
+    = javascript_include_tag "application"
     /[if lt IE 9] <script src="assets/js/html5.js"></script><script src="assets/js/css3-mediaqueries.js"></script>
 
   %body
-    %nav.navbar.navbar-default.navbar-fixed-top{ role: "navigation" }
-      .container-fluid
-        = yield
-
-
-    -# = render "shared/header"
-    -# = yield
-    -# = render "shared/footer"
+    %header.clearfix
+      %nav.navbar.navbar-default{ role: "navigation" }
+        .container-fluid
+          .navbar-header
+            = link_to image_tag("buddypix_logo.png", alt: "Logo"), "#"
+          .links
+            %ul.nav.navbar-nav
+              %li
+                = link_to "Users", "#"
+              %li
+                = link_to "Cards", "#"
+              %li
+                = link_to "Photos", "#"
+              %li
+                = link_to "Comments", "#"
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                = link_to "Log out", destroy_user_session_path, method: :delete
+    .container.clearfix
+      = yield
 
