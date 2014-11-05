@@ -1,4 +1,3 @@
-
 %h3 Admin Cards index page
 
 .panel.panel-default
@@ -26,9 +25,8 @@
 
         %th
           = link_to "destroy", admin_album_path(card), method: :delete, data: { confirm: "sure to destroy this card?" }
-          = link_to "hide card", "#"
-
-
-
-
+          - if card.hidden?
+            = link_to "view card", view_card_admin_album_path(card)
+          - else
+            = link_to "hide card", hide_card_admin_album_path(card)
 

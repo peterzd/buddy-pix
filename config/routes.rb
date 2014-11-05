@@ -2,7 +2,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "", to: "dashboard#index", as: "/"
-    resources :albums
+    resources :albums do
+      member do
+        get :hide_card
+        get :view_card
+      end
+    end
   end
 
   resources :supports, :blogs

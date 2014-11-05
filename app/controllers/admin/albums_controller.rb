@@ -1,19 +1,29 @@
 class Admin::AlbumsController < Admin::ApplicationController
   respond_to :html
+  before_action :set_album, only: [:destroy, :hide_card, :view_card]
 
   def index
     @cards = Album.all
   end
 
   def destroy
-    @card = Album.find params[:id]
-    @card.destroy
+    @album.destroy
     redirect_to admin_albums_path
   end
 
   def new
     @album = Album.new
     respond_with @album
+  end
+
+  def hide_card
+    @album.update hidden: true
+    redirect_to admin_albums_path
+  end
+
+  def view_card
+    @album.update hidden: false
+    redirect_to admin_albums_path
   end
 
   # Peter at 11.5: this action method is duplicated with the one in AlbumsController#create
@@ -34,5 +44,9 @@ class Admin::AlbumsController < Admin::ApplicationController
   private
   def album_params
     params.require(:album).permit(:id, :name, :last_name, :caption, :cover_image)
+  end
+
+  def set_album
+    @album = Album.find params[:id]
   end
 end
