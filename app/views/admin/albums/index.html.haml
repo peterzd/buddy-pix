@@ -25,8 +25,6 @@
 
         %th
           = link_to "destroy", admin_album_path(card), method: :delete, data: { confirm: "sure to destroy this card?" }
-          - if card.hidden?
-            = link_to "view card", view_card_admin_album_path(card)
-          - else
-            = link_to "hide card", hide_card_admin_album_path(card)
+          - action = card.hidden? ? "view" : "hide"
+          = link_to "#{action} card", send("#{action}_card_admin_album_path", card)
 
