@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         get :view_card
       end
     end
+
+    resources :users
   end
 
   resources :supports, :blogs
