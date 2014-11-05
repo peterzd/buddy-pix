@@ -16,6 +16,9 @@ class Admin::AlbumsController < Admin::ApplicationController
     respond_with @album
   end
 
+  # Peter at 11.5: this action method is duplicated with the one in AlbumsController#create
+  # we can extract the method out into a shared class, maybe "AlbumAction" class
+  # to call: AlbumAction.create_action(album_params) { |obj| authorize obj }
   def create
     @album = Album.new album_params.except(:cover_image).merge(creator: current_user)
     @album.save
