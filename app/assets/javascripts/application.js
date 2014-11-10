@@ -13,4 +13,16 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require_directory ../../../vendor/assets/javascripts/grid_gallery
+//= require_directory ../../../vendor/assets/javascripts/icheck
+//= require_directory ../../../vendor/assets/javascripts/img_liquid
+//= require_directory ../../../vendor/assets/javascripts/mscrollar
+//= require_directory ../../../vendor/assets/javascripts/responsive_tabs
+//= require angular.min
+//= require chosen.jquery
+//= require css3-mediaqueries
+//= require html5
+//= require masonry.pkgd.min
+//= require waypoints.min
+//= require ckeditor-jquery
 //= require_tree .

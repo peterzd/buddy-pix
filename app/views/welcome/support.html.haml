@@ -1,0 +1,18 @@
+%section.clearfix.inner_body
+  .pc.cm
+    = form_for @support do |f|
+      %h4 Support
+      %aside.fl.w50.p10
+        .p10
+          = f.text_field :sender_name, placeholder: "Your Name"
+        .p10
+          = f.text_field :subject, placeholder: "Subject"
+        .p10
+          = f.text_field :email, placeholder: "Email id"
+        .p10
+          = f.text_area :message, placeholder: "Message"
+        .p10
+          = f.submit "Send Message"
+    %aside.fl.w50.p10
+      %h1 Please Send Us your Valueable Suggestion and feedback.
+      
