@@ -9,3 +9,5 @@ script:
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database buddy_pix_test' -U postgres
+rvm:
+  - 2.1.2
