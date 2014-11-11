@@ -89,5 +89,9 @@ class User < ActiveRecord::Base
       sum += image.commenters.count
     end
   end
+
+  def last_sign_in_date
+    date = last_sign_in_at || created_at
+  end
 end
 
