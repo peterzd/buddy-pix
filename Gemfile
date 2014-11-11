@@ -13,6 +13,7 @@ gem 'haml-rails'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'devise'
 gem "bootstrap-sass"
+gem "font-awesome-sass", '~> 4.2.0'
 gem 'autoprefixer-rails'
 gem "simple_form"
 
