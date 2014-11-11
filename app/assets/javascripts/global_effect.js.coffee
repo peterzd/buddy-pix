@@ -95,5 +95,7 @@ class Global
 
 
 $(document).on "page:load ready", ->
+  alert "good"
   new Global()
+
 
