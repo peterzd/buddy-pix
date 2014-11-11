@@ -15,6 +15,7 @@ gem "bootstrap-sass"
 gem "font-awesome-sass", '~> 4.2.0'
 gem 'autoprefixer-rails'
 gem "simple_form"
+gem 'modernizr-rails'
 
 gem 'spring',        group: :development
 gem "paperclip", "~> 4.2"
