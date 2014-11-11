@@ -1,0 +1,33 @@
+%h3 Admin Users index page
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left All users list
+    .pull-right
+      = link_to "New user", "#"
+  %table.table.table-striped
+    %tr
+      %th User ID
+      %th Email
+      %th Username
+      %th First name
+      %th Last name
+      %th Phone No.
+      %th Create At
+      %th Last sign in
+      %th Actions
+    - @users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.email
+        %td= user.username
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.phone_number
+        %td= user.created_at.strftime("%Y-%m-%d")
+        %td
+          = "#{user.last_sign_in_date.strftime("%Y-%m-%d")}(#{time_ago_in_words user.last_sign_in_date} ago)"
+
+        %th
+          = link_to "destroy", admin_user_path(user), method: :delete, data: { confirm: "sure to destroy this card?" }
+

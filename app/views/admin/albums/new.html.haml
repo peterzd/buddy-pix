@@ -1,0 +1,7 @@
+= simple_form_for [:admin, @album], defaults: { label_html: { class: "col-sm-2" } }, html: { class: "form-horizontal" }, wrapper: :bootstrap_horizontal do |f| 
+  = f.input :name
+  = f.input :last_name
+  = f.input :caption
+  = f.input :private, as: :radio_buttons
+  = f.input :cover_image, as: :file
+  = f.button :submit
