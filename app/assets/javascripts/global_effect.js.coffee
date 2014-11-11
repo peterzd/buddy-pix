@@ -94,11 +94,9 @@ class Global
     }
 
 
-$ ->
-  alert "good"
-  new Global()
-# $(document).on "page:load ready", ->
-#   alert "good"
+# $ ->
 #   new Global()
+$(document).on "page:load ready", ->
+  new Global()
 
 
