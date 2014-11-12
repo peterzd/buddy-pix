@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031074302) do
+ActiveRecord::Schema.define(version: 20141112081331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,19 @@ ActiveRecord::Schema.define(version: 20141031074302) do
   end
 
   add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
+
+  create_table "invitations", force: true do |t|
+    t.integer  "sender_id"
+    t.integer  "invited_user_id"
+    t.string   "status"
+    t.integer  "card_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invitations", ["card_id"], name: "index_invitations_on_card_id", using: :btree
+  add_index "invitations", ["invited_user_id"], name: "index_invitations_on_invited_user_id", using: :btree
+  add_index "invitations", ["sender_id"], name: "index_invitations_on_sender_id", using: :btree
 
   create_table "likes", force: true do |t|
     t.integer  "liker_id"
