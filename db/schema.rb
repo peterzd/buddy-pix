@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20141112081331) do
 
   create_table "invitations", force: true do |t|
     t.integer  "sender_id"
-    t.integer  "invited_user_id"
+    t.integer  "receiver_id"
     t.string   "status"
     t.integer  "card_id"
     t.datetime "created_at"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20141112081331) do
   end
 
   add_index "invitations", ["card_id"], name: "index_invitations_on_card_id", using: :btree
-  add_index "invitations", ["invited_user_id"], name: "index_invitations_on_invited_user_id", using: :btree
+  add_index "invitations", ["receiver_id"], name: "index_invitations_on_receiver_id", using: :btree
   add_index "invitations", ["sender_id"], name: "index_invitations_on_sender_id", using: :btree
 
   create_table "likes", force: true do |t|
