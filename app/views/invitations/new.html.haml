@@ -1,0 +1,22 @@
+%section.clearfix.inner_body
+  .pc.cm
+    .p10
+      #invitation-tab
+        %ul.resp-tabs-list
+          %li APP CONTACT
+          %li EMAIL
+        .resp-tabs-container
+          .app-contact-container
+            this is container for app contact
+          .email-container
+            this is container for email
+
+:javascript
+  $("#invitation-tab").easyResponsiveTabs({
+    type: 'default', //Types: default, vertical, accordion           
+    width: 'auto', //auto or any custom width
+    fit: true,   // 100% fits in a container
+    closed: false, // Close the panels on start, the options 'accordion' and 'tabs' keep them closed in there respective view types
+  });
+
+

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :albums, as: :cards, path: :cards do
+    resources :invitations
     collection do
       get :hidden_cards
     end
