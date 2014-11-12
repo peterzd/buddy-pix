@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount API::Root => '/'
+
   namespace :admin do
     get "", to: "dashboard#index", as: "/"
     resources :albums do

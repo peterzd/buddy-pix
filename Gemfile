@@ -22,6 +22,8 @@ gem 'spring',        group: :development
 gem "paperclip", "~> 4.2"
 gem "pundit"
 gem 'ckeditor_rails'
+gem 'grape'
+gem 'grape-entity'
 
 group :development, :test do
   gem 'minitest-rails'
