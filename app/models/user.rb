@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   has_many :likes, foreign_key: :liker_id
   has_many :liked_photos, through: :likes, source: :likeable
 
+  # invitations
+  has_many :received_invitations, class_name: "Invitation", foreign_key: :receiver_id
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -92,6 +95,14 @@ class User < ActiveRecord::Base
 
   def last_sign_in_date
     date = last_sign_in_at || created_at
+  end
+
+  def send_invitation(receiver, card)
+    Invitation.create sender: self, receiver: receiver, card: card, status: Invitation::STATUS[:pending]
+  end
+
+  def my_pending_invitations
+    received_invitations.where status: Invitation::STATUS[:pending]
   end
 end
 

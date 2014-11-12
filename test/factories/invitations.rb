@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :invitation do
     sender nil
-    invited_user nil
+    receiver nil
     status "MyString"
     card nil
   end

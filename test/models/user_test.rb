@@ -139,4 +139,25 @@ describe User do
       peter.total_photos.count.must_equal 0
     end
   end
+
+  describe "relations with invitations" do
+    describe ".send_invitation" do
+      it "creates a new invitation" do
+        peter.send_invitation allen, album
+        invitation = Invitation.first
+        invitation.sender.must_equal peter
+        invitation.card.must_equal album
+        invitation.receiver.must_equal allen
+      end
+    end
+
+    describe ".my_pending_invitations" do
+      it "returns all invitations that I am the receiver and status is pending" do
+        pending_invitation = create :invitation, sender: allen, receiver: peter, card: album, status: Invitation::STATUS[:pending]
+        accepted_invitation = create :invitation, sender: allen, receiver: peter, card: album, status: Invitation::STATUS[:accepted]
+        rejected_invitation = create :invitation, sender: allen, receiver: peter, card: album, status: Invitation::STATUS[:rejected]
+        peter.my_pending_invitations.must_match_array [pending_invitation]
+      end
+    end
+  end
 end
