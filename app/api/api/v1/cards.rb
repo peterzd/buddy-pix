@@ -15,7 +15,8 @@ module API
           requires :id, type: String, desc: "card id"
         end
         get ":id" do
-          Album.find params[:id]
+          card = Album.find params[:id]
+          present card, with: API::Entities::Card
         end
       end
     end
