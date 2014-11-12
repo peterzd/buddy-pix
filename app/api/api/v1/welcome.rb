@@ -9,8 +9,6 @@ module API
         get :blog do
           Blog.order :created_at
         end
-
-
       end
     end
   end
