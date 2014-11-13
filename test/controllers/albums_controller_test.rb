@@ -50,6 +50,66 @@ describe AlbumsController do
     end
   end
 
+  describe "GET show" do
+    describe "the card is public" do
+      before do
+        public_album.update creator: peter
+      end
+
+      it "everyone can access the page" do
+        get :show, id: public_album.id
+        assert_response :success
+      end
+    end
+
+    describe "the card is private" do
+      before do
+        private_album.update creator: peter
+      end
+
+      describe "not logged in user" do
+        it "can not access the page" do
+          get :show, id: private_album.id
+          assert_redirected_to root_path
+        end
+      end
+
+      describe "logged in as the creator" do
+        before do
+          sign_in peter
+        end
+
+        it "can access the page" do
+          get :show, id: private_album.id
+          assert_response :success
+        end
+      end
+
+      describe "logged in as the follower" do
+        before do
+          allen.joins_album private_album
+          sign_in allen
+        end
+
+        it "can access the page" do
+          get :show, id: private_album.id
+          assert_response :success
+        end
+      end
+
+      describe "logged in as the other user" do
+        before do
+          sign_in allen
+        end
+
+        it "can access the page" do
+          get :show, id: private_album.id
+          assert_redirected_to root_path
+        end
+      end
+    end
+  end
+
   describe "POST create album" do
     describe "not logged in" do
       it "can not access the page" do
