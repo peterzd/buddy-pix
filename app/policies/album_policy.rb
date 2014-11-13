@@ -9,6 +9,12 @@ class AlbumPolicy < ApplicationPolicy
     user && user.persisted?
   end
 
+  def show?
+    return true unless record.private?
+    return false unless user
+    user.admin? || (record.creator == user) || record.followers.include?(user)
+  end
+
   def new?
     user && user.persisted?
   end

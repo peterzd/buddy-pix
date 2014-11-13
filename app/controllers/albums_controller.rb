@@ -21,6 +21,7 @@ class AlbumsController < ApplicationController
   end
 
   def show
+    authorize @album
     respond_with(@album)
   end
 
