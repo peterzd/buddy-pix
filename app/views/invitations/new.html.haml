@@ -12,8 +12,8 @@
               %ul
                 - @users.each do |user|
                   %li.options
-                    = label_tag "user_ids[]", "#{user.email} #{user.user_name}"
-                    = check_box_tag "user_ids[]", user.id, false, class: "check-test"
+                    = label_tag "user_ids_#{user.id}", "#{user.email} #{user.user_name}"
+                    = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}"
               = submit_tag "Invite Friends"
           .email-container
             this is container for email
