@@ -65,9 +65,7 @@
             - else
               = link_to image_tag("eye_icon.png") + "Hide Card", hide_card_card_path(album), method: :post, remote: true
 
-            %a{:href => "#"}
-              = image_tag "invite_user.png"
-              Invite Users
+            = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
             = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
         / feed box
 
