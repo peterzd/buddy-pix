@@ -143,7 +143,7 @@ describe User do
   describe "relations with invitations" do
     describe ".send_invitation" do
       it "creates a new invitation" do
-        peter.send_invitation allen, album
+        peter.send_invitation allen.id, album
         invitation = Invitation.first
         invitation.sender.must_equal peter
         invitation.card.must_equal album

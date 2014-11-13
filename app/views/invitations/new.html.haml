@@ -8,6 +8,11 @@
         .resp-tabs-container
           .app-contact-container
             this is container for app contact
+            = form_tag card_invitations_path do
+              - @users.each do |user|
+                = label_tag user.email
+                = check_box_tag "user_ids[]", user.id
+              = submit_tag "Invite Friends"
           .email-container
             this is container for email
 

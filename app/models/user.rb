@@ -97,8 +97,8 @@ class User < ActiveRecord::Base
     date = last_sign_in_at || created_at
   end
 
-  def send_invitation(receiver, card)
-    Invitation.create sender: self, receiver: receiver, card: card, status: Invitation::STATUS[:pending]
+  def send_invitation(receiver_id, card)
+    Invitation.create sender: self, receiver_id: receiver_id, card: card, status: Invitation::STATUS[:pending]
   end
 
   def my_pending_invitations
