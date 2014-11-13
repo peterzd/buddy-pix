@@ -2,7 +2,7 @@ class Global
   constructor: ->
     @dropdownNav()
     @imgFill()
-    @checkCustomize()
+    # @checkCustomize()
     @selectCtm()
     @smoothScroll()
     @optionBtn()
