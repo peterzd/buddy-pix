@@ -1,10 +1,11 @@
+- creator = @album.creator
 %section.clearfix.inner_body
   .pc.cm
     .p10
       %figure.profile_cover.img_fill.fl.w100.album_cover
         = image_tag @album.cover_image_url
         %hgroup.head_row.bs
-          %h2.fl= @user.user_name
+          %h2.fl= creator.user_name
           %p.fr.count.bs
             %i.fa.fa-user
             = sanitize "#{@album.followers.count} &nbsp;|&nbsp;"
@@ -12,7 +13,7 @@
             25
       .album_bar.fl.w100
         %aside.p20.fr.invite_btn
-          %a.btn{:href => "#"} Invite user
+          = link_to "Invite user", new_card_invitation_path(@album), class: "btn"
         %aside.p20.para
           = @album.caption
     .upload_btn.ac.bs.fl.w100
@@ -25,7 +26,7 @@
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
-                = image_tag @user.profile_cover_url(:medium)
+                = image_tag creator.profile_cover_url(:medium)
               .info_side
                 %h3
                   = photo.title

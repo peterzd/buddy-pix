@@ -21,7 +21,6 @@ class AlbumsController < ApplicationController
   end
 
   def show
-    @user = current_user
     respond_with(@album)
   end
 

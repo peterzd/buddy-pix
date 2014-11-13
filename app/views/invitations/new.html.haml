@@ -1,0 +1,33 @@
+%section.clearfix.inner_body
+  .pc.cm
+    .p10
+      #invitation-tab
+        %ul.resp-tabs-list
+          %li APP CONTACT
+          %li EMAIL
+        .resp-tabs-container
+          .app-contact-container
+            this is container for app contact
+            = form_tag card_invitations_path do
+              %ul
+                - @users.each do |user|
+                  %li.options
+                    = label_tag "user_ids_#{user.id}", "#{user.email} #{user.user_name}"
+                    = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}"
+              = submit_tag "Invite Friends"
+          .email-container
+            this is container for email
+
+:javascript
+  $("#invitation-tab").easyResponsiveTabs({
+    type: 'default', // Types: default, vertical, accordion
+    width: 'auto', //auto or any custom width
+    fit: true,   // 100% fits in a container
+    closed: false, // Close the panels on start, the options 'accordion' and 'tabs' keep them closed in there respective view types
+  });
+
+  $("input[type='checkbox']").iCheck({
+    checkboxClass: "icheckbox_square pull-right",
+    increaseArea: '20%'
+  });
+
