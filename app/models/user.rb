@@ -104,5 +104,6 @@ class User < ActiveRecord::Base
   def my_pending_invitations
     received_invitations.where status: Invitation::STATUS[:pending]
   end
+
 end
 
