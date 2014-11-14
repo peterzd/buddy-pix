@@ -39,13 +39,12 @@ module API
           user = User.find_by email: params[:email]
           error!("record not found") unless user
           if user.valid_password?(params[:password])
-            # success
-            present user
+            present user, using: API::Entities::User
+          else
+            error!("email or password is not correct!")
           end
         end
       end
-
-
     end
   end
 end
