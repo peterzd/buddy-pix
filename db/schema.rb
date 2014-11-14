@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112081331) do
+ActiveRecord::Schema.define(version: 20141114063526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,8 +125,10 @@ ActiveRecord::Schema.define(version: 20141112081331) do
     t.integer  "cover_image_id"
     t.string   "type"
     t.integer  "cover_photo_id"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["cover_image_id"], name: "index_users_on_cover_image_id", using: :btree
   add_index "users", ["cover_photo_id"], name: "index_users_on_cover_photo_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
