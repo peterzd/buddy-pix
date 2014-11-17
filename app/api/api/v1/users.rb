@@ -53,6 +53,18 @@ module API
           authenticate!
           uploaded_pic = params[:picture]
           image = Image.create picture: uploaded_pic
+          current_user.set_profile_cover image
+          present current_user, with: API::Entities::User
+        end
+
+        desc "upload cover photo"
+        params do
+          requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
+        end
+        post :cover_photo do
+          authenticate!
+          uploaded_pic = params[:picture]
+          image = Image.create picture: uploaded_pic
           current_user.set_cover_photo image
           present current_user, with: API::Entities::User
         end
@@ -67,6 +79,24 @@ module API
         get :my_cards do
           authenticate!
           present current_user, with: API::Entities::User, type: :with_cards
+        end
+
+        desc "update user's profile"
+        params do
+          optional :first_name, type: String, desc: "user's first name"
+          optional :last_name, type: String, desc: "user's last name"
+          optional :email, type: String, desc: "user's email"
+          optional :phone_number, type: String, desc: "user's phone number"
+        end
+        post :update_profile do
+          authenticate!
+          current_user.update!(
+            first_name: params[:first_name],
+            last_name: params[:last_name],
+            email: params[:email],
+            phone_number: params[:phone_number]
+          )
+          present current_user #, with: API::Entities::User
         end
 
 
