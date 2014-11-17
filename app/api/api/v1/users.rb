@@ -44,6 +44,18 @@ module API
             error!("email or password is not correct!")
           end
         end
+
+        desc "upload profile photo"
+        params do
+          # requires :upload, type: File, desc: "uploaded image"
+          requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
+        end
+        post :profile_cover do
+          uploaded_pic = params[:picture]
+          image = Image.create picture: uploaded_pic
+          puts "image is #{image.id}"
+
+        end
       end
     end
   end
