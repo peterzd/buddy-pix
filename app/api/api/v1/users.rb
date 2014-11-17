@@ -24,7 +24,7 @@ module API
             password: params[:password]
           )
           if user.save
-            present user, using: API::Entities::User
+            present user, with: API::Entities::User
           else
             error!("#{user.errors.full_messages}")
           end
@@ -39,7 +39,7 @@ module API
           user = User.find_by email: params[:email]
           error!("record not found") unless user
           if user.valid_password?(params[:password])
-            present user, using: API::Entities::User
+            present user, with: API::Entities::User
           else
             error!("email or password is not correct!")
           end
@@ -47,15 +47,29 @@ module API
 
         desc "upload profile photo"
         params do
-          # requires :upload, type: File, desc: "uploaded image"
           requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
         end
         post :profile_cover do
+          authenticate!
           uploaded_pic = params[:picture]
           image = Image.create picture: uploaded_pic
-          puts "image is #{image.id}"
-
+          current_user.set_cover_photo image
+          present current_user, with: API::Entities::User
         end
+
+        desc "returns the user's profile"
+        get :profile do
+          authenticate!
+          present current_user, with: API::Entities::User
+        end
+
+        desc "returns my created cards"
+        get :my_cards do
+          authenticate!
+          present current_user, with: API::Entities::User, type: :with_cards
+        end
+
+
       end
     end
   end
