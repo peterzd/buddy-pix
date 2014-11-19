@@ -31,6 +31,11 @@ class PhotosService
     if @params[:image]
       image = Image.create @params[:image]
       @photo.image = image
+#         name = photo_params[:image][:picture].original_filename
+#         directory = "tmp/uploaded_images"
+#         path = File.join(directory, name)
+#         File.open(path, "wb") { |f| f.write(photo_params[:image][:picture].read) }
+#         @photo.set_image path
     end
   end
 
