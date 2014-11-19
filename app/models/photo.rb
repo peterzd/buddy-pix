@@ -80,7 +80,7 @@ class Photo < ActiveRecord::Base
   end
 
   def set_image(image_path)
-    CreateImageWorker.perform_async image_path, self.id
+    PhotoImageWorker.perform_async image_path, self.id
   end
 end
 
