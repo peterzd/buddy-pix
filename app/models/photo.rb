@@ -78,6 +78,10 @@ class Photo < ActiveRecord::Base
     album.touch
     send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator)
   end
+
+  def set_image(image_path)
+    CreateImageWorker.perform_async image_path, self.id
+  end
 end
 
 

@@ -36,6 +36,7 @@ gem 'hashie_rails'
 # search
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'minitest-rails'

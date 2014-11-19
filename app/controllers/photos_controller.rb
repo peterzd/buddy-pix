@@ -22,6 +22,21 @@ class PhotosController < ApplicationController
 
     if PhotosService.new(photo, photo_params).save_photo
       redirect_to card_path @card
+# =======
+#     if @photo.save
+#       if photo_params[:image]
+#         # store the uploaded image to tmp/uploaded/file_name
+#         # pass the path to set_image
+#         # create the image in worker
+#         name = photo_params[:image][:picture].original_filename
+#         directory = "tmp/uploaded_images"
+#         path = File.join(directory, name)
+#         File.open(path, "wb") { |f| f.write(photo_params[:image][:picture].read) }
+
+#         @photo.set_image path
+#       end
+#       redirect_to cards_path
+# >>>>>>> [feature]background work to create image
     else
       render nothing: true
     end
