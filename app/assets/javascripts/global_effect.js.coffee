@@ -11,10 +11,20 @@ class Global
   dropdownNav: ->
     $('.expand_nav_point').on "click", ->
       if $(window).width() >= 1025
-        $('.drop_nav_links').slideToggle "slow"
-        $(".expand_nav_point").toggleClass "active"
+        if $('.expand_nav_point').hasClass "active"
+          $('.drop_nav_links').slideUp 0
+          $('.expand_nav_point').removeClass "active"
+          $('.drop_overlay').remove()
+        else
+          $('.drop_nav_links').slideDown 0
+          $('.expand_nav_point').addClass "active"
+          $('body').append '<div class="drop_overlay"></div>'
+        $('.drop_overlay').on "mouseover", ->
+          $('.drop_nav_links').slideUp 0
+          $('.expand_nav_point').removeClass "active"
+          $('.drop_overlay').remove
       if $(window).width() < 1025
-        $('body').toggleClass "suffle"
+        $('body').toggleClass 'suffle'
     $(".min_nav_btn").on "click", ->
       if $(window).width() < 480
         $('body').toggleClass "suffle"
