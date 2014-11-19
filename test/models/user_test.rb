@@ -38,6 +38,12 @@ describe User do
     it "adds the user to the card's followers list" do
       album.followers.must_include peter
     end
+
+    it "updates the card's updated_at" do
+      relation = UsersAlbums.last
+      album.updated_at.to_s.must_equal relation.created_at.to_s
+    end
+
   end
 
   describe ".hidden_cards" do
