@@ -80,6 +80,7 @@ describe User do
   describe "relations with likes" do
     describe "user likes an image" do
       before do
+        photo.update album: album
         peter.like_photo photo, mood: Like::MOOD[:cool]
       end
 
@@ -90,6 +91,11 @@ describe User do
       it "sets the mood to the like" do
         Like.count.must_equal 1
         peter.likes.last.mood.must_equal Like::MOOD[:cool]
+      end
+
+      it "updates the photo's card's updated_at" do
+        like = Like.last
+        album.updated_at.to_s.must_equal like.created_at.to_s
       end
     end
   end

@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
 
   def like_photo(photo, mood: Like::MOOD[:happy])
     like = Like.create liker: self, likeable: photo, mood: mood
+    photo.album.touch
   end
 
   def profile_cover_url(format=:original)
