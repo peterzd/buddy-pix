@@ -37,11 +37,22 @@ class Global
     $(".img_set").imgLiquid { fill: false }
 
   checkCustomize: ->
-    $('input[type="checkbox"],input[type="radio"]').iCheck {
-      checkboxClass: "icheckbox_square",
-      radioClass: "iradio_square",
-      increaseArea: '20%'
-    }
+    inputList = $("input[type='radio'")
+    for i in [inputList.length - 1 .. 0] by -1
+      $(inputList[i]).prettyCheckable
+
+    inputcheck = $("input[type='checkbox']")
+    for j in [inputcheck.length - 1 .. 0] by -1
+      $(inputcheck[j]).prettyCheckable
+
+    $('.prettyradio').on "click", ->
+      $('.prettyradio').removeClass 'active'
+      if $(this).find('.checked')
+        $(this).addClass 'active'
+    $('.prettycheckbox').on 'click', ->
+      $('.prettycheckbox').removeClass 'active'
+      if $(this).find '.checked'
+        $(this).toggleClass 'active'
 
   selectCtm: ->
     opts = {
