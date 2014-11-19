@@ -96,6 +96,17 @@ describe User do
       photo.comments.must_include comment
     end
 
+    it "adds one to the user's comments" do
+      comment = Comment.last
+      peter.comments.must_include comment
+      peter.commented_images.must_include photo
+    end
+
+    it "has content" do
+      peter.comments_photo photo, "good one"
+      Comment.last.content.must_equal "good one"
+    end
+
     it "updates the photo's card's updated_at" do
       comment = Comment.last
       album.updated_at.to_s.must_equal comment.created_at.to_s
@@ -189,6 +200,34 @@ describe User do
         accepted_invitation = create :invitation, sender: allen, receiver: peter, card: album, status: Invitation::STATUS[:accepted]
         rejected_invitation = create :invitation, sender: allen, receiver: peter, card: album, status: Invitation::STATUS[:rejected]
         peter.my_pending_invitations.must_match_array [pending_invitation]
+      end
+    end
+  end
+
+  describe ".profile_cards" do
+    before do
+      album.update_columns updated_at: 3.days.ago
+      private_album.update_columns updated_at: 2.days.ago
+      public_album.update_columns updated_at: 1.days.ago
+    end
+
+    describe "returns the cards that I followed order by social feed date" do
+      it "other user follows a card" do
+        allen.joins_album private_album
+        peter.profile_cards.must_equal [private_album, public_album, album]
+      end
+
+      it "someone likes one photo of a card" do
+        photo.update album: album
+        allen.like_photo photo
+        peter.profile_cards.must_equal [album, public_album, private_album]
+      end
+
+      it "someone comments on a photo" do
+        photo.update album: album
+        allen.comments_photo photo
+
+        peter.profile_cards.must_equal [album, public_album, private_album]
       end
     end
   end

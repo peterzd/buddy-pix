@@ -38,8 +38,13 @@ class User < ActiveRecord::Base
     album.touch
   end
 
-  def comments_photo(photo)
+  def profile_cards
+    joined_albums.order(updated_at: :desc)
+  end
+
+  def comments_photo(photo, comment_content="")
     commented_images << photo
+    comments.last.update content: comment_content
     photo.album.touch
   end
 
