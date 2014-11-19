@@ -3,8 +3,11 @@ require "test_helper"
 describe Photo do
   helper_objects
 
-  it "must be valid" do
-    photo.must_be :valid?
+  describe "relations with album" do
+    it "updates the album's created_at time when creates a new photo" do
+      photo = album.photos.create title: "newly created", description: "will touch album"
+      album.updated_at.to_s.must_equal photo.created_at.to_s
+    end
   end
 
   describe "relations with image" do
