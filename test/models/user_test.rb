@@ -28,6 +28,7 @@ describe User do
 
   describe "joins an album" do
     before do
+      album.update_columns updated_at: 1.day.ago
       peter.joins_album(album)
     end
 
@@ -80,13 +81,32 @@ describe User do
   end
 
   describe "relations with comments" do
+    before do
+      photo.update album: album
+      album.update_columns updated_at: 1.day.ago
+      peter.comments_photo photo
+    end
 
+    it "creates a new comment" do
+      Comment.count.must_equal 1
+    end
+
+    it "adds a comment to the photo's comments" do
+      comment = Comment.last
+      photo.comments.must_include comment
+    end
+
+    it "updates the photo's card's updated_at" do
+      comment = Comment.last
+      album.updated_at.to_s.must_equal comment.created_at.to_s
+    end
   end
 
   describe "relations with likes" do
     describe "user likes an image" do
       before do
         photo.update album: album
+        album.update_columns updated_at: 1.day.ago
         peter.like_photo photo, mood: Like::MOOD[:cool]
       end
 

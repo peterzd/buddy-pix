@@ -38,6 +38,11 @@ class User < ActiveRecord::Base
     album.touch
   end
 
+  def comments_photo(photo)
+    commented_images << photo
+    photo.album.touch
+  end
+
   def hidden_cards
     created_albums.where hidden: true
   end
