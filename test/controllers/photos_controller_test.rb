@@ -5,7 +5,8 @@ describe PhotosController do
 
   describe "GET like" do
     before do
-      photo.album = album
+      # photo.album = album
+      photo.update album: album
     end
 
     describe "not logged in user" do

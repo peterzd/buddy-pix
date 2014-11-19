@@ -41,6 +41,7 @@ describe Photo do
   describe "relations with likes" do
     describe "user likes an image" do
       before do
+        photo.update album: album
         peter.like_photo photo, mood: Like::MOOD[:cool]
       end
 
