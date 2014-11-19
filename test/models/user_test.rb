@@ -167,8 +167,8 @@ describe User do
     end
 
     it "returns 0 if the user has no created albums" do
-      peter.total_photos.must_match_array []
-      peter.total_photos.count.must_equal 0
+      allen.total_photos.must_match_array []
+      allen.total_photos.count.must_equal 0
     end
   end
 
