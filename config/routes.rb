@@ -37,8 +37,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get :my_wall, to: "users#my_wall"
   resources :users do
-    get :my_wall
     member do
       patch :update_account_settings
     end

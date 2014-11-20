@@ -12,7 +12,7 @@
       %nav.fr
         -# navigation side
         %aside.fl.mr10.hide_less_1024
-          = link_to(sanitize("My Wall &nbsp;|&nbsp;"), user_my_wall_path(current_user))
+          = link_to(sanitize("My Wall &nbsp;|&nbsp;"), my_wall_path)
           = link_to "My card", cards_path, class: "mr10"
           = link_to "Create New CARD", new_card_path, class: "btn inline mr10"
           = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
@@ -33,7 +33,7 @@
                 %span.name.mr10
                   = "Hi! #{current_user.show_name}"
             %li.hide.view_less_1024
-              = link_to "Home", user_my_wall_path(current_user)
+              = link_to "Home", my_wall_path
             %li.hide.view_less_1024
               = link_to "My Card", cards_path
             %li.hide.view_less_1024
