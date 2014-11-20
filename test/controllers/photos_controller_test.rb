@@ -109,6 +109,11 @@ describe PhotosController do
             post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
           end
         end
+
+        it "set the creator as allen" do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+          Photo.last.creator.must_equal allen
+        end
       end
 
       describe "logged in as the card's owner" do
@@ -127,6 +132,11 @@ describe PhotosController do
           assert_difference("album.photos.count") do
             post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
           end
+        end
+
+        it "set the creator as peter" do
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+          Photo.last.creator.must_equal peter
         end
       end
 
