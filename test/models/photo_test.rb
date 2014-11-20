@@ -39,6 +39,14 @@ describe Photo do
   end
 
   describe "relations with likes" do
+    it "liers can not be duplicated" do
+      photo.update album: album
+      allen.like_photo photo
+      allen.like_photo photo
+      photo.likes.count.must_equal 1
+      photo.likers.count.must_equal 1
+    end
+
     describe "user likes an image" do
       before do
         photo.update album: album

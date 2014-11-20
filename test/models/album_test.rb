@@ -19,6 +19,14 @@ describe Album do
     album.followers.must_include peter
   end
 
+  it "followers can not be duplicated" do
+    allen.joins_album album
+    allen.joins_album album
+    peter.joins_album album
+
+    album.followers.count.must_equal 2
+  end
+
   describe "relations with cover image" do
     it "creates the image and set it as the album's cover image" do
       image = create :image
