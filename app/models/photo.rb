@@ -1,6 +1,7 @@
 class Photo < ActiveRecord::Base
   has_one :image, as: :imageable
   belongs_to :album, touch: true
+  belongs_to :creator, class_name: "User"
 
   # relations with comments
   has_many :comments, foreign_key: :commentable_id

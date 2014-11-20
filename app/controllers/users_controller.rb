@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
+    @cards = current_user.profile_cards
   end
 
   def update_account_settings

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :created_albums, class_name: "Album", foreign_key: :creator_id
+  has_many :uploaded_photos, class_name: "Photo", foreign_key: :creator_id
 
   has_many :album_relations, class_name: "UsersAlbums"
   has_many :joined_albums, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :album_relations, source: :album
@@ -83,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def user_name
-    "#{first_name} #{last_name}"
+    username || "#{first_name} #{last_name}"
   end
 
   def total_photos

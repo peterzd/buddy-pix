@@ -231,4 +231,14 @@ describe User do
       end
     end
   end
+
+  describe "relations with photos" do
+    describe "has many uploaded photos" do
+      it "creates a photo with creator" do
+        photo.update creator: peter
+        peter.uploaded_photos.must_include photo
+      end
+    end
+  end
+
 end
