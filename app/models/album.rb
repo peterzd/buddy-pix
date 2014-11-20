@@ -10,7 +10,7 @@ class Album < ActiveRecord::Base
   has_many :photos
 
   after_initialize :set_default_value
-  after_create :creator_follow
+  after_save :creator_follow
 
   def set_cover_image(image)
     update cover_image_id: image.id

@@ -17,9 +17,9 @@ class UsersController < ApplicationController
   def destroy
   end
 
-  def profile
+  def my_wall
     @user = current_user
-    @cards = current_user.profile_cards
+    @photos = current_user.my_wall_pics
   end
 
   def update_account_settings

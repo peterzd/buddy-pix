@@ -1,0 +1,73 @@
+%section.clearfix.inner_body
+  .pc.cm
+    .p10.fl.w100
+      %figure.profile_pic.round.img_fill
+        = image_tag @user.profile_cover_url(:medium)
+      %figure.profile_cover.img_fill.fl.w100
+        = image_tag @user.cover_photo_url
+        %hgroup.head_row.bs
+          %h2= @user.user_name
+        .info_row
+          .info_cell.bs
+            %i.pe-7s-albums
+            %span= @user.created_albums.count
+          .info_cell.bs
+            %i.pe-7s-photo-gallery
+            %span= @user.uploaded_photos.count
+          .info_cell.bs
+            %i.pe-7s-like
+            %span= @user.total_likes
+          .info_cell.bs
+            %i.pe-7s-chat
+            %span= @user.total_comments
+    #m-container.fl.w100
+      - @photos.each do |photo|
+        - album = photo.album
+        .p10.feed_box.fl.w50{ id: dom_id(photo) }
+          .top_row.clearfix
+            %aside.fl.p10.user_info
+              %figure.img_fill.round.fl
+                = image_tag photo.creator.profile_cover_url(:medium)
+              .info_side
+                %h3= photo.creator.user_name
+                %p
+                  = "#{time_ago_in_words(photo.updated_at)} ago"
+            %aside.fr.p10.h3.ar.cat_side
+              %h3
+                = link_to album.name, card_path(album)
+              %p
+                = album.private? ? "Private" : "Public"
+          %figure.post_img.img_fill.clearfix
+            = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(album, photo)
+            %h2= photo.description
+          .f_bottom.clearfix
+            %aside.fl.mt5
+              = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{photo.likes.count}"), "#", class: "p10 inline like_btn"
+              = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(album, photo), class: "p10 inline"
+            %aside.fr.p10= "#{album.followers.count} Followers"
+            .fl.w100.like_box.bs.hide
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+    .loading_feed.feed_box.fl.w100.p10
+      = image_tag "preloader.png", alt: "Loading ...", class: "rotate"
+      %span
+        Loading
+        %blink ...
+
+
+:javascript
+  jQuery(function($) {
+      var container = document.querySelector('#m-container');
+      var msnry =  new Masonry( container, {
+          itemSelector: '.feed_box'
+      });
+      $('.like_btn').click(function(){
+          $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
+              msnry.layout();// this is masonry layout reset function we can user with other events
+          });
+          return false;
+      });
+  });
