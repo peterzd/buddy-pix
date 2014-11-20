@@ -13,6 +13,12 @@ describe Album do
     public_album.wont_be :private?
   end
 
+  it "followers will have the creator" do
+    album
+    peter.joined_albums.must_include album
+    album.followers.must_include peter
+  end
+
   describe "relations with cover image" do
     it "creates the image and set it as the album's cover image" do
       image = create :image

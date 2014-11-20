@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :created_albums, class_name: "Album", foreign_key: :creator_id
+  has_many :uploaded_photos, class_name: "Photo", foreign_key: :creator_id
 
   has_many :album_relations, class_name: "UsersAlbums"
   has_many :joined_albums, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :album_relations, source: :album
@@ -23,12 +24,34 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  before_save :ensure_authentication_token
+
+  def ensure_authentication_token
+    self.authentication_token ||= generate_authentication_token
+  end
+
   def admin?
     instance_of? AdminUser
   end
 
   def joins_album(album)
     UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
+    album.touch
+  end
+
+  def profile_cards
+    joined_albums.order(updated_at: :desc)
+  end
+
+  def my_wall_pics
+    Photo.where(album: joined_albums).order(updated_at: :desc)
+  end
+
+  def comments_photo(photo, comment_content="")
+    commented_images << photo
+    comments.last.update content: comment_content
+    photo.touch
+    photo.album.touch
   end
 
   def hidden_cards
@@ -47,6 +70,8 @@ class User < ActiveRecord::Base
 
   def like_photo(photo, mood: Like::MOOD[:happy])
     like = Like.create liker: self, likeable: photo, mood: mood
+    photo.touch
+    photo.album.touch
   end
 
   def profile_cover_url(format=:original)
@@ -65,9 +90,10 @@ class User < ActiveRecord::Base
   end
 
   def user_name
-    "#{first_name} #{last_name}"
+    username || "#{first_name} #{last_name}"
   end
 
+  # peter at 2014-11-20: this method may not be used
   def total_photos
     created_albums.inject([]) do |total_photos, album|
       if album.photos
@@ -82,13 +108,13 @@ class User < ActiveRecord::Base
   # Peter at 11.3: these total methods are the same with the ones in model/album.rb
   # maybe we can extract them out into another file
   def total_likes
-    total_photos.inject(0) do |sum, image|
+    uploaded_photos.inject(0) do |sum, image|
       sum += image.likers.count
     end
   end
 
   def total_comments
-    total_photos.inject(0) do |sum, image|
+    uploaded_photos.inject(0) do |sum, image|
       sum += image.commenters.count
     end
   end
@@ -103,6 +129,14 @@ class User < ActiveRecord::Base
 
   def my_pending_invitations
     received_invitations.where status: Invitation::STATUS[:pending]
+  end
+  
+  private
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
   end
 
 end

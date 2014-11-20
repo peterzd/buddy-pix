@@ -5,9 +5,9 @@ def helper_objects
   let(:allen) { create :user, email: "allen@test.com", password: "11111111", first_name: "allen", last_name: "wang" }
 
   # albums (cards)
-  let(:album) { create :album, caption: "album caption", name: "first album", private: true }
-  let(:private_album) { create :album, name: "private album", private: true }
-  let(:public_album) { create :album, name: "public album", private: false }
+  let(:album) { create :album, caption: "album caption", name: "first album", private: true, creator: peter }
+  let(:private_album) { create :album, name: "private album", private: true, creator: peter }
+  let(:public_album) { create :album, name: "public album", private: false, creator: peter }
 
   # blogs
   let(:blog) { create :blog, title: "test blog", content: "this is content of the blog" }

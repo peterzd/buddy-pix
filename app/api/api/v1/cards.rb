@@ -1,8 +1,7 @@
 module API
   module V1
     class Cards < Grape::API
-      version 'v1'
-      format :json
+      include API::V1::Helper
 
       resources :cards do
         desc "returns all cards"

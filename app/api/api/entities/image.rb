@@ -6,7 +6,7 @@ module API
 
       private
       def url
-        object.picture.url
+        object.picture.url :medium
       end
     end
   end
