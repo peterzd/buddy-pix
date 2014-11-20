@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    get :profile
+    get :my_wall
     member do
       patch :update_account_settings
     end
