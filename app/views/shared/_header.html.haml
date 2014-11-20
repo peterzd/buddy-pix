@@ -1,7 +1,7 @@
 %header.scale
   .pc.cm
     %figure.fl.logo
-      = image_tag "buddypix_logo.png", alt: "Logo"
+      = link_to image_tag("buddypix_logo.png", alt: "Logo"), root_path
     -# logo
     - unless user_signed_in?
       %nav.fr
@@ -33,7 +33,7 @@
                 %span.name.mr10
                   = "Hi! #{current_user.show_name}"
             %li.hide.view_less_1024
-              = link_to "Profile", user_my_wall_path(current_user)
+              = link_to "Home", user_my_wall_path(current_user)
             %li.hide.view_less_1024
               = link_to "My Card", cards_path
             %li.hide.view_less_1024
@@ -41,13 +41,15 @@
             %li.hide.view_less_1024
               = link_to "Search"
             %li
-              = link_to "Account Setting", dashboard_account_settings_path
+              = link_to "Following", "#"
             %li
               = link_to "Alerts", "#"
-            - if policy(:album).hidden_cards?
-              %li
-                = link_to "Hidden Cards", hidden_cards_cards_path
             %li
               = link_to "Support", welcome_support_path
             %li
+              = link_to "Settings", dashboard_account_settings_path
+            %li
+              = link_to "Hidden Cards", hidden_cards_cards_path
+            %li
               = link_to "Sign Out", destroy_user_session_path, method: :delete
+
