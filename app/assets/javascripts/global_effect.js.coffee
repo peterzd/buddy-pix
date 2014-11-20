@@ -6,6 +6,7 @@ class Global
     @selectCtm()
     @smoothScroll()
     @optionBtn()
+    @remove_msg()
 
   dropdownNav: ->
     $('.expand_nav_point').on "click", ->
@@ -52,6 +53,12 @@ class Global
       $('.prettycheckbox').removeClass 'active'
       if $(this).find '.checked'
         $(this).toggleClass 'active'
+
+  remove_msg: ->
+    $(".msg .fa-times").on 'click', ->
+      $(this).parents('.msg').remove
+    $('.invite_row .link_btns a.close').on 'click', ->
+      $(this).parents('.invite_row').addClass 'decline'
 
   smoothScroll: ->
     $('a[href*=#]:not([href=#])').on "click", ->
