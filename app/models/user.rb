@@ -87,6 +87,7 @@ class User < ActiveRecord::Base
     username || "#{first_name} #{last_name}"
   end
 
+  # peter at 2014-11-20: this method may not be used
   def total_photos
     created_albums.inject([]) do |total_photos, album|
       if album.photos
@@ -101,13 +102,13 @@ class User < ActiveRecord::Base
   # Peter at 11.3: these total methods are the same with the ones in model/album.rb
   # maybe we can extract them out into another file
   def total_likes
-    total_photos.inject(0) do |sum, image|
+    uploaded_photos.inject(0) do |sum, image|
       sum += image.likers.count
     end
   end
 
   def total_comments
-    total_photos.inject(0) do |sum, image|
+    uploaded_photos.inject(0) do |sum, image|
       sum += image.commenters.count
     end
   end
