@@ -58,7 +58,7 @@ figure{line-height:0;}
    ========================================================================== */
 body{background-color:#fff;color:#555555; font:16px 'robotolight';}
 h1,h2,h3,h4,h5,h6{font-weight:normal; color:inherit;}
-p a,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{font-weight:inherit; text-decoration:none; color:#0083d4;}
+p a,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{font-weight:inherit; text-decoration:none; color:inherit;}
 a:hover{color:#000;}
 h1{font-size:60px; margin-bottom:10px; line-height:60px; font-family:'roboto_condensedbold';}
 h2{font-size:30px; line-height:36px; margin-bottom:15px;}
@@ -196,7 +196,7 @@ button.active,input[type="submit"].active,input[type="button"].active, .btn:hove
 
 /*link button styling*/
 .btn{display:block; line-height:40px; text-decoration:none;}
-.inline{display:inline-block;}
+.inline{display:inline-block; vertical-align:middle;}
 
 /*form and links
 header .btn,header button,header input[type="submit"],header input[type="button"]{border-radius:0px; -moz-border-radius:0px; -o-border-radius:0px; -webkit-border-radius:0px; } 
@@ -242,6 +242,7 @@ label{display:block; font-size:18px;}
 
 /*header and footer*/
 footer a,header a{text-transform:uppercase; text-decoration:none;}
+footer a.active,header a.active{ color:#93b509; font-family:'robotomedium'; }
 
 /*home header*/
 header{background-color:#fff; height:60px; line-height:60px; position:fixed; top:0px; left:0px; width:100%; z-index:1000; border-bottom:1px solid #E7E7E7;}
@@ -366,7 +367,9 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .uplaod.cover_img{height:190px;}
 .uplaod.profile_photo{height:144px; width:144px;}
 
-.invite_row_list .invite_row{background-color:#fff; }
+.invite_row_list .invite_row{background-color:#fff;}
+.invite_row_list .invite_row.decline{opacity:.5}
+.invite_row_list .invite_row.decline:hover{opacity:1}
 .invite_row_list .invite_row:nth-child(even){background-color:#f1f1f1;}
 .invite_row{position:relative; padding-right:164px; margin-bottom:2px;}  
 .invite_row .user_fig{width:60px; height:60px;}
@@ -380,7 +383,9 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .invite_row .link_btns a:first-child{margin-right:2px; background-color:#93b509; color:#fff;}
 .invite_row .link_btns a span{ display:none;}
 .invite_row .link_btns a:hover{background-color:#333; color:#fff;}
-
+.invite_row_list .invite_row.decline .link_btns a.close{display:none;}
+.invite_row_list .invite_row.decline .link_btns{width:80px;}
+.invite_row_list .invite_row.decline .link_btns a{margin-right:0px;}
 
 .noti-list .noti-row{margin-bottom:2px;}
 .noti-row{background-color:#fff; position:relative;}
@@ -502,6 +507,12 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .card_count span{display:inline-block; padding-right:10px; font-size:15px; color:#333;}
 
 
+.msg{border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; -o-border-radius:5px; border-width:1px; border-style:solid; color:#fff; font-size:14px; padding:5px 10px; clear:both; margin:5px 0;}
+.msg .fa-times{float:right; cursor:pointer; padding:3px 0px 3px 3px;} 
+.msg.success{background-color:#81CA80; border-color:#6FC26E;}
+.msg.info{background-color:#6BBCD7; border-color:#57B3D2;}
+.msg.warning{background-color:#E9C842; border-color:#E6C12B;}
+.msg.danger{background-color:#E96562; border-color:#E64F4C;}
 
 /* ==========================================================================
         Responsive styling Styling
@@ -594,7 +605,7 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
     
     /*notic invitation page*/
     .invite_row{ padding-right:10px;}
-    .invite_row .link_btns{position:static; width: 100%; margin-top:10px;}
+    .invite_row_list .invite_row.decline .link_btns,.invite_row .link_btns{position:static; width: 100%; margin-top:10px;}
     .invite_row .link_btns a{height:40px; width:auto; font-size:21px; line-height:40px; padding:0 10px;}
     .invite_row .link_btns a span{display:inline-block; margin-left:10px;}
     
