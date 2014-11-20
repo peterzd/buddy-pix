@@ -20,51 +20,54 @@
           .info_cell.bs
             %i.pe-7s-chat
             %span= @user.total_comments
-    %form.search_row.fl.w100.p10
-      .fl.select
-        %select
-          %option Card View
-          %option List View
-      .fl.input
-        %input{:placeholder => "Search ...", :type => "text"}/
-      .btn_box.fr
-        %button{:type => "submit"}
-          %i.pe-7s-search
     #m-container.fl.w100
-      - @cards.each do |album|
-        .p10.feed_box.fl.w50
-          / feed box
+      - @photos.each do |photo|
+        - album = photo.album
+        .p10.feed_box.fl.w50{ id: dom_id(photo) }
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
-                = image_tag album.creator.profile_cover_url(:medium)
+                = image_tag photo.creator.profile_cover_url(:medium)
               .info_side
-                %h3= album.creator.user_name
+                %h3= photo.creator.user_name
                 %p
-                  = "#{time_ago_in_words(album.updated_at)} ago"
+                  = "#{time_ago_in_words(photo.updated_at)} ago"
             %aside.fr.p10.h3.ar.cat_side
-              %h3= album.name
+              %h3
+                = link_to album.name, card_path(album)
               %p
                 = album.private? ? "Private" : "Public"
           %figure.post_img.img_fill.clearfix
-            = image_tag album.cover_image_url(:medium)
-            %h2= album.caption
+            = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(album, photo)
+            %h2= photo.description
           .f_bottom.clearfix
-            %aside.fl
-              %a.p10.inline{:href => "#"}
-                %i.pe-7s-like
-                %strong= album.total_likes
-              %a.p10.inline{:href => "#"}
-                %i.pe-7s-chat
-                %strong= album.total_comments
-            %aside.fr.p10
-              = "#{album.followers.count} Followers"
-        / feed box
+            %aside.fl.mt5
+              = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{photo.likes.count}"), "#", class: "p10 inline like_btn"
+              = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(album, photo), class: "p10 inline"
+            %aside.fr.p10= "#{album.followers.count} Followers"
+            .fl.w100.like_box.bs.hide
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+    .loading_feed.feed_box.fl.w100.p10
+      = image_tag "preloader.png", alt: "Loading ...", class: "rotate"
+      %span
+        Loading
+        %blink ...
+
+
 :javascript
   jQuery(function($) {
       var container = document.querySelector('#m-container');
       var msnry =  new Masonry( container, {
           itemSelector: '.feed_box'
       });
-      //msnry.layout();
+      $('.like_btn').click(function(){
+          $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
+              msnry.layout();// this is masonry layout reset function we can user with other events
+          });
+          return false;
+      });
   });
