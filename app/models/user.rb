@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def joins_album(album)
+    return if joined_albums.include? album
     UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
     album.touch
   end
