@@ -10,7 +10,7 @@ class Album < ActiveRecord::Base
   has_many :photos
 
   after_initialize :set_default_value
-  default_scope { order created_at: :asc }
+  after_create :creator_follow
 
   def set_cover_image(image)
     update cover_image_id: image.id
@@ -36,5 +36,10 @@ class Album < ActiveRecord::Base
   def set_default_value
     self.hidden ||= false
   end
+
+  def creator_follow
+    creator.joins_album self
+  end
 end
+
 

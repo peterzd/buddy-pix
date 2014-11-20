@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
 
   def create
     set_card
-    @photo = @card.photos.build photo_params.except(:image)
+    @photo = @card.photos.build photo_params.except(:image).merge(creator: current_user)
     authorize @photo
 
     if @photo.save

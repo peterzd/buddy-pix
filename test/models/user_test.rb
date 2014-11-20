@@ -28,6 +28,7 @@ describe User do
 
   describe "joins an album" do
     before do
+      album.update_columns updated_at: 1.day.ago
       peter.joins_album(album)
     end
 
@@ -38,6 +39,12 @@ describe User do
     it "adds the user to the card's followers list" do
       album.followers.must_include peter
     end
+
+    it "updates the card's updated_at" do
+      relation = UsersAlbums.last
+      album.updated_at.to_s.must_equal relation.created_at.to_s
+    end
+
   end
 
   describe ".hidden_cards" do
@@ -74,12 +81,43 @@ describe User do
   end
 
   describe "relations with comments" do
+    before do
+      photo.update album: album
+      album.update_columns updated_at: 1.day.ago
+      peter.comments_photo photo
+    end
 
+    it "creates a new comment" do
+      Comment.count.must_equal 1
+    end
+
+    it "adds a comment to the photo's comments" do
+      comment = Comment.last
+      photo.comments.must_include comment
+    end
+
+    it "adds one to the user's comments" do
+      comment = Comment.last
+      peter.comments.must_include comment
+      peter.commented_images.must_include photo
+    end
+
+    it "has content" do
+      peter.comments_photo photo, "good one"
+      Comment.last.content.must_equal "good one"
+    end
+
+    it "updates the photo's card's updated_at" do
+      comment = Comment.last
+      album.updated_at.to_s.must_equal comment.created_at.to_s
+    end
   end
 
   describe "relations with likes" do
     describe "user likes an image" do
       before do
+        photo.update album: album
+        album.update_columns updated_at: 1.day.ago
         peter.like_photo photo, mood: Like::MOOD[:cool]
       end
 
@@ -90,6 +128,11 @@ describe User do
       it "sets the mood to the like" do
         Like.count.must_equal 1
         peter.likes.last.mood.must_equal Like::MOOD[:cool]
+      end
+
+      it "updates the photo's card's updated_at" do
+        like = Like.last
+        album.updated_at.to_s.must_equal like.created_at.to_s
       end
     end
   end
@@ -135,8 +178,8 @@ describe User do
     end
 
     it "returns 0 if the user has no created albums" do
-      peter.total_photos.must_match_array []
-      peter.total_photos.count.must_equal 0
+      allen.total_photos.must_match_array []
+      allen.total_photos.count.must_equal 0
     end
   end
 
@@ -160,4 +203,42 @@ describe User do
       end
     end
   end
+
+  describe ".profile_cards" do
+    before do
+      album.update_columns updated_at: 3.days.ago
+      private_album.update_columns updated_at: 2.days.ago
+      public_album.update_columns updated_at: 1.days.ago
+    end
+
+    describe "returns the cards that I followed order by social feed date" do
+      it "other user follows a card" do
+        allen.joins_album private_album
+        peter.profile_cards.must_equal [private_album, public_album, album]
+      end
+
+      it "someone likes one photo of a card" do
+        photo.update album: album
+        allen.like_photo photo
+        peter.profile_cards.must_equal [album, public_album, private_album]
+      end
+
+      it "someone comments on a photo" do
+        photo.update album: album
+        allen.comments_photo photo
+
+        peter.profile_cards.must_equal [album, public_album, private_album]
+      end
+    end
+  end
+
+  describe "relations with photos" do
+    describe "has many uploaded photos" do
+      it "creates a photo with creator" do
+        photo.update creator: peter
+        peter.uploaded_photos.must_include photo
+      end
+    end
+  end
+
 end
