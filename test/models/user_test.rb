@@ -29,15 +29,15 @@ describe User do
   describe "joins an album" do
     before do
       album.update_columns updated_at: 1.day.ago
-      peter.joins_album(album)
+      allen.joins_album(album)
     end
 
     it "adds the card to the user's joined_albums list" do
-      peter.joined_albums.must_include album
+      allen.joined_albums.must_include album
     end
 
     it "adds the user to the card's followers list" do
-      album.followers.must_include peter
+      album.followers.must_include allen
     end
 
     it "updates the card's updated_at" do
