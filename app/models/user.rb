@@ -70,6 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def like_photo(photo, mood: Like::MOOD[:happy])
+    return if liked_photos.include? photo
     like = Like.create liker: self, likeable: photo, mood: mood
     photo.touch
     photo.album.touch

@@ -22,6 +22,7 @@ describe Album do
   it "followers can not be duplicated" do
     allen.joins_album album
     allen.joins_album album
+    peter.joins_album album
 
     album.followers.count.must_equal 2
   end
