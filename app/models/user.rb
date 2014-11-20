@@ -43,9 +43,14 @@ class User < ActiveRecord::Base
     joined_albums.order(updated_at: :desc)
   end
 
+  def my_wall_pics
+    Photo.where(album: joined_albums).order(updated_at: :desc)
+  end
+
   def comments_photo(photo, comment_content="")
     commented_images << photo
     comments.last.update content: comment_content
+    photo.touch
     photo.album.touch
   end
 
@@ -65,6 +70,7 @@ class User < ActiveRecord::Base
 
   def like_photo(photo, mood: Like::MOOD[:happy])
     like = Like.create liker: self, likeable: photo, mood: mood
+    photo.touch
     photo.album.touch
   end
 

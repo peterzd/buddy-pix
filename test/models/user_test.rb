@@ -232,6 +232,38 @@ describe User do
     end
   end
 
+  describe ".my_wall_pics" do
+    before do
+      album.update creator: allen
+      allen.joins_album public_album
+      @photo_1 = create :photo, album: album
+      @photo_2 = create :photo, album: public_album
+      @photo_3 = create :photo, album: private_album
+      @photo_4 = create :photo, album: public_album
+    end
+
+    it "returns the photos belongs to albums which I followed" do
+      allen.my_wall_pics.must_match_array [@photo_1, @photo_2, @photo_4]
+      allen.my_wall_pics.wont_include @photo_3
+    end
+
+    describe "returns the photo order by updated date" do
+      it "upload a new photo to a followed album" do
+        allen.my_wall_pics.must_equal [@photo_4, @photo_2, @photo_1]
+      end
+
+      it "someone likes a photo" do
+        peter.like_photo @photo_1
+        allen.my_wall_pics.must_equal [@photo_1, @photo_4, @photo_2]
+      end
+
+      it "someone comments on a photo" do
+        peter.comments_photo @photo_2
+        allen.my_wall_pics.must_equal [@photo_2, @photo_4, @photo_1]
+      end
+    end
+  end
+
   describe "relations with photos" do
     describe "has many uploaded photos" do
       it "creates a photo with creator" do
