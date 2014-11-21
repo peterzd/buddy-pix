@@ -21,7 +21,7 @@
         %hr.mb0
         %aside.fl
           = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{@photo.likes.count}"), "#", class: "p10 inline like_btn"
-          = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{@photo.comments.count}"), "#", class: "p10 inline"
+          = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{@photo.comments.count}"), "#commt_box", class: "p10 inline"
         %aside.fr
           %a.p10.inline{:href => "#commt_box"}
             %i.fa.fa-download
@@ -44,7 +44,7 @@
               = like.mood
         + #{remaining_like > 0 ? remaining_like : 0}
       %i.pe-7s-angle-right.like_user_btn
-    #comments.fl.w100
+    #commt_box.fl.w100
       .cmt_row.bs.clearfix
         %figure
         %aside
