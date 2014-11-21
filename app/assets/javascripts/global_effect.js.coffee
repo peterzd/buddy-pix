@@ -61,15 +61,16 @@ class Global
       $(this).parents('.invite_row').addClass 'decline'
 
   smoothScroll: ->
-    $('a[href*=#]:not([href=#])').on "click", ->
-      if location.pathname.replace(/^\//, '') is this.pathname.replace(/^\//, '') && location.hostname is this.hostname
-        target = $(this.hash)
-        target = target.length ? target : $("[name=#{this.hash.slice(1)}]")
-        if target.length && $(window).width() >= 640
-          $('html,body').animate {
-            scrollTop: target.offset.top + -60
-          }, 1000
+    $("a[href*=#]:not([href=#])").click ->
+      if location.pathname.replace(/^\//, "") is @pathname.replace(/^\//, "") and location.hostname is @hostname
+        target = $(@hash)
+        target = (if target.length then target else $("[name=" + @hash.slice(1) + "]"))
+        if target.length and $(window).width() >= 640
+          $("html,body").animate
+            scrollTop: target.offset().top + -60
+          , 1000
           return false
+      return
 
   selectCtm: ->
     opts = {
