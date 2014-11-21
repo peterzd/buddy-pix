@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   # relations with comments
   has_many :comments, foreign_key: :commenter_id
-  has_many :commented_images, through: :comments, source: :commentable
+  has_many :commented_images, through: :comments, source: :commentable, source_type: "Photo"
 
   # relations with like
   has_many :likes, foreign_key: :liker_id
