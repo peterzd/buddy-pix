@@ -50,7 +50,6 @@
           %figure.img_fill
             = image_tag comment.commenter.profile_cover_url(:thumb)
           %aside
-            -# %h4.fl Joseph Korian
             %h4.fl= comment.commenter.user_name
             %p.fr
               %strong= "#{time_ago_in_words(comment.created_at)} ago"
@@ -62,12 +61,15 @@
         - if comment.replies.count > 0
           - comment.replies.each do |reply|
             .cmt_row.bs.clearfix.reply_box
-              %figure
+              %figure.img_fill
+                = image_tag reply.commenter.profile_cover_url(:thumb)
               %aside
-                %h4.fl Admin
+                %h4.fl= reply.commenter.user_name
                 %p.fr
-                  %strong 10 minutes ago
-                %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
+                  %strong= "#{time_ago_in_words reply.created_at} ago"
+                %p.fl.w100
+                  = reply.content
+
       .cmt_row.bs.clearfix.mt10.txt_area
         %figure.img_fill
           = image_tag current_user.profile_cover_url(:thumb)

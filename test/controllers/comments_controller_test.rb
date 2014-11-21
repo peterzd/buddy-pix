@@ -4,7 +4,7 @@ describe CommentsController do
   helper_objects
 
   before do
-    photo.album = album
+    photo.update album: album
   end
 
   describe "GET index" do
@@ -15,11 +15,16 @@ describe CommentsController do
   end
 
   describe "POST create" do
-    it "creates an comment for the photo" do
-      assert_difference("Comment.count") do
-        post :create, photo_id: photo.id, comment: attributes_for(:comment, commenter: peter, content: "this is a comment"), card_id: album.id
+    describe "logged in user" do
+      before do
+        sign_in allen
       end
-      assert_response :success
+
+      it "creates an comment for the photo" do
+        assert_difference("Comment.count") do
+          post :create, photo_id: photo.id, comment: attributes_for(:comment, commenter: peter, content: "this is a comment"), card_id: album.id
+        end
+      end
     end
   end
 
