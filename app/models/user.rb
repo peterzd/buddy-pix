@@ -48,9 +48,9 @@ class User < ActiveRecord::Base
     Photo.where(album: joined_albums).order(updated_at: :desc)
   end
 
-  def comments_photo(photo, comment_content="")
+  def comments_photo(photo, comment_content="", image=nil)
     commented_images << photo
-    comments.last.update content: comment_content
+    comments.last.update content: comment_content, image: image
     photo.touch
     photo.update_last_updater self
     photo.album.touch
