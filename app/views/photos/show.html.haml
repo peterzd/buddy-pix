@@ -90,86 +90,13 @@
     %i.tag_close X
     %h3.ac.mt5 Like User
     %ul.like_user_list.p10
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
+      - @photo.likes.each do |like|
+        - liker = like.liker
+        %li
+          %figure.round.fl.mr10.img_fill
+            = image_tag liker.profile_cover_url(:medium)
+          %span= liker.user_name
+          %i{ class: "#{like.mood}" } #{like.mood}
 
 :javascript
   jQuery(function($) {
