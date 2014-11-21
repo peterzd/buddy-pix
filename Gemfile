@@ -22,6 +22,7 @@ gem 'spring',        group: :development
 gem "paperclip", "~> 4.2"
 gem "pundit"
 gem 'ckeditor_rails'
+gem 'draper', '~> 1.3'
 
 # for APIs
 gem 'grape'
