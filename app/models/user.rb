@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
     photo.album.touch
   end
 
+  def reply_comment(comment)
+    Comment.create commenter: self, commentable: comment
+  end
+
   def hidden_cards
     created_albums.where hidden: true
   end

@@ -5,9 +5,12 @@ class Comment < ActiveRecord::Base
 
   has_one :image, as: :imageable, dependent: :destroy
 
+  has_one :reply, class_name: "Comment", as: :commentable
+
   def picture_url(format=:medium)
     return "" if image.nil?
     image.picture.url format
   end
+
 end
 
