@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
     commented_images << photo
     comments.last.update content: comment_content
     photo.touch
+    photo.update_last_updater self
     photo.album.touch
   end
 
@@ -73,6 +74,7 @@ class User < ActiveRecord::Base
     return if liked_photos.include? photo
     like = Like.create liker: self, likeable: photo, mood: mood
     photo.touch
+    photo.update_last_updater self
     photo.album.touch
   end
 
