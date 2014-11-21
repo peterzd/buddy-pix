@@ -2,6 +2,7 @@
   .pc.cm
     = render 'users/profile_pics'
     #m-container.fl.w100.mt10
+      -# cards list
       - @albums.each do |album|
         .p10.feed_box.fl.w50{ id: dom_id(album) }
           %figure.post_img.img_fill.clearfix
@@ -17,11 +18,7 @@
                 %i.fa.fa-picture-o
                   = album.photos.count
           .f_bottom.clearfix.event_link
-            - if album.hidden?
-              = link_to image_tag("eye_view_icon.png") + "View Card", view_card_card_path(album), method: :post, remote: true
-            - else
-              = link_to image_tag("eye_icon.png") + "Hide Card", hide_card_card_path(album), method: :post, remote: true
-
+            = album.decorate.hidden_link
             = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
             = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
         / feed box

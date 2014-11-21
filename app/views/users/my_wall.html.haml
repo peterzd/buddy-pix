@@ -2,6 +2,7 @@
   .pc.cm
     = render 'profile_pics'
     #m-container.fl.w100
+      -# photo's list
       - @photos.each do |photo|
         - album = photo.album
         .p10.feed_box.fl.w50{ id: dom_id(photo) }
