@@ -2,6 +2,9 @@ class PhotosController < ApplicationController
   before_action :set_card
   before_action :set_photo, except: [:new, :create]
 
+  def show
+  end
+
   def like
     authorize :photo, :like?
     current_user.like_photo @photo, mood: params[:mood]

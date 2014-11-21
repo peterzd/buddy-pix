@@ -15,4 +15,8 @@ class Photo < ActiveRecord::Base
     return "" if image.nil?
     image.picture.url format
   end
+
+  def recent_likes(count)
+    likes.order(created_at: :desc).limit count
+  end
 end
