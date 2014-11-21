@@ -111,6 +111,10 @@ describe User do
       comment = Comment.last
       album.updated_at.to_s.must_equal comment.created_at.to_s
     end
+    
+    it "sets the last_updater for the photo as the user" do
+      photo.updater.must_equal peter
+    end
   end
 
   describe "relations with likes" do
@@ -133,6 +137,10 @@ describe User do
       it "updates the photo's card's updated_at" do
         like = Like.last
         album.updated_at.to_s.must_equal like.created_at.to_s
+      end
+
+      it "sets the last_updater for the photo as the user" do
+        photo.updater.must_equal peter
       end
     end
   end

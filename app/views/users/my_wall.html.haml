@@ -27,9 +27,9 @@
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
-                = image_tag photo.creator.profile_cover_url(:medium)
+                = image_tag photo.updater.profile_cover_url(:medium)
               .info_side
-                %h3= photo.creator.user_name
+                %h3= photo.updater.user_name
                 %p
                   = "#{time_ago_in_words(photo.updated_at)} ago"
             %aside.fr.p10.h3.ar.cat_side
