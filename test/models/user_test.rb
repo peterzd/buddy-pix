@@ -118,14 +118,16 @@ describe User do
   end
 
   describe ".reply_comment" do
-    it "adds a reply to the comment" do
+    before do
       photo.update album: album
       peter.comments_photo photo
-      comment = Comment.last
+      @comment = Comment.last
+      allen.reply_comment @comment
+    end
 
-      allen.reply_comment comment
+    it "adds a reply to the comment" do
       reply = Comment.last
-      comment.reply.must_equal reply
+      @comment.replies.must_include reply
     end
   end
 
