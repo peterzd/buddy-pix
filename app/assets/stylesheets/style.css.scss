@@ -514,6 +514,9 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .msg.warning{background-color:#E9C842; border-color:#E6C12B;}
 .msg.danger{background-color:#E96562; border-color:#E64F4C;}
 
+.fig_img{background-color:#fff; border-top:1px solid #e7e7e7; border-bottom:1px solid #e7e7e7; padding:10px 0;}
+.fig_img img{max-width:100%}
+
 /* ==========================================================================
         Responsive styling Styling
    ========================================================================== */
@@ -622,6 +625,9 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 
     .card_box .f_bottom aside{float:none; text-align:center;}
 .card_box .f_bottom aside.card_count span{padding-right:0px;}
+
+.app_icon{width:70px;}
+.app_store_icon{width:113px;}
 
 }
 

@@ -1,71 +1,34 @@
 %section.clearfix.inner_body
   .pc.cm
-    .p10
-      %figure.profile_pic.round.img_fill
-        = image_tag @user.profile_cover_url(:medium)
-      %figure.profile_cover.img_fill.fl.w100
-        = image_tag @user.cover_photo_url
-        %hgroup.head_row.bs
-          %h2= @user.user_name
-        .info_row
-          .info_cell.bs
-            %i.pe-7s-albums
-            %span= @user.created_albums.count
-          .info_cell.bs
-            %i.pe-7s-photo-gallery
-            %span= @user.total_photos.count
-          .info_cell.bs
-            %i.pe-7s-like
-            %span= @user.total_likes
-          .info_cell.bs
-            %i.pe-7s-chat
-            %span= @user.total_comments
-    %form.search_row.fl.w100.p10
-      .fl.select
-        %select
-          %option Card View
-          %option List View
-      .fl.input
-        %input{:placeholder => "Search ...", :type => "text"}/
-      .btn_box.fr
-        %button{:type => "submit"}
-          %i.pe-7s-search
-    .fl.w100
+    = render 'users/profile_pics'
+    #m-container.fl.w100.mt10
+      -# cards list
       - @albums.each do |album|
         .p10.feed_box.fl.w50{ id: dom_id(album) }
-          / feed box
-          .top_row.clearfix
-            %aside.fl.p10.user_info
-              %figure.img_fill.round.fl
-                = image_tag @user.profile_cover_url(:medium)
-              .info_side
-                = link_to content_tag(:h3, album.name), card_path(album)
-                -# %h3= album.name
-                %p
-                  = "#{time_ago_in_words album.created_at} ago"
-            %aside.fr.p10.h3.ar
-              %h3 Basketball
-              %p
-                = "what's this time? 20 minutes ago"
           %figure.post_img.img_fill.clearfix
-            = image_tag album.cover_image_url
+            = link_to image_tag(album.cover_image_url :medium), card_path(album)
             %span.tag
               - private_text = album.private? ? "private" : "public"
               = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
             .post_shadow
-              %h3.fl Basketball
+              %h3.fl= album.name
               %p.fr.count.bs
-                %i.fa.fa-user
+                %i.fa.fa-group
                   = sanitize "#{album.followers.count} &nbsp;|&nbsp;"
-                %i.fa.fa-user
-                  = "what is this count for users? 25"
+                %i.fa.fa-picture-o
+                  = album.photos.count
           .f_bottom.clearfix.event_link
-            - if album.hidden?
-              = link_to image_tag("eye_view_icon.png") + "View Card", view_card_card_path(album), method: :post, remote: true
-            - else
-              = link_to image_tag("eye_icon.png") + "Hide Card", hide_card_card_path(album), method: :post, remote: true
-
+            = album.decorate.hidden_link
             = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
             = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
         / feed box
 
+:javascript
+  jQuery(function($) {
+      var container = document.querySelector('#m-container');
+      var msnry =  new Masonry( container, {
+          itemSelector: '.feed_box',
+          columnWidth: 0
+      });
+      //msnry.layout();
+  });

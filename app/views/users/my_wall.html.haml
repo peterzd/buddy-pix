@@ -1,26 +1,8 @@
 %section.clearfix.inner_body
   .pc.cm
-    .p10.fl.w100
-      %figure.profile_pic.round.img_fill
-        = image_tag @user.profile_cover_url(:medium)
-      %figure.profile_cover.img_fill.fl.w100
-        = image_tag @user.cover_photo_url
-        %hgroup.head_row.bs
-          %h2= @user.user_name
-        .info_row
-          .info_cell.bs
-            %i.pe-7s-albums
-            %span= @user.created_albums.count
-          .info_cell.bs
-            %i.pe-7s-photo-gallery
-            %span= @user.uploaded_photos.count
-          .info_cell.bs
-            %i.pe-7s-like
-            %span= @user.total_likes
-          .info_cell.bs
-            %i.pe-7s-chat
-            %span= @user.total_comments
+    = render 'profile_pics'
     #m-container.fl.w100
+      -# photo's list
       - @photos.each do |photo|
         - album = photo.album
         .p10.feed_box.fl.w50{ id: dom_id(photo) }

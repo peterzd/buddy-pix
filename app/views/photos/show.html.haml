@@ -5,7 +5,7 @@
     .p10.feed_box.mt20.clearfix
       .top_row.clearfix
         %aside.fl.p10.user_info
-          %figure.img_fill.round.fl
+          %figure.img_fill.round
             = image_tag creator.profile_cover_url(:medium)
           .info_side
             %h3=  creator.user_name
@@ -13,63 +13,76 @@
         %aside.fr.p10.h3.ar.cat_side
           %h3= card.name
           %p= card.private? ? "Private" : "Public"
-      %figure.clearfix
+      %figure.clearfix.ac.fig_img
         = image_tag @photo.picture_url :medium
       .f_bottom.clearfix.fl.w100
         .p10
           %p= @photo.description
         %hr.mb0
-        = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{@photo.likes.count}"), "#", class: "p10 inline like_btn"
-        = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{@photo.comments.count}"), "#", class: "p10 inline"
+        %aside.fl
+          = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{@photo.likes.count}"), "#", class: "p10 inline like_btn"
+          = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{@photo.comments.count}"), "#commt_box", class: "p10 inline"
+        %aside.fr
+          %a.p10.inline{:href => "#commt_box"}
+            %i.fa.fa-download
+            %strong Download Image
+        .like_box.bs.hide.clearfix.cr{ id: dom_id(@photo) }
+          = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+          = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+          = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+          = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+          = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+
+
     .fr.cr.follow_row_box.mt20
       %ul.fl
-        - remaining_like = @photo.likes.count - 3
-        - @photo.recent_likes(3).each do |like|
+        - remaining_like = @photo.likes.count - 4
+        - @photo.recent_likes(4).each do |like|
           %li.img_fill
             = image_tag like.liker.profile_cover_url(:medium)
             %span{ class: "#{like.mood}" }
               = like.mood
         + #{remaining_like > 0 ? remaining_like : 0}
       %i.pe-7s-angle-right.like_user_btn
-    .fl.w100
-      .cmt_row.bs.clearfix
-        %figure
-        %aside
-          %h4.fl Joseph Korian
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-          %a.fl{:href => "#"}
-            %i.fa.fa-reply
-            Reply
-      .cmt_row.bs.clearfix.reply_box
-        %figure
-        %aside
-          %h4.fl Admin
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-      .cmt_row.bs.clearfix
-        %figure
-        %aside
-          %h4.fl Joseph Korian
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-          %a.fl{:href => "#"}
-            %i.fa.fa-reply
-            Reply
+    #commt_box.fl.w100
+      - @photo.comments.each do |comment|
+        .cmt_row.bs.clearfix
+          %figure.img_fill
+            = image_tag comment.commenter.profile_cover_url(:thumb)
+          %aside
+            %h4.fl= comment.commenter.user_name
+            %p.fr
+              %strong= "#{time_ago_in_words(comment.created_at)} ago"
+            %p.fl.w100
+              = comment.content
+            %a.fl{:href => "#"}
+              %i.fa.fa-reply
+              Reply
+        - if comment.replies.count > 0
+          - comment.replies.each do |reply|
+            .cmt_row.bs.clearfix.reply_box
+              %figure.img_fill
+                = image_tag reply.commenter.profile_cover_url(:thumb)
+              %aside
+                %h4.fl= reply.commenter.user_name
+                %p.fr
+                  %strong= "#{time_ago_in_words reply.created_at} ago"
+                %p.fl.w100
+                  = reply.content
+
       .cmt_row.bs.clearfix.mt10.txt_area
-        %figure
+        %figure.img_fill
+          = image_tag current_user.profile_cover_url(:thumb)
         %aside
-          %textarea{:placeholder => "Write your comments"}
-          .mt10
-            .btn.browse_btn.inline.fl.dark
-              %input{:type => "file"}/
-              %i.fa.fa-image
-            %span.inline.p10 Attach Image
-          .cr
-            %input.mt20{:type => "submit", :value => "Send Comment"}/
+          = form_tag card_photo_comments_path(card, @photo), multipart: true do
+            = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
+            .mt10
+              .btn.browse_btn.inline.fl.dark
+                = file_field_tag "comment[image][picture]"
+                %i.fa.fa-image
+              %span.inline.p10 Attach Image
+            .cr
+              = submit_tag "Send Comment", class: "mt20"
 
 -# list tagged friends
 .tag_frd_overlay.hide
@@ -77,86 +90,13 @@
     %i.tag_close X
     %h3.ac.mt5 Like User
     %ul.like_user_list.p10
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.happy happy
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.like like
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cool cool
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.sad sad
-      %li
-        %figure.round.fl.mr10.img_fill
-        %span Giacomo Guilizzani
-        %i.cheer cheer
+      - @photo.likes.each do |like|
+        - liker = like.liker
+        %li
+          %figure.round.fl.mr10.img_fill
+            = image_tag liker.profile_cover_url(:medium)
+          %span= liker.user_name
+          %i{ class: "#{like.mood}" } #{like.mood}
 
 :javascript
   jQuery(function($) {
@@ -166,6 +106,10 @@
       });
       $('.like_user_btn').on('click',function(){
           $('.tag_frd_overlay').toggleClass('hide');
+          return false;
+      });
+      $('.like_btn').click(function(){
+          $(this).parents('.f_bottom').find('.like_box').fadeToggle(0);
           return false;
       });
   });

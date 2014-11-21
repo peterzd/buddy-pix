@@ -5,7 +5,8 @@ class Photo < ActiveRecord::Base
   belongs_to :last_updater, class_name: "User"
 
   # relations with comments
-  has_many :comments, foreign_key: :commentable_id
+  # has_many :comments, foreign_key: :commentable_id
+  has_many :comments, as: :commentable
   has_many :commenters, through: :comments, source: :commenter
 
   # relations with likes

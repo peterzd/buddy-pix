@@ -1,7 +1,14 @@
 class CommentsController < ApplicationController
   def create
-    @comment = Comment.create comment_params
-    render nothing: true
+    @card = Album.find params[:card_id]
+    @photo = Photo.find params[:photo_id]
+    if comment_params[:image]
+      image = Image.create comment_params[:image]
+      current_user.comments_photo @photo, comment_params[:content], image
+    else
+      current_user.comments_photo @photo, comment_params[:content]
+    end
+    redirect_to card_photo_path(@card, @photo)
   end
 
   def index
@@ -11,7 +18,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:id, :commenter_id, :content)
+    params.require(:comment).permit(:id, :commenter_id, :content, { image: [:picture] })
   end
 
 end
