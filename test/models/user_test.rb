@@ -117,6 +117,20 @@ describe User do
     end
   end
 
+  describe ".reply_comment" do
+    before do
+      photo.update album: album
+      peter.comments_photo photo
+      @comment = Comment.last
+      allen.reply_comment @comment
+    end
+
+    it "adds a reply to the comment" do
+      reply = Comment.last
+      @comment.replies.must_include reply
+    end
+  end
+
   describe "relations with likes" do
     describe "user likes an image" do
       before do

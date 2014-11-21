@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   # relations with comments
   has_many :comments, foreign_key: :commenter_id
-  has_many :commented_images, through: :comments, source: :commentable
+  has_many :commented_images, through: :comments, source: :commentable, source_type: "Photo"
 
   # relations with like
   has_many :likes, foreign_key: :liker_id
@@ -48,12 +48,16 @@ class User < ActiveRecord::Base
     Photo.where(album: joined_albums).order(updated_at: :desc)
   end
 
-  def comments_photo(photo, comment_content="")
+  def comments_photo(photo, comment_content="", image=nil)
     commented_images << photo
-    comments.last.update content: comment_content
+    comments.last.update content: comment_content, image: image
     photo.touch
     photo.update_last_updater self
     photo.album.touch
+  end
+
+  def reply_comment(comment, reply_content="")
+    Comment.create commenter: self, commentable: comment, content: reply_content
   end
 
   def hidden_cards

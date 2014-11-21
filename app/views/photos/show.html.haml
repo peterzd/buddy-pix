@@ -45,44 +45,44 @@
         + #{remaining_like > 0 ? remaining_like : 0}
       %i.pe-7s-angle-right.like_user_btn
     #commt_box.fl.w100
-      .cmt_row.bs.clearfix
-        %figure
-        %aside
-          %h4.fl Joseph Korian
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-          %a.fl{:href => "#"}
-            %i.fa.fa-reply
-            Reply
-      .cmt_row.bs.clearfix.reply_box
-        %figure
-        %aside
-          %h4.fl Admin
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-      .cmt_row.bs.clearfix
-        %figure
-        %aside
-          %h4.fl Joseph Korian
-          %p.fr
-            %strong 10 minutes ago
-          %p.fl.w100 Donec scelerisque velit ut pellentesque viverra. Sed dignissim mi in est cursus viverra. Nullam arcu ante, faucibus a neque vitae, tempus finibus augue.
-          %a.fl{:href => "#"}
-            %i.fa.fa-reply
-            Reply
+      - @photo.comments.each do |comment|
+        .cmt_row.bs.clearfix
+          %figure.img_fill
+            = image_tag comment.commenter.profile_cover_url(:thumb)
+          %aside
+            %h4.fl= comment.commenter.user_name
+            %p.fr
+              %strong= "#{time_ago_in_words(comment.created_at)} ago"
+            %p.fl.w100
+              = comment.content
+            %a.fl{:href => "#"}
+              %i.fa.fa-reply
+              Reply
+        - if comment.replies.count > 0
+          - comment.replies.each do |reply|
+            .cmt_row.bs.clearfix.reply_box
+              %figure.img_fill
+                = image_tag reply.commenter.profile_cover_url(:thumb)
+              %aside
+                %h4.fl= reply.commenter.user_name
+                %p.fr
+                  %strong= "#{time_ago_in_words reply.created_at} ago"
+                %p.fl.w100
+                  = reply.content
+
       .cmt_row.bs.clearfix.mt10.txt_area
-        %figure
+        %figure.img_fill
+          = image_tag current_user.profile_cover_url(:thumb)
         %aside
-          %textarea{:placeholder => "Write your comments"}
-          .mt10
-            .btn.browse_btn.inline.fl.dark
-              %input{:type => "file"}/
-              %i.fa.fa-image
-            %span.inline.p10 Attach Image
-          .cr
-            %input.mt20{:type => "submit", :value => "Send Comment"}/
+          = form_tag card_photo_comments_path(card, @photo), multipart: true do
+            = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
+            .mt10
+              .btn.browse_btn.inline.fl.dark
+                = file_field_tag "comment[image][picture]"
+                %i.fa.fa-image
+              %span.inline.p10 Attach Image
+            .cr
+              = submit_tag "Send Comment", class: "mt20"
 
 -# list tagged friends
 .tag_frd_overlay.hide
