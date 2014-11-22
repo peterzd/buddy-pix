@@ -2,11 +2,12 @@ class Global
   constructor: ->
     @dropdownNav()
     @imgFill()
-    # @checkCustomize()
+    @checkCustomize()
     @selectCtm()
     @smoothScroll()
     @optionBtn()
     @remove_msg()
+    @fancy_box()
 
   dropdownNav: ->
     $('.expand_nav_point').on "click", ->
@@ -37,28 +38,35 @@ class Global
     $(".img_set").imgLiquid { fill: false }
 
   checkCustomize: ->
-    inputList = $("input[type='radio'")
-    for i in [inputList.length - 1 .. 0] by -1
-      $(inputList[i]).prettyCheckable
+    inputList = $("input[type='radio']")
+    i = inputList.length - 1
 
+    while i >= 0
+      $(inputList[i]).prettyCheckable()
+      i--
     inputcheck = $("input[type='checkbox']")
-    for j in [inputcheck.length - 1 .. 0] by -1
-      $(inputcheck[j]).prettyCheckable
+    j = inputcheck.length - 1
 
-    $('.prettyradio').on "click", ->
-      $('.prettyradio').removeClass 'active'
-      if $(this).find('.checked')
-        $(this).addClass 'active'
-    $('.prettycheckbox').on 'click', ->
-      $('.prettycheckbox').removeClass 'active'
-      if $(this).find '.checked'
-        $(this).toggleClass 'active'
+    while j >= 0
+      $(inputcheck[j]).prettyCheckable()
+      j--
+    $(".prettyradio").on "click", ->
+      $(".prettyradio").removeClass "active"
+      $(this).addClass "active"  if $(this).find(".checked")
+      return
+
+    $(".prettycheckbox").on "click", ->
+      $(this).toggleClass "active"  if $(this).find(".checked")
+      return
 
   remove_msg: ->
     $(".msg .fa-times").on 'click', ->
       $(this).parents('.msg').remove
     $('.invite_row .link_btns a.close').on 'click', ->
       $(this).parents('.invite_row').addClass 'decline'
+
+  fancy_box: ->
+    $(".fancybox").fancybox()
 
   smoothScroll: ->
     $("a[href*=#]:not([href=#])").click ->

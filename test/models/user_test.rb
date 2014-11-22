@@ -44,7 +44,22 @@ describe User do
       relation = UsersAlbums.last
       album.updated_at.to_s.must_equal relation.created_at.to_s
     end
+  end
 
+  describe ".unfollow_album" do
+    before do
+      allen.joins_album album
+    end
+
+    it "remove the album from the user's joined_albums" do
+      allen.unfollow_album album
+      allen.joined_albums.wont_include album
+    end
+
+    it "remove the user from the album's followers" do
+      allen.unfollow_album album
+      album.followers.wont_include allen
+    end
   end
 
   describe ".hidden_cards" do

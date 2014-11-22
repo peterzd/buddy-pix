@@ -21,8 +21,7 @@
 //= require css3-mediaqueries
 //= require html5
 //= require masonry.pkgd.min
-//= require owl.carousel.min
 //= require prettyCheckable.min
-//= require waypoints.min
+//= require jquery.fancybox.pack
 //= require ckeditor-jquery
 //= require_tree .

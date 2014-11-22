@@ -36,6 +36,11 @@ describe Photo do
     it "the album should have the photo" do
       album.photos.must_include photo
     end
+
+    it "removes out from the album if destroyed" do
+      photo.destroy
+      album.photos.wont_include photo
+    end
   end
 
   describe "relations with likes" do

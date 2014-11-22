@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     member do
       post :hide_card
       post :view_card
+      get :follow
+      get :unfollow
     end
 
     resources :photos do
