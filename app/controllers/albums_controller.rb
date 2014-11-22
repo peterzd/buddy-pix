@@ -23,6 +23,7 @@ class AlbumsController < ApplicationController
   def show
     authorize @album
     @album.update hit_count: @album.hit_count + 1
+    @photos = @album.photos.order updated_at: :desc
     respond_with(@album)
   end
 
