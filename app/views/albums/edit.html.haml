@@ -1,26 +1,3 @@
 %section.clearfix.inner_body
   .pc.cm
-    = form_for @album, url: cards_path, html: { class: "mt20" } do |f|
-      %h4.ph10 Create New Card
-      %aside.fl.w50.mt10
-        .ph10
-          = f.text_field :name, placeholder: "Card Name"
-        .p10
-          = f.text_area :caption, placeholder: "Description(optional)"
-      %aside.fl.w50.ac.ph10
-        %h4.al
-          %small Cover Photo
-        %figure.uplaod.cover_img
-        .btn.browse_btn.inline.mt20
-          = f.fields_for :cover_image do |cover|
-            = cover.file_field "picture"
-          Browse Images
-      .fl.w50.mb20.cr.p10
-        .check_select.bs.fl
-          %span.btn.inline
-            = f.radio_button "private", "false", data: { label: "Public" }
-          %span.btn.inline
-            = f.radio_button "private", "true", data: { label: "Private" }
-        .fl.mt20.cr
-          = f.submit "Create card"
-
+    = render 'form', action_text: "Save changes"
