@@ -32,6 +32,17 @@ class PhotosController < ApplicationController
     end
   end
 
+  def download
+    file_name = @photo.image.picture_file_name
+    file_type = @photo.image.picture_content_type
+
+    send_file(
+      "#{Rails.root}/public/#{@photo.picture_url(:original).split(/\?/).first}",
+      filename: file_name,
+      type: file_type
+    )
+  end
+
   private
   def set_photo
     @photo = Photo.find params[:id]

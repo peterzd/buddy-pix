@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :photos do
       member do
         get :like
+        get :download
       end
       resources :comments
     end
