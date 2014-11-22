@@ -237,9 +237,63 @@ describe PhotosController do
           end
         end
       end
+    end
+  end
 
+  describe "GET show" do
+    describe "the photo belongs to a public card" do
+      before do
+        photo.update album: public_album, creator: peter
+      end
+
+      describe "user did not joins this card" do
+        before do
+          sign_in allen
+        end
+
+        it "can access the page" do
+          get :show, card_id: public_album.id, id: photo.id
+          assert_response :success
+        end
+      end
+
+      describe "user joins this card" do
+        before do
+          sign_in peter
+        end
+        it "can access the page" do
+          get :show, card_id: private_album.id, id: photo.id
+          assert_response :success
+        end
+      end
     end
 
+    describe "the photo belongs to a private card" do
+      before do
+        photo.update album: private_album, creator: peter
+      end
+
+      describe "user did not joins this card" do
+        before do
+          sign_in allen
+        end
+
+        it "can not access the page" do
+          get :show, card_id: private_album.id, id: photo.id
+          assert_redirected_to root_path
+        end
+      end
+
+      describe "user joins this card" do
+        before do
+          sign_in peter
+        end
+        it "can access the page" do
+          get :show, card_id: private_album.id, id: photo.id
+          assert_response :success
+        end
+      end
+    end
   end
 
 end
