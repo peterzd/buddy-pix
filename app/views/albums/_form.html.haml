@@ -1,4 +1,4 @@
-= form_for @album, url: cards_path, html: { class: "mt20" } do |f|
+= form_for @album, url: url_path , html: { class: "mt20" } do |f|
   %h4.ph10 Create New Card
   %aside.fl.w50.mt10
     .ph10
@@ -16,8 +16,8 @@
   .fl.w50.mb20.cr.p10
     .check_select.bs.fl
       %span.btn.inline
-        = f.radio_button "private", "false", data: { label: "Public" }
+        = f.radio_button "private", "false", data: { label: "Public" }, checked: !@album.private?
       %span.btn.inline
-        = f.radio_button "private", "true", data: { label: "Private" }
+        = f.radio_button "private", "true", data: { label: "Private" }, checked: @album.private?
     .fl.mt20.cr
       = f.submit "#{action_text}"

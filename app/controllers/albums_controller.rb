@@ -34,6 +34,7 @@ class AlbumsController < ApplicationController
   end
 
   def edit
+    authorize @album
   end
 
   def create
@@ -50,8 +51,14 @@ class AlbumsController < ApplicationController
   end
 
   def update
-    @album.update(album_params)
-    respond_with(@album)
+    authorize @album
+    @album.update(album_params.except(:cover_image))
+
+    if album_params[:cover_image]
+      image = Image.create album_params[:cover_image]
+      @album.set_cover_image image
+    end
+    redirect_to card_path @album
   end
 
   def destroy
