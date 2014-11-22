@@ -40,6 +40,14 @@ class User < ActiveRecord::Base
     album.touch
   end
 
+  def unfollow_album(album)
+    joined_albums.delete album
+  end
+
+  def has_joined_album?(album)
+    joined_albums.include? album
+  end
+
   def profile_cards
     joined_albums.order(updated_at: :desc)
   end
