@@ -35,6 +35,7 @@ class Album < ActiveRecord::Base
   private
   def set_default_value
     self.hidden ||= false
+    self.hit_count ||= 0
   end
 
   def creator_follow

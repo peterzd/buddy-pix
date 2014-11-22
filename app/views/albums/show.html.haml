@@ -18,9 +18,9 @@
             %i.fa.fa-heart
             = sanitize "#{@album.total_likes} &nbsp;|&nbsp;"
             %i.fa.fa-eye
-             85   | 
+            = sanitize "#{@album.hit_count} &nbsp;|&nbsp;"
             %i.fa.fa-comment
-            = sanitize "#{@album.total_comments} &nbsp;|&nbsp;"
+            = sanitize "#{@album.total_comments}"
       .album_bar.fl.w100
         %aside.p20.fr.invite_btn
           = link_to "Invite user", new_card_invitation_path(@album), class: "btn"

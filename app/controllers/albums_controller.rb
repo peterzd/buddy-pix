@@ -22,6 +22,7 @@ class AlbumsController < ApplicationController
 
   def show
     authorize @album
+    @album.update hit_count: @album.hit_count + 1
     respond_with(@album)
   end
 
