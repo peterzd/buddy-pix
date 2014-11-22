@@ -61,6 +61,12 @@
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
 
+      .loading_feed.feed_box.fl.w100.p10
+        = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+        %span
+          Loading
+          %blink ...
+
 :javascript
   jQuery(function($) {
       var container = document.querySelector('#m-container');

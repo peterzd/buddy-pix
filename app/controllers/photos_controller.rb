@@ -45,6 +45,11 @@ class PhotosController < ApplicationController
     )
   end
 
+  def destroy
+    @photo.destroy
+    redirect_to card_path @card
+  end
+
   private
   def set_photo
     @photo = Photo.find params[:id]

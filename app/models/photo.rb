@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  has_one :image, as: :imageable
+  has_one :image, as: :imageable, dependent: :destroy
   belongs_to :album, touch: true
   belongs_to :creator, class_name: "User"
   belongs_to :last_updater, class_name: "User"
