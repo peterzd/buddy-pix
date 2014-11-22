@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
   protect_from_forgery except: [ :hide_card, :view_card ]
   respond_to :html, :json
-  before_action :set_album, except: [:index, :hidden_cards, :new]
+  before_action :set_album, except: [:index, :hidden_cards, :new, :create]
 
   # Peter at 11.3: can the two methods extract the same code into another method?
   def index
