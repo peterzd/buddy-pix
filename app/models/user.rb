@@ -35,9 +35,17 @@ class User < ActiveRecord::Base
   end
 
   def joins_album(album)
-    return if joined_albums.include? album
+    return if has_joined_album? album
     UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
     album.touch
+  end
+
+  def unfollow_album(album)
+    joined_albums.delete album
+  end
+
+  def has_joined_album?(album)
+    joined_albums.include? album
   end
 
   def profile_cards

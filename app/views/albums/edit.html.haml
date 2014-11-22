@@ -1,7 +1,3 @@
-%h1 Editing album
-
-= render 'form'
-
-= link_to 'Show', @album
-\|
-= link_to 'Back', albums_path
+%section.clearfix.inner_body
+  .pc.cm
+    = render 'form', action_text: "Save changes", url_path: card_path(@album)

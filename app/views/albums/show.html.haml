@@ -2,57 +2,70 @@
 %section.clearfix.inner_body
   .pc.cm
     .p10
-      %figure.profile_cover.img_fill.fl.w100.album_cover
+      %figure.profile_cover.card_profile_cover.img_fill.fl.w100.album_cover
         = image_tag @album.cover_image_url
         %hgroup.head_row.bs
-          %h2.fl= creator.user_name
+          %h2.fl
+            = @album.name
+            %small
+              = "- #{@album.private? ? 'Priavte' : 'Public'}"
+              = link_to content_tag(:i, "", class: "fa fa-gear"), edit_card_path(@album) if policy(@album).edit?
           %p.fr.count.bs
-            %i.fa.fa-user
+            %i.fa.fa-group
             = sanitize "#{@album.followers.count} &nbsp;|&nbsp;"
-            %i.fa.fa-user
-            25
+            %i.fa.fa-picture-o
+            = sanitize "#{@album.photos.count} &nbsp;|&nbsp;"
+            %i.fa.fa-heart
+            = sanitize "#{@album.total_likes} &nbsp;|&nbsp;"
+            %i.fa.fa-eye
+            = sanitize "#{@album.hit_count} &nbsp;|&nbsp;"
+            %i.fa.fa-comment
+            = sanitize "#{@album.total_comments}"
       .album_bar.fl.w100
         %aside.p20.fr.invite_btn
-          = link_to "Invite user", new_card_invitation_path(@album), class: "btn"
+          = @album.decorate.invite_btn_links
         %aside.p20.para
           = @album.caption
+
     .upload_btn.ac.bs.fl.w100
-      = link_to image_tag("upload_img_btn.png", alt: "upload Image"), new_card_photo_path(@album)
-      -# %input{:type => "file"}/
-      -# = image_tag "upload_img_btn.png", alt: "upload Image"
+      = link_to image_tag("upload_img_btn.png", alt: "upload Image"), new_card_photo_path(@album), class: "fl w100"
     #m-container.fl.w100.clearfix
-      - @album.photos.each do |photo|
+      - @photos.each do |photo|
+        - uploader = photo.creator
         .p10.feed_box.fl.w50{ id: dom_id(photo) }
           .top_row.clearfix
             %aside.fl.p10.user_info
               %figure.img_fill.round.fl
-                = image_tag creator.profile_cover_url(:medium)
+                = image_tag uploader.profile_cover_url(:medium)
               .info_side
-                %h3
-                  = photo.title
+                %h3= uploader.user_name
                 %p
-                  = "#{time_ago_in_words photo.created_at} ago"
+                  = "#{time_ago_in_words photo.updated_at} ago"
             %aside.fr.p10.h3.ar
-              %h3 Basketball
-              %p
-                = "what is this time? 20 minutes ago"
+              %h3= photo.title
+              %p= @album.private? ? "Priavte" : "Public"
+
           %figure.post_img.img_fill.clearfix
-            = image_tag photo.picture_url(:medium), alt: "post img"
+            = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(@album, photo)
+            %h2= photo.description
           .f_bottom.clearfix.fl.w100
-            %aside.fl
-              %a.p10.inline.like_btn{:href => "#"}
-                %i.pe-7s-like
-                %strong= photo.likes.count
-              %a.p10.inline{:href => "#"}
-                %i.pe-7s-chat
-                %strong= photo.comments.count
-            %aside.fr.p10 110 Followers
+            %aside.fl.mt5
+              = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{photo.likes.count}"), card_photo_path(@album, photo), class: "p10 inline like_btn"
+              = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(@album, photo), class: "p10 inline"
+            %aside.fr.p10
+              = photo.decorate.remove_link
             .fl.w100.like_box.bs.hide
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
               = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+
+      .loading_feed.feed_box.fl.w100.p10
+        = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+        %span
+          Loading
+          %blink ...
 
 :javascript
   jQuery(function($) {
