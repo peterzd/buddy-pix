@@ -22,14 +22,8 @@
             %i.fa.fa-comment
             = sanitize "#{@album.total_comments}"
       .album_bar.fl.w100
-        - if user_signed_in?
-          %aside.p20.fr.invite_btn
-            - if current_user == @album.creator
-              = link_to "Invite user", new_card_invitation_path(@album), class: "btn"
-            - elsif current_user.has_joined_album?(@album)
-              = link_to "UnFollow", unfollow_card_path(@album), class: "btn dull"
-            - else
-              = link_to "Follow", follow_card_path(@album), class: "btn"
+        %aside.p20.fr.invite_btn
+          = @album.decorate.invite_btn_links
         %aside.p20.para
           = @album.caption
 
