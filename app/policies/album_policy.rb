@@ -23,6 +23,14 @@ class AlbumPolicy < ApplicationPolicy
     user && user.persisted?
   end
 
+  def edit?
+    update?
+  end
+
+  def update?
+    user == record.creator
+  end
+
   def hide_card?
     (record.creator == user) || user.admin?
   end
