@@ -21,11 +21,20 @@ class User < ActiveRecord::Base
   # invitations
   has_many :received_invitations, class_name: "Invitation", foreign_key: :receiver_id
 
+  has_many :taggings
+  has_many :tagged_photos, through: :taggings, source: :photo
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   before_save :ensure_authentication_token
 
+  class << self
+    def all_users
+      where(type: nil).all
+    end
+  end
+  
   def ensure_authentication_token
     self.authentication_token ||= generate_authentication_token
   end

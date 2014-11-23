@@ -32,6 +32,10 @@ class Album < ActiveRecord::Base
     end
   end
 
+  def recent_photos(count)
+    photos.order(updated_at: :desc).limit(count)
+  end
+
   private
   def set_default_value
     self.hidden ||= false

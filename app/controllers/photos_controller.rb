@@ -17,18 +17,12 @@ class PhotosController < ApplicationController
   end
 
   def create
-    set_card
-    @photo = @card.photos.build photo_params.except(:image).merge(creator: current_user)
-    authorize @photo
+    photo = @card.photos.build photo_params.except(:image, :tagged_users).merge(creator: current_user)
+    authorize photo
 
-    if @photo.save
-      if photo_params[:image]
-        image = Image.create photo_params[:image]
-        @photo.image = image
-      end
-      redirect_to cards_path
+    if PhotosService.new(photo, photo_params).save_photo
+      redirect_to card_path @card
     else
-      logger.info "there's error when trying to save the photo"
       render nothing: true
     end
   end
@@ -60,6 +54,7 @@ class PhotosController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:id, :title, :description, { image: [:picture] })
+    params.require(:photo).permit(:id, :title, :description, { image: [:picture] }, :tagged_users)
   end
 end
+
