@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post "comments/:id/reply", to: "comments#reply", as: :reply_comment
+
   get :my_wall, to: "users#my_wall"
   resources :users do
     member do
