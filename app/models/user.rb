@@ -64,8 +64,8 @@ class User < ActiveRecord::Base
     photo.album.touch
   end
 
-  def reply_comment(comment, reply_content="")
-    Comment.create commenter: self, commentable: comment, content: reply_content
+  def reply_comment(comment, reply_content="", image=nil)
+    Comment.create commenter: self, commentable: comment, content: reply_content, image: image
   end
 
   def hidden_cards

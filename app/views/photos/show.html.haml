@@ -17,6 +17,8 @@
         = image_tag @photo.picture_url :medium
       .f_bottom.clearfix.fl.w100
         .p10
+          %p
+            %strong= @photo.title
           %p= @photo.description
         %hr.mb0
         %aside.fl
@@ -52,11 +54,9 @@
             %h4.fl= comment.commenter.user_name
             %p.fr
               %strong= "#{time_ago_in_words(comment.created_at)} ago"
-            %p.fl.w100
-              = comment.content
-            %a.fl{:href => "#"}
-              %i.fa.fa-reply
-              Reply
+            %p.fl= comment.content
+            = image_tag comment.picture_url(:medium)
+            = link_to content_tag(:i, "", class: "fa fa-reply") + "Reply", "#reply", class: "fl fancybox", data: { commenter: comment.commenter.user_name, "comment-id" => comment.id }
         - if comment.replies.count > 0
           - comment.replies.each do |reply|
             .cmt_row.bs.clearfix.reply_box
@@ -97,6 +97,25 @@
           %span= liker.user_name
           %i{ class: "#{like.mood}" } #{like.mood}
 
+#reply.light_box.hide
+  %p
+    %strong Reply To Joseph
+  .cmt_row.bs.clearfix.txt_area
+    %figure.img_fill
+      = image_tag current_user.profile_cover_url(:thumb)
+    %aside
+      = form_tag reply_comment_path, multipart: true do
+        = hidden_field_tag "card_id", card.id
+        = hidden_field_tag "photo_id", @photo.id
+        = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
+        .mt10
+          .btn.browse_btn.inline.fl.dark
+            = file_field_tag "comment[image][picture]"
+            %i.fa.fa-image
+          %span.inline.p10 Attach Image
+        .cr
+          = submit_tag "Send Comment", class: "mt20"
+
 :javascript
   jQuery(function($) {
       $('.tag_close').on('click',function(){
@@ -112,4 +131,11 @@
           return false;
       });
   });
+
+:coffee
+  $('.fancybox').on 'click', ->
+    commenter = $(this).data("commenter")
+    comment_id = $(this).data("comment-id")
+    $("#reply p strong").html "Reply To " + commenter
+    $('#reply form').attr "action", "/comments/" + comment_id + "/reply"
 
