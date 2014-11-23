@@ -17,6 +17,8 @@
         = image_tag @photo.picture_url :medium
       .f_bottom.clearfix.fl.w100
         .p10
+          %p
+            %strong= @photo.title
           %p= @photo.description
         %hr.mb0
         %aside.fl
@@ -52,9 +54,9 @@
             %h4.fl= comment.commenter.user_name
             %p.fr
               %strong= "#{time_ago_in_words(comment.created_at)} ago"
-            %p.fl.w100
-              = comment.content
-            %a.fl{:href => "#"}
+            %p.fl= comment.content
+            = image_tag comment.picture_url(:medium)
+            %a.fl.fancybox{:href => "#reply"}
               %i.fa.fa-reply
               Reply
         - if comment.replies.count > 0
@@ -96,6 +98,22 @@
             = image_tag liker.profile_cover_url(:medium)
           %span= liker.user_name
           %i{ class: "#{like.mood}" } #{like.mood}
+
+#reply.light_box.hide
+  / replybox pop up
+  %p
+    %strong Reply To Joseph
+  .cmt_row.bs.clearfix.txt_area
+    %figure
+    %aside
+      %textarea{:placeholder => "Write your comments"}
+      .mt10
+        .btn.browse_btn.inline.fl.dark
+          %input{:type => "file"}/
+          %i.fa.fa-image
+        %span.inline.p10 Attach Image
+      .cr
+        %input.mt20{:type => "submit", :value => "Send Comment"}/
 
 :javascript
   jQuery(function($) {
