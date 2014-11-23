@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
     def all_users
       where(type: nil).all
     end
+
+    def all_other_users(myself)
+      User.where(type: nil).where.not(id: myself.id)
+    end
   end
   
   def ensure_authentication_token

@@ -54,7 +54,7 @@
       .input
         %input{:placeholder => "Search ...", :type => "text"}/
     %ul.ph10.contact_search_list.cr
-      - User.all_users.each do |user|
+      - User.all_other_users(current_user).each do |user|
         %li
           %figure.fl.round.img_fill
             = image_tag user.profile_cover_url(:thumb)
@@ -78,5 +78,4 @@
 :coffee
   $("#invite_users_btn").on "click", ->
     total_checked = $("input[name='tagged_user']:checked").serialize()
-    alert total_checked
     $("#photo_tagged_users").val(total_checked)
