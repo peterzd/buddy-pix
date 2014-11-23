@@ -21,12 +21,7 @@ class PhotosController < ApplicationController
     @photo = @card.photos.build photo_params.except(:image, :tagged_users).merge(creator: current_user)
     authorize @photo
 
-    tagged_users = photo_params[:tagged_users]
-    if tagged_users do
-      tagged_users.split("&").each do |tag|
-        @photo.tag_user tag.split("=").last.to_i
-      end
-    end
+    PhotosService.new(@photo).process_tagged_users(photo_params)
 
     if @photo.save
       if photo_params[:image]
