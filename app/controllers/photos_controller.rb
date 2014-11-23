@@ -18,8 +18,13 @@ class PhotosController < ApplicationController
 
   def create
     set_card
-    @photo = @card.photos.build photo_params.except(:image).merge(creator: current_user)
+    @photo = @card.photos.build photo_params.except(:image, :tagged_users).merge(creator: current_user)
     authorize @photo
+
+    tagged_users = photo_params[:tagged_users]
+    tagged_users.split("&").each do |tag|
+      @photo.tag_user tag.split("=").last.to_i
+    end
 
     if @photo.save
       if photo_params[:image]
@@ -60,6 +65,6 @@ class PhotosController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:id, :title, :description, { image: [:picture] })
+    params.require(:photo).permit(:id, :title, :description, { image: [:picture] }, :tagged_users)
   end
 end

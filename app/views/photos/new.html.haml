@@ -1,25 +1,82 @@
 %section.clearfix.inner_body
   .pc.cm
-    = form_for @photo, url: card_photos_path(@card) do |f|
-      %h4 Create New Card
-      %aside.fl.w50.p10
+    = form_for @photo, url: card_photos_path(@card), html: { class: "mt20" } do |f|
+      = hidden_field_tag "photo[tagged_users]"
+      %h4.ph10 Upload Images
+      %aside.fl.w50.mt10
         .p10
           = f.text_field :title, placeholder: "Image Title"
-        .p10
+        .p10.mt10
           = f.text_area :description, placeholder: "Description(optional)"
-        .box_link.p10.ac.w50
-          %a.fb{:href => "#"}
-            %i.fa.fa-facebook
-            Share on Facebook
-        .p10
-          = f.submit "Post Now"
-      %aside.fl.w50.p10.al
-        %h4.ph10.mt10.al
+      %aside.fl.w50.ac
+        %h4.al.ph10
           %small Card Images
-          -# list of three recent photos of the card
-        -# %figure.uplaod.cover_img
-        .btn.browse_btn.inline
-          = f.fields_for :image do |img|
-            = img.file_field "picture"
-          Browse Images
+        .ph10
+          .btn.browse_btn.inline.fl
+            = f.fields_for :image do |img|
+              = img.file_field "picture"
+            -# %input{:type => "file"}>/
+            Browse Images
+        .up_img_list.cr
+          - @card.recent_photos(3).each do |p|
+            .fl.w33.p10.img
+              %figure.img_fill
+                = image_tag p.picture_url(:medium)
+      .fl.w50.mb20.cr.p10
+        %div
+          %h4.al
+            %small Tag Friends
+          = link_to "Add", "#", class: "btn inline add_tag_btn"
+          .fr.chose_tager
+            %ul.fl
+              %li
+                %figure
+              %li
+                %figure
+              %li
+                %figure
+              %li
+                %figure
+            + Others
+        .f_share_select.cr.mt20
+          %input{"data-label" => "Public", :name => "post_type", :type => "checkbox"}/
+        .fl.mt20
+          = f.submit "Post Now"
 
+.tag_frd_overlay.hide
+  .tag_box.clearfix.cover_box.cm
+    %i.tag_close X
+    %h3.ac.mt5 Select Tag User
+    .search_row.fl.w100.p10.contect_search
+      .btn_box.fr
+        %button{:type => "submit"}
+          %i.pe-7s-search
+      .input
+        %input{:placeholder => "Search ...", :type => "text"}/
+    %ul.ph10.contact_search_list.cr
+      - User.all_users.each do |user|
+        %li
+          %figure.fl.round.img_fill
+            = image_tag user.profile_cover_url(:thumb)
+          .check
+            %input{ "data-label" => "#{user.user_name}", "data-labelposition" => "left", :name => "tagged_user", :type => "checkbox", value: user.id }
+    .p20.ac
+      %button.inline{:type => "submit", id: "invite_users_btn"} Invte Friends
+
+:javascript
+  jQuery(function($) {
+      $('.tag_close').on('click',function(){
+          $('.tag_frd_overlay').toggleClass('hide');
+          return false;
+      });
+      $('.add_tag_btn').on('click',function(){
+          $('.tag_frd_overlay').toggleClass('hide');
+          return false;
+      });
+  });
+
+:coffee
+  $("#invite_users_btn").on "click", ->
+    total_checked = $("input[name='tagged_user']:checked").serialize()
+    alert total_checked
+    $("#photo_tagged_users").val(total_checked)
