@@ -11,6 +11,20 @@ class CommentsController < ApplicationController
     redirect_to card_photo_path(@card, @photo)
   end
 
+  def reply
+    card = Album.find params[:card_id]
+    photo = Photo.find params[:photo_id]
+    comment = Comment.find params[:id]
+
+    if comment_params[:image]
+      image = Image.create comment_params[:image]
+      current_user.reply_comment comment, params[:comment][:content], image
+    else
+      current_user.reply_comment comment, params[:comment][:content]
+    end
+    redirect_to card_photo_path(card, photo)
+  end
+
   def index
     photo = Photo.find params[:photo_id]
     @comments = photo.comments
