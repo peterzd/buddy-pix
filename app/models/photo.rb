@@ -13,6 +13,10 @@ class Photo < ActiveRecord::Base
   has_many :likes, foreign_key: :likeable_id
   has_many :likers, through: :likes, source: :liker
 
+
+  has_many :taggings
+  has_many :tagged_users, through: :taggings, source: :user
+
   def picture_url(format=:original)
     return "" if image.nil?
     image.picture.url format
@@ -29,5 +33,11 @@ class Photo < ActiveRecord::Base
   def updater
     return creator unless last_updater
     last_updater
+  end
+
+  def tag_user(user_id)
+    user = User.find user_id
+    return if tagged_users.include? user
+    tagged_users << User.find(user_id)
   end
 end
