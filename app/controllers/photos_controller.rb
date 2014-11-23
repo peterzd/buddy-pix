@@ -22,8 +22,10 @@ class PhotosController < ApplicationController
     authorize @photo
 
     tagged_users = photo_params[:tagged_users]
-    tagged_users.split("&").each do |tag|
-      @photo.tag_user tag.split("=").last.to_i
+    if tagged_users do
+      tagged_users.split("&").each do |tag|
+        @photo.tag_user tag.split("=").last.to_i
+      end
     end
 
     if @photo.save
