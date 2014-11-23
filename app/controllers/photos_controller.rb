@@ -26,7 +26,7 @@ class PhotosController < ApplicationController
         image = Image.create photo_params[:image]
         @photo.image = image
       end
-      redirect_to cards_path
+      redirect_to card_path @card
     else
       logger.info "there's error when trying to save the photo"
       render nothing: true
