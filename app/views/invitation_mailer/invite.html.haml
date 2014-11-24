@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Hi
+    %p
+      #{@content}
+      %br
+      = link_to card_url(@card), card_url(@card)
+    %p
+      Regards
+    %p
+      #{@user.user_name}
+

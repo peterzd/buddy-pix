@@ -69,7 +69,7 @@ class Global
     $(".fancybox").fancybox()
 
   smoothScroll: ->
-    $("a[href*=#]:not([href=#])").not('.fancybox').click ->
+    $("a[href*=#]:not([href=#])").not(".fancybox").click ->
       if location.pathname.replace(/^\//, "") is @pathname.replace(/^\//, "") and location.hostname is @hostname
         target = $(@hash)
         target = (if target.length then target else $("[name=" + @hash.slice(1) + "]"))

@@ -12,6 +12,7 @@ module BuddyPix
 
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+    config.action_mailer.default_url_options = { host: 'buddypix.com' }
 
     config.assets.precompile += %w[admin.css admin.js]
     config.generators do |g|
@@ -33,5 +34,16 @@ module BuddyPix
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # settings to send email via Gmail
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'buddypix.com',
+      user_name:            ENV["EMAIL_NAME"],
+      password:             ENV["EMAIL_PWD"],
+      authentication:       'plain',
+      enable_starttls_auto: true  }
   end
 end

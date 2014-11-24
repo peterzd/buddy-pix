@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions" }
 
   resources :albums, as: :cards, path: :cards do
+    post :invite_by_email, to: "invitations#invite_by_email"
     resources :invitations
     collection do
       get :hidden_cards
