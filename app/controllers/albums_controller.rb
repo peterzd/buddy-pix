@@ -14,10 +14,7 @@ class AlbumsController < ApplicationController
   def hidden_cards
     authorize :album, :hidden_cards?
     @user = current_user
-    @albums = current_user.hidden_cards
-    respond_with @albums do |format|
-      format.html { render :index }
-    end
+    @cards = current_user.hidden_cards
   end
 
   def following_cards
@@ -78,7 +75,7 @@ class AlbumsController < ApplicationController
     end
   end
 
-  def view_card
+  def publish_card
     @album.update hidden: false
     respond_with @album do |format|
       format.js { render "hide_view_card" }

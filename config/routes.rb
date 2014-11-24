@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
     member do
       post :hide_card
-      post :view_card
+      post :publish_card
       get :follow
       get :unfollow
     end

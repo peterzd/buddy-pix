@@ -1,0 +1,35 @@
+%section.clearfix.inner_body
+  .pc.cm
+    = render 'users/profile_pics'
+    .fl.w100
+      - @cards.each do |card|
+        - creator = card.creator
+        -# this part is the same as the one in albums/index page
+        .p10.feed_box.fl.w50{ id: dom_id(card) }
+          .top_row.clearfix
+            %aside.fl.p10.user_info
+              %figure.img_fill.round.fl
+                = image_tag creator.profile_cover_url(:medium)
+              .info_side
+                %h3= creator.user_name
+                %p= "#{time_ago_in_words card.updated_at} ago"
+            %aside.fr.p10.h3.ar
+              %h3
+                = link_to card.name, card_path(card)
+              %p 20 minutes ago
+          %figure.post_img.img_fill.clearfix
+            = image_tag card.cover_image_url(:medium), alt: "post img"
+            %span.tag
+              - private_text = card.decorate.private_text.downcase
+              = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
+            .post_shadow
+              %h3.fl= card.name
+              %p.fr.count.bs
+                %i.fa.fa-group
+                #{card.followers.count}   | 
+                %i.fa.fa-picture-o
+                card.photos.count
+          .f_bottom.clearfix.event_link
+            = card.decorate.hidden_link
+            = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(card)
+            = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(card)
