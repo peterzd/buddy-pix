@@ -4,11 +4,11 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
     %h1
-      Hi,
+      Hi
     %p
-      I would like to invite you on BuddyPix to check our latest Card and Images. Please click on this link to access:
+      #{@content}
       %br
-      #{card_url @card}
+      = link_to card_url(@card), card_url(@card)
     %p
       Regards
     %p
