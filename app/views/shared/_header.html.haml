@@ -41,7 +41,7 @@
             %li.hide.view_less_1024
               = link_to "Search"
             %li
-              = link_to "Following", "#"
+              = link_to "Following(#{current_user.following_cards.count})", following_cards_cards_path
             %li
               = link_to "Alerts", "#"
             %li

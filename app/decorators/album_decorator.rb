@@ -17,4 +17,8 @@ class AlbumDecorator < Draper::Decorator
       link_to "Follow", follow_card_path(object), class: "btn"
     end
   end
+
+  def private_text
+    object.private? ? 'Priavte' : 'Public'
+  end
 end

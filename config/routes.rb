@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :invitations
     collection do
       get :hidden_cards
+      get :following_cards
     end
 
     member do
