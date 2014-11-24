@@ -19,6 +19,6 @@ class AlbumDecorator < Draper::Decorator
   end
 
   def private_text
-    object.private? ? 'Priavte' : 'Public'
+    object.private? ? 'Private' : 'Public'
   end
 end
