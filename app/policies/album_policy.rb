@@ -38,4 +38,12 @@ class AlbumPolicy < ApplicationPolicy
   def hidden_cards?
     !(user.nil? || user.hidden_cards.empty?)
   end
+
+  def unfollow?
+    user && user.persisted?
+  end
+
+  def follow
+    unfollow?
+  end
 end
