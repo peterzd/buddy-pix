@@ -176,14 +176,14 @@ describe AlbumsController do
     end
   end
 
-  describe "POST view_card" do
+  describe "POST publish_card" do
     before do
       album.update creator: peter, hidden: true
     end
 
     it "makes a hidden card to be visible to world" do
       sign_in peter
-      xhr :post, :view_card, id: album.id
+      xhr :post, :publish_card, id: album.id
       album.reload.wont_be :hidden
     end
   end
@@ -200,7 +200,7 @@ describe AlbumsController do
 
       it "redirects to the root page" do
         get :hidden_cards
-        assert_redirected_to root_path
+        assert_response :success
       end
     end
 
@@ -217,7 +217,7 @@ describe AlbumsController do
 
       it "lists all the user's hidden cards" do
         get :hidden_cards
-        assigns[:albums].must_match_array @hidden_cards
+        assigns[:cards].must_match_array @hidden_cards
       end
     end
   end

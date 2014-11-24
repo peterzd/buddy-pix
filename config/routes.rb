@@ -22,11 +22,12 @@ Rails.application.routes.draw do
     resources :invitations
     collection do
       get :hidden_cards
+      get :following_cards
     end
 
     member do
       post :hide_card
-      post :view_card
+      post :publish_card
       get :follow
       get :unfollow
     end

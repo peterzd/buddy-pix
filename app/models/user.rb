@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     album.touch
   end
 
+  def following_cards
+    joined_albums - created_albums
+  end
+
   def unfollow_album(album)
     joined_albums.delete album
   end
