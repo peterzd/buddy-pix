@@ -16,7 +16,7 @@
             %aside.fr.p10.h3.ar
               %h3
                 = link_to card.name, card_path(card)
-              %p 20 minutes ago
+              %p= card.decorate.private_text
           %figure.post_img.img_fill.clearfix
             = image_tag card.cover_image_url(:medium), alt: "post img"
             %span.tag
@@ -28,7 +28,7 @@
                 %i.fa.fa-group
                 #{card.followers.count}   | 
                 %i.fa.fa-picture-o
-                card.photos.count
+                #{card.photos.count}
           .f_bottom.clearfix.event_link
             = card.decorate.hidden_link
             = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(card)
