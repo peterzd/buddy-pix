@@ -40,7 +40,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'buddypix.com',
+    domain:               'buddypix.net',
     user_name:            ENV["EMAIL_NAME"],
     password:             ENV["EMAIL_PWD"],
     authentication:       'plain',
