@@ -3,7 +3,7 @@ class AlbumDecorator < Draper::Decorator
 
   def hidden_link
     image_name = object.hidden? ? "view_" : ""
-    path_name = object.hidden? ? "view" : "hide"
+    path_name = object.hidden? ? "publish" : "hide"
     link_to image_tag("eye_#{image_name}icon.png") + "#{path_name.capitalize} Card", send("#{path_name}_card_card_path", object), method: :post, remote: true
   end
 
@@ -16,5 +16,9 @@ class AlbumDecorator < Draper::Decorator
     else
       link_to "Follow", follow_card_path(object), class: "btn"
     end
+  end
+
+  def private_text
+    object.private? ? 'Private' : 'Public'
   end
 end

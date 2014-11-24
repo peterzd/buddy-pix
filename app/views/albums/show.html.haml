@@ -8,7 +8,7 @@
           %h2.fl
             = @album.name
             %small
-              = "- #{@album.private? ? 'Priavte' : 'Public'}"
+              = "- #{@album.decorate.private_text}"
               = link_to content_tag(:i, "", class: "fa fa-gear"), edit_card_path(@album) if policy(@album).edit?
           %p.fr.count.bs
             %i.fa.fa-group
@@ -43,7 +43,7 @@
                   = "#{time_ago_in_words photo.updated_at} ago"
             %aside.fr.p10.h3.ar
               %h3= photo.title
-              %p= @album.private? ? "Priavte" : "Public"
+              %p= @album.decorate.private_text
 
           %figure.post_img.img_fill.clearfix
             = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(@album, photo)
