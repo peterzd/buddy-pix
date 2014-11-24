@@ -25,30 +25,12 @@
           = submit_tag "Invite Friends"
     #email.cover_box.tab.p10.hide
       %div
-        %input{:placeholder => "Email id", :type => "text"}/
-      .mt10
-        %textarea{:placeholder => "Hi-I’d like to share this album and pictures with you"}
-      .p20.ac
-        %button.inline{:type => "submit"} Send Invitation
-
-
-
-      -# #invitation-tab
-      -#   %ul.resp-tabs-list
-      -#     %li APP CONTACT
-      -#     %li EMAIL
-      -#   .resp-tabs-container
-      -#     .app-contact-container
-      -#       this is container for app contact
-      -#       = form_tag card_invitations_path do
-      -#         %ul
-      -#           - @users.each do |user|
-      -#             %li.options
-      -#               = label_tag "user_ids_#{user.id}", "#{user.email} #{user.user_name}"
-      -#               = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}"
-      -#         = submit_tag "Invite Friends"
-      -#     .email-container
-      -#       this is container for email
+        = form_tag card_invite_by_email_path do
+          = text_field_tag "email[to_url]", "", placeholder: "Email id"
+          .mt10
+            = text_area_tag "email[content]", "", placeholder:  "Hi-I’d like to share this album and pictures with you"
+          .p20.ac
+            = submit_tag "Send Invitation"
 
 :javascript
   jQuery(function($) {

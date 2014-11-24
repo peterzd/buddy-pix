@@ -22,6 +22,7 @@ gem "paperclip", "~> 4.2"
 gem "pundit"
 gem 'ckeditor_rails'
 gem 'draper', '~> 1.3'
+gem "figaro"
 
 # for APIs
 gem 'grape'
