@@ -12,7 +12,7 @@
         .box_link.p10.ac.fl.w50
           = link_to content_tag(:i, "", class: "fa fa-facebook") + "Facebook Login", user_omniauth_authorize_path(:facebook), class: "fb"
         .box_link.p10.ac.fl.w50
-          = link_to content_tag(:i, "", class: "fa fa-google") + "Google Login", "#", class: "g"
+          = link_to content_tag(:i, "", class: "fa fa-google") + "Google Login", user_omniauth_authorize_path(:google_oauth2), class: "g"
         .p10.fl
           = f.submit "Login"
 

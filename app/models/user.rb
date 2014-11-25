@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
   before_save :ensure_authentication_token
 
@@ -52,9 +52,22 @@ class User < ActiveRecord::Base
       end
     end
 
+    def find_for_google_oauth2(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.username = auth.info.name
+        user.image_url = auth.info.image
+      end
+    end
+
     def new_with_session(params, session)
       super.tap do |user|
         if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        elsif data = session["devise.google_data"] && session["devise.google_data"]["extra"]["raw_info"]
           user.email = data["email"] if user.email.blank?
         end
       end

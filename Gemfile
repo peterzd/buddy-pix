@@ -26,6 +26,7 @@ gem "figaro"
 
 # omniauth login
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
 
 # for APIs
 gem 'grape'
