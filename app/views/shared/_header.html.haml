@@ -15,7 +15,7 @@
           = link_to(sanitize("My Wall &nbsp;|&nbsp;"), my_wall_path)
           = link_to "My card", cards_path, class: "mr10"
           = link_to "Create New CARD", new_card_path, class: "btn inline mr10"
-          = link_to(content_tag(:i, "", class: "fa fa-search"), "#", class: "btn inline search-btn mr10")
+          = link_to(content_tag(:i, "", class: "fa fa-search"), search_path, class: "btn inline search-btn mr10")
         %aside.fl.drop_nav
           .expand_nav_point.hide_less_480
             %figure.round.mt10.mr10.fl.img_fill

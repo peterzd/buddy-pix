@@ -1,0 +1,100 @@
+- user = current_user || User.new
+%section.clearfix.inner_body
+  %section.clearfix.search_form
+    = form_tag search_path, method: :get, class: "search_row cm pc p10" do
+      .fl.select
+        = select_tag "search[type]", options_for_select([["Card View", "card"], ["Image View", "photo"]])
+      .fl.input
+        = text_field_tag "search[query]", "", placeholder: "Search ..."
+      .btn_box.fr
+        = button_tag(type: "submit") do
+          %i.pe-7s-search
+  .pc.cm
+    #m-container.fl.w100.mt10
+      - if @cards
+        - @cards.each do |card|
+          - creator = card.creator
+          .p10.feed_box.fl.w50.card_box
+            .top_row.clearfix
+              %aside.fl.p10.user_info
+                %figure.img_fill.round.fl
+                  = image_tag creator.profile_cover_url(:medium)
+                .info_side
+                  %h3= creator.user_name
+                  %p= "#{time_ago_in_words card.updated_at} ago"
+              %aside.fr.p10.h3.ar.cat_side
+                %h3
+                  = link_to card.name, card_path(card)
+                %p= card.decorate.private_text
+            %figure.post_img.img_fill.clearfix
+              = link_to image_tag(card.cover_image_url(:medium)), card_path(card)
+              %h2= card.caption
+            .f_bottom.clearfix
+              %aside.fl.p10.mt5.card_count
+                %span
+                  %i.fa.fa-group
+                  = sanitize "#{card.followers.count}"
+                %span
+                  %i.fa.fa-image
+                  = sanitize "#{card.photos.count}"
+                %span
+                  %i.fa.fa-heart
+                  = sanitize "#{card.total_likes}"
+                %span
+                  %i.fa.fa-eye
+                  = sanitize "#{card.hit_count}"
+                %span
+                  %i.fa.fa-comment
+                  = sanitize "#{card.total_comments}"
+
+              %aside.fr.p10
+                = card.decorate.follow_btn_link(user)
+      - else
+        - @photos.each do |photo|
+          - uploader = photo.creator
+          - card = photo.album
+          .p10.feed_box.fl.w50{ id: dom_id(photo) }
+            .top_row.clearfix
+              %aside.fl.p10.user_info
+                %figure.img_fill.round.fl
+                  = image_tag uploader.profile_cover_url(:medium)
+                .info_side
+                  %h3= uploader.user_name
+                  %p
+                    = "#{time_ago_in_words photo.updated_at} ago"
+              %aside.fr.p10.h3.ar.cat_side
+                %h3
+                  = link_to "#{card.name}", card_path(card)
+                %p= card.decorate.private_text
+            %figure.post_img.img_fill.clearfix
+              = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(card, photo)
+              %h2= photo.description
+            .f_bottom.clearfix
+              %aside.fl.mt5
+                = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{photo.likes.count}"), card_photo_path(card, photo), class: "p10 inline like_btn"
+                = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(card, photo), class: "p10 inline"
+              .fl.w100.like_box.bs.hide
+                = link_to "", like_card_photo_path(card, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
+                = link_to "", like_card_photo_path(card, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
+                = link_to "", like_card_photo_path(card, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
+                = link_to "", like_card_photo_path(card, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
+                = link_to "", like_card_photo_path(card, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
+
+
+      .loading_feed.feed_box.fl.w100.p10
+        = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+        %span
+          Loading
+          %blink ...
+      / loading
+
+:javascript
+  jQuery(function($) {
+      var container = document.querySelector('#m-container');
+      var msnry = new Masonry(container, {
+          itemSelector: '.feed_box',
+          columnWidth: 0
+      });
+      //msnry.layout();
+  });
+
