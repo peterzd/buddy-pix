@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
         user.first_name = auth.info.first_name
         user.last_name = auth.info.last_name
         user.username = auth.info.username   # assuming the user model has a name
-        # user.image = auth.info.image # assuming the user model has an image
+        user.image_url = auth.info.image # assuming the user model has an image
       end
     end
 
@@ -130,7 +130,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_cover_url(format=:original)
-    return "" if profile_cover.nil?
+    return image_url if profile_cover.nil?
     profile_cover.picture.url(format)
   end
 
