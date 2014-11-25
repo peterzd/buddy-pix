@@ -18,9 +18,14 @@ class Photo < ActiveRecord::Base
   has_many :likes, foreign_key: :likeable_id
   has_many :likers, through: :likes, source: :liker
 
-
   has_many :taggings
   has_many :tagged_users, through: :taggings, source: :user
+
+  class << self
+    def all_visible_items
+      includes(:album).where("albums.private" => [false, nil]).references(:albums)
+    end
+  end
 
   def picture_url(format=:original)
     return "" if image.nil?

@@ -8,9 +8,8 @@ class SearchController < ApplicationController
       case type
       when "card"
         @cards = search_for_cards(query)
-      when "image"
-        @images = search_for_images(query)
-        logger.info "the images are #{@images}"
+      when "photo"
+        @photos = search_for_photos(query)
       end
     end
   end
@@ -33,6 +32,16 @@ class SearchController < ApplicationController
     end
   end
 
-  def search_for_images(query)
+  def search_for_photos(query)
+    return Photo.all_visible_items if query.blank?
+    result = Photo.search query
+    result.results.inject([]) do |records, r|
+      photo = Photo.find r.id
+      if photo.visible_to_world?
+        records << photo
+      else
+        records
+      end
+    end
   end
 end
