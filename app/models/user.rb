@@ -25,7 +25,8 @@ class User < ActiveRecord::Base
   has_many :tagged_photos, through: :taggings, source: :photo
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:facebook]
 
   before_save :ensure_authentication_token
 
@@ -36,6 +37,27 @@ class User < ActiveRecord::Base
 
     def all_other_users(myself)
       User.where(type: nil).where.not(id: myself.id)
+    end
+
+    # copied from [devise wiki](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview),
+    # for omniauth login
+    def from_omniauth(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.username = auth.info.username   # assuming the user model has a name
+        # user.image = auth.info.image # assuming the user model has an image
+      end
+    end
+
+    def new_with_session(params, session)
+      super.tap do |user|
+        if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        end
+      end
     end
   end
   

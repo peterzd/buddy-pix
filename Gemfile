@@ -24,6 +24,9 @@ gem 'ckeditor_rails'
 gem 'draper', '~> 1.3'
 gem "figaro"
 
+# omniauth login
+gem 'omniauth-facebook'
+
 # for APIs
 gem 'grape'
 gem 'grape-entity'
