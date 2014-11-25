@@ -1,4 +1,9 @@
+require 'elasticsearch/model'
+
 class Photo < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_one :image, as: :imageable, dependent: :destroy
   belongs_to :album, touch: true
   belongs_to :creator, class_name: "User"
@@ -40,4 +45,11 @@ class Photo < ActiveRecord::Base
     return if tagged_users.include? user
     tagged_users << User.find(user_id)
   end
+
+  def visible_to_world?
+    album.visible_to_world?
+  end
 end
+
+Photo.import
+

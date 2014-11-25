@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   end
 
   get "search", to: "search#search", as: :search
-  get "search_cards", to: "search#search_cards", as: :search_cards
+  # get "search_cards", to: "search#search_cards", as: :search_cards
 
 
 end
