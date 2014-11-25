@@ -25,8 +25,17 @@ class User < ActiveRecord::Base
   has_many :tagged_photos, through: :taggings, source: :photo
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :recoverable, :rememberable, :trackable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+
+  ## validations
+  validates_presence_of   :email, :if => :email_required?
+  validates_format_of     :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_uniqueness_of :email, scope: [:provider]
+
+  validates_presence_of     :password, :if => :password_required?
+  validates_confirmation_of :password, :if => :password_required?
+  validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   before_save :ensure_authentication_token
 
@@ -208,6 +217,14 @@ class User < ActiveRecord::Base
   end
   
   private
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
+  end
+
+  def email_required?
+    true
+  end
+
   def generate_authentication_token
     loop do
       token = Devise.friendly_token
