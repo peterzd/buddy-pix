@@ -1,4 +1,9 @@
+require 'elasticsearch/model'
+
 class Photo < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_one :image, as: :imageable, dependent: :destroy
   belongs_to :album, touch: true
   belongs_to :creator, class_name: "User"
@@ -13,9 +18,14 @@ class Photo < ActiveRecord::Base
   has_many :likes, foreign_key: :likeable_id
   has_many :likers, through: :likes, source: :liker
 
-
   has_many :taggings
   has_many :tagged_users, through: :taggings, source: :user
+
+  class << self
+    def all_visible_items
+      includes(:album).where("albums.private" => [false, nil]).references(:albums)
+    end
+  end
 
   def picture_url(format=:original)
     return "" if image.nil?
@@ -40,4 +50,11 @@ class Photo < ActiveRecord::Base
     return if tagged_users.include? user
     tagged_users << User.find(user_id)
   end
+
+  def visible_to_world?
+    album.visible_to_world?
+  end
 end
+
+Photo.import
+

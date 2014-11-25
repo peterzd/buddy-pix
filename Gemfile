@@ -29,6 +29,10 @@ gem 'grape'
 gem 'grape-entity'
 gem 'hashie_rails'
 
+# search
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 group :development, :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'

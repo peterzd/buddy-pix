@@ -1,4 +1,9 @@
+require 'elasticsearch/model'
+
 class Album < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :creator, class_name: "User"
 
   has_many :user_relations, class_name: "UsersAlbums"
@@ -36,6 +41,11 @@ class Album < ActiveRecord::Base
     photos.order(updated_at: :desc).limit(count)
   end
 
+  def visible_to_world?
+    return false if self.private? or self.hidden?
+    true
+  end
+
   private
   def set_default_value
     self.hidden ||= false
@@ -47,4 +57,5 @@ class Album < ActiveRecord::Base
   end
 end
 
+Album.import
 

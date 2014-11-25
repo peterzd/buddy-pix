@@ -18,6 +18,15 @@ class AlbumDecorator < Draper::Decorator
     end
   end
 
+  def follow_btn_link(user)
+    if user.has_joined_album? object
+      link_to "UnFollow", unfollow_card_path(object), class: "btn dull"
+    else
+      link_to "Follow", follow_card_path(object), class: "btn"
+    end
+
+  end
+
   def private_text
     object.private? ? 'Private' : 'Public'
   end
