@@ -97,7 +97,7 @@ describe User do
 
   describe "relations with comments" do
     before do
-      photo.update album: album
+      photo.update album: album, creator: allen
       album.update_columns updated_at: 1.day.ago
       peter.comments_photo photo
     end
@@ -129,6 +129,14 @@ describe User do
     
     it "sets the last_updater for the photo as the user" do
       photo.updater.must_equal peter
+    end
+
+    it "creates notification to the photo's creator" do
+      notification = allen.notifications.last
+      notification.maker.must_equal peter
+      notification.action.must_equal Notification::ACTION[:comment]
+      notification.object.must_equal photo
+      notification.receiver.must_equal allen
     end
   end
 

@@ -40,6 +40,14 @@ class Photo < ActiveRecord::Base
     update last_updater: user
   end
 
+  def commented_by(user, content: nil, image: nil)
+    comment = Comment.create commenter: user, commentable: self, content: content, image: image
+    touch
+    update_last_updater user
+    album.touch
+    send_notification(maker: user, action: Notification::ACTION[:comment], object: self, receiver: creator)
+  end
+
   def updater
     return creator unless last_updater
     last_updater
@@ -53,6 +61,11 @@ class Photo < ActiveRecord::Base
 
   def visible_to_world?
     album.visible_to_world?
+  end
+
+  private
+  def send_notification(options={})
+    Notification.create options
   end
 end
 
