@@ -8,9 +8,16 @@ class Invitation < ActiveRecord::Base
   def accept
     update status: STATUS[:accepted]
     self.receiver.joins_album self.card
+    send_notification(maker: receiver, action: Notification::ACTION[:accept_invitation], object: self, receiver: sender)
   end
 
   def reject
     update status: STATUS[:rejected]
+    send_notification(maker: receiver, action: Notification::ACTION[:decline_invitation], object: self, receiver: sender)
+  end
+
+  private
+  def send_notification(options={})
+    Notification.create options
   end
 end
