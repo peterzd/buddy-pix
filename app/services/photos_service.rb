@@ -8,6 +8,8 @@ class PhotosService
     if @photo.save
       process_tagged_users
       process_image
+      # later this method could be placed in background work
+      send_notifications
       true
     else
       false
@@ -30,5 +32,17 @@ class PhotosService
       image = Image.create @params[:image]
       @photo.image = image
     end
+  end
+
+  def send_notifications
+    receivers = @photo.album.followers
+    maker = @photo.creator
+    receivers.each do |receiver|
+      send_notification(maker: maker, action: Notification::ACTION[:post_photo], object: @photo, receiver: receiver)
+    end
+  end
+
+  def send_notification(options={})
+    Notification.create options
   end
 end
