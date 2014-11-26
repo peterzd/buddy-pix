@@ -140,11 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def like_photo(photo, mood: Like::MOOD[:happy])
-    return if liked_photos.include? photo
-    like = Like.create liker: self, likeable: photo, mood: mood
-    photo.touch
-    photo.update_last_updater self
-    photo.album.touch
+    photo.liked_by self, mood: mood
   end
 
   def profile_cover_url(format=:original)

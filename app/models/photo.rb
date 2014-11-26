@@ -42,10 +42,13 @@ class Photo < ActiveRecord::Base
 
   def commented_by(user, content: nil, image: nil)
     comment = Comment.create commenter: user, commentable: self, content: content, image: image
-    touch
-    update_last_updater user
-    album.touch
-    send_notification(maker: user, action: Notification::ACTION[:comment], object: self, receiver: creator)
+    after_action :comment, user
+  end
+
+  def liked_by(user, mood: Like::MOOD[:happy])
+    return if user.liked_photos.include? self
+    like = Like.create liker: user, likeable: self, mood: mood
+    after_action :like, user
   end
 
   def updater
@@ -66,6 +69,13 @@ class Photo < ActiveRecord::Base
   private
   def send_notification(options={})
     Notification.create options
+  end
+
+  def after_action(action, user)
+    touch
+    update_last_updater user
+    album.touch
+    send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator)
   end
 end
 
