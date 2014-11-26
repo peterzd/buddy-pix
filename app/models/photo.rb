@@ -56,5 +56,4 @@ class Photo < ActiveRecord::Base
   end
 end
 
-Photo.import
 
