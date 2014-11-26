@@ -25,7 +25,17 @@ class User < ActiveRecord::Base
   has_many :tagged_photos, through: :taggings, source: :photo
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable,
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+
+  ## validations
+  validates_presence_of   :email, :if => :email_required?
+  validates_format_of     :email, :with  => Devise.email_regexp, :allow_blank => true, :if => :email_changed?
+  validates_uniqueness_of :email, scope: [:provider]
+
+  validates_presence_of     :password, :if => :password_required?
+  validates_confirmation_of :password, :if => :password_required?
+  validates_length_of       :password, :within => Devise.password_length, :allow_blank => true
 
   before_save :ensure_authentication_token
 
@@ -36,6 +46,40 @@ class User < ActiveRecord::Base
 
     def all_other_users(myself)
       User.where(type: nil).where.not(id: myself.id)
+    end
+
+    # copied from [devise wiki](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview),
+    # for omniauth login
+    def from_omniauth(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.username = auth.info.username   # assuming the user model has a name
+        user.image_url = auth.info.image # assuming the user model has an image
+      end
+    end
+
+    def find_for_google_oauth2(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.username = auth.info.name
+        user.image_url = auth.info.image
+      end
+    end
+
+    def new_with_session(params, session)
+      super.tap do |user|
+        if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        elsif data = session["devise.google_data"] && session["devise.google_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        end
+      end
     end
   end
   
@@ -108,7 +152,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_cover_url(format=:original)
-    return "" if profile_cover.nil?
+    return image_url if profile_cover.nil?
     profile_cover.picture.url(format)
   end
 
@@ -173,6 +217,14 @@ class User < ActiveRecord::Base
   end
   
   private
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
+  end
+
+  def email_required?
+    true
+  end
+
   def generate_authentication_token
     loop do
       token = Devise.friendly_token

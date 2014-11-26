@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :supports, :blogs
 
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks" }
 
   resources :albums, as: :cards, path: :cards do
     post :invite_by_email, to: "invitations#invite_by_email"
