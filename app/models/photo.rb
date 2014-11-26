@@ -48,7 +48,7 @@ class Photo < ActiveRecord::Base
   def tag_user(user_id)
     user = User.find user_id
     return if tagged_users.include? user
-    tagged_users << User.find(user_id)
+    tagged_users << user
   end
 
   def visible_to_world?

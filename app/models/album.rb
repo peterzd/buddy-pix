@@ -46,6 +46,12 @@ class Album < ActiveRecord::Base
     true
   end
 
+  def joined_by(user)
+    return if user.has_joined_album? self
+    UsersAlbums.create user: user, album: self, access_type: UsersAlbums::ACCESS_TYPE[:joined]
+    self.touch
+  end
+
   private
   def set_default_value
     self.hidden ||= false
