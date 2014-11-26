@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :taggings
   has_many :tagged_photos, through: :taggings, source: :photo
 
+  has_many :notifications, foreign_key: :receiver_id
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]

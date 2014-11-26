@@ -27,6 +27,18 @@ describe Album do
     album.followers.count.must_equal 2
   end
 
+  describe ".joined_by(user)" do
+    it "creates a notification to the creator" do
+      [album, allen, peter]
+      album.joined_by allen
+      notification = Notification.first
+      notification.maker.must_equal allen
+      notification.action.must_equal Notification::ACTION[:join_card]
+      notification.object.must_equal album
+      notification.receiver.must_equal peter
+    end
+  end
+
   describe "relations with cover image" do
     it "creates the image and set it as the album's cover image" do
       image = create :image
