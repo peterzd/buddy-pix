@@ -194,7 +194,7 @@ class User < ActiveRecord::Base
 
   def send_invitation(receiver_id, card)
     user = User.find receiver_id
-    return if user.my_invited_cards.include? card
+    return if user.my_pending_invited_cards.include? card
     Invitation.create sender: self, receiver_id: receiver_id, card: card, status: Invitation::STATUS[:pending]
   end
 
@@ -202,8 +202,12 @@ class User < ActiveRecord::Base
     received_invitations.where status: Invitation::STATUS[:pending]
   end
 
-  def my_invited_cards
-    received_invitations.inject([]) do |invited_cards, invitation|
+  def my_rejected_invitations
+    received_invitations.where status: Invitation::STATUS[:rejected]
+  end
+
+  def my_pending_invited_cards
+    my_pending_invitations.inject([]) do |invited_cards, invitation|
       invited_cards << invitation.card
     end
   end

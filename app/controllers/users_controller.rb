@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def alerts
-    @invitations = current_user.my_pending_invitations
+    @invitations = current_user.my_pending_invitations + current_user.my_rejected_invitations
     @notifications = current_user.notifications
   end
 
