@@ -9,6 +9,6 @@ class Notification < ActiveRecord::Base
 
   private
   def set_read
-    is_read ||= false
+    self.is_read ||= false
   end
 end
