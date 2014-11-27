@@ -15,7 +15,7 @@
           %p= card.private? ? "Private" : "Public"
       %figure.clearfix.ac.fig_img
         = image_tag @photo.picture_url :medium
-      .f_bottom.clearfix.fl.w100
+      .f_bottom.clearfix.fl.w100{ id: dom_id(@photo)  }
         .p10
           %p
             %strong= @photo.title

@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many :taggings
   has_many :tagged_photos, through: :taggings, source: :photo
 
+  has_many :notifications, foreign_key: :receiver_id
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
@@ -92,9 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def joins_album(album)
-    return if has_joined_album? album
-    UsersAlbums.create user: self, album: album, access_type: UsersAlbums::ACCESS_TYPE[:joined]
-    album.touch
+    album.joined_by(self)
   end
 
   def following_cards
@@ -118,11 +118,7 @@ class User < ActiveRecord::Base
   end
 
   def comments_photo(photo, comment_content="", image=nil)
-    commented_images << photo
-    comments.last.update content: comment_content, image: image
-    photo.touch
-    photo.update_last_updater self
-    photo.album.touch
+    photo.commented_by self, content: comment_content, image: image
   end
 
   def reply_comment(comment, reply_content="", image=nil)
@@ -144,11 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def like_photo(photo, mood: Like::MOOD[:happy])
-    return if liked_photos.include? photo
-    like = Like.create liker: self, likeable: photo, mood: mood
-    photo.touch
-    photo.update_last_updater self
-    photo.album.touch
+    photo.liked_by self, mood: mood
   end
 
   def profile_cover_url(format=:original)
@@ -202,7 +194,7 @@ class User < ActiveRecord::Base
 
   def send_invitation(receiver_id, card)
     user = User.find receiver_id
-    return if user.my_invited_cards.include? card
+    return if user.my_pending_invited_cards.include? card
     Invitation.create sender: self, receiver_id: receiver_id, card: card, status: Invitation::STATUS[:pending]
   end
 
@@ -210,10 +202,18 @@ class User < ActiveRecord::Base
     received_invitations.where status: Invitation::STATUS[:pending]
   end
 
-  def my_invited_cards
-    received_invitations.inject([]) do |invited_cards, invitation|
+  def my_rejected_invitations
+    received_invitations.where status: Invitation::STATUS[:rejected]
+  end
+
+  def my_pending_invited_cards
+    my_pending_invitations.inject([]) do |invited_cards, invitation|
       invited_cards << invitation.card
     end
+  end
+
+  def unread_notifications
+    notifications.where is_read: false
   end
   
   private
