@@ -61,7 +61,7 @@ class Global
 
   remove_msg: ->
     $(".msg .fa-times").on 'click', ->
-      $(this).parents('.msg').remove
+      $(this).parents('.msg').remove()
     $('.invite_row .link_btns a.close').on 'click', ->
       $(this).parents('.invite_row').addClass 'decline'
 

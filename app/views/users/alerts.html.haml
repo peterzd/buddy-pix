@@ -1,0 +1,31 @@
+%section.clearfix.inner_body
+  .pc.cm.mt10
+    #msg
+    %h4 My Invitation
+    .invite_row_list
+      - @invitations.each do |invitation|
+        - sender = invitation.sender
+        - card = invitation.card
+        - decline_class = invitation.status == Invitation::STATUS[:rejected] ? "decline" : ""
+        .invite_row.p10.clearfix.bs{ class: decline_class, id: dom_id(invitation) }
+          %aside.fl
+            %figure.user_fig.fl.img_fill.round
+              = image_tag sender.profile_cover_url(:thumb)
+            %aside.info_msg.mt10
+              %h3
+                = sender.user_name
+                %span= "#{time_ago_in_words invitation.created_at} ago"
+              %p
+                = "#{sender.user_name} Invites you for"
+                = link_to "#{card.name}", card_path(card)
+                = "#{card.decorate.private_text} Category."
+          %aside.fr.link_btns
+            = link_to content_tag(:i, "", class: 'pe-7s-check') + content_tag(:span, "Accept"), accept_card_invitation_path(card, invitation), remote: true
+            = link_to content_tag(:i, "", class: 'pe-7s-close-circle') + content_tag(:span, "Decline"), reject_card_invitation_path(card, invitation), remote: true
+      / invites
+    .mt20.noti-list
+      %h4 Notifications
+      .note_link
+        - @notifications.each do |noti|
+          = render "users/alerts/#{noti.action}", notification: noti
+

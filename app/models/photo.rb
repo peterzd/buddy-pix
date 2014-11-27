@@ -40,6 +40,17 @@ class Photo < ActiveRecord::Base
     update last_updater: user
   end
 
+  def commented_by(user, content: nil, image: nil)
+    comment = Comment.create commenter: user, commentable: self, content: content, image: image
+    after_action :comment, user
+  end
+
+  def liked_by(user, mood: Like::MOOD[:happy])
+    return if user.liked_photos.include? self
+    like = Like.create liker: user, likeable: self, mood: mood
+    after_action :like, user
+  end
+
   def updater
     return creator unless last_updater
     last_updater
@@ -48,13 +59,25 @@ class Photo < ActiveRecord::Base
   def tag_user(user_id)
     user = User.find user_id
     return if tagged_users.include? user
-    tagged_users << User.find(user_id)
+    tagged_users << user
+    send_notification(maker: nil, action: Notification::ACTION[:tagged], object: self, receiver: user)
   end
 
   def visible_to_world?
     album.visible_to_world?
   end
+
+  private
+  def send_notification(options={})
+    Notification.create options
+  end
+
+  def after_action(action, user)
+    touch
+    update_last_updater user
+    album.touch
+    send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator)
+  end
 end
 
-Photo.import
 

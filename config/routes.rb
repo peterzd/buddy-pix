@@ -17,10 +17,23 @@ Rails.application.routes.draw do
   resources :supports, :blogs
 
   devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks" }
+  get :my_wall, to: "users#my_wall"
+  get :alerts, to: "users#alerts"
+
+  resources :notifications do
+    member do
+      get :read
+    end
+  end
 
   resources :albums, as: :cards, path: :cards do
     post :invite_by_email, to: "invitations#invite_by_email"
-    resources :invitations
+    resources :invitations do
+      member do
+        get :accept
+        get :reject
+      end
+    end
     collection do
       get :hidden_cards
       get :following_cards
@@ -44,7 +57,6 @@ Rails.application.routes.draw do
 
   post "comments/:id/reply", to: "comments#reply", as: :reply_comment
 
-  get :my_wall, to: "users#my_wall"
   resources :users do
     member do
       patch :update_account_settings

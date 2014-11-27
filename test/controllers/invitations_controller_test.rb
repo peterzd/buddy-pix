@@ -42,4 +42,26 @@ describe InvitationsController do
       end
     end
   end
+
+  describe "GET accept" do
+    before do
+      @invitation =  create :invitation, sender: peter, receiver: allen, card: album, status: Invitation::STATUS[:pending] 
+    end
+
+    it "changes the status of the invitation" do
+      xhr :get, :accept, card_id: album.id, id: @invitation.id
+      @invitation.reload.status.must_equal Invitation::STATUS[:accepted]
+    end
+  end
+
+  describe "GET reject" do
+    before do
+      @invitation =  create :invitation, sender: peter, receiver: allen, card: album, status: Invitation::STATUS[:pending] 
+    end
+
+    it "changes the status of the invitation" do
+      xhr :get, :reject, card_id: album.id, id: @invitation.id
+      @invitation.reload.status.must_equal Invitation::STATUS[:rejected]
+    end
+  end
 end

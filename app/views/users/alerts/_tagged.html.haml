@@ -1,0 +1,14 @@
+- photo = notification.object
+- card = photo.album
+
+.p10.noti-row.clearfix{ id: dom_id(notification) }
+  %figure.fl.round.img_fill
+    = image_tag current_user.profile_cover_url(:thumb)
+  %aside
+    %p
+      = "You have been tagged in a post"
+      = link_to photo.title, card_photo_path(card, photo)
+      = "#{card.decorate.private_text} Category."
+      = "#{time_ago_in_words notification.created_at} ago"
+  = link_to "", read_notification_path(notification), remote: true, class: "pe-7s-close-circle close"
+

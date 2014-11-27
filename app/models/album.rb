@@ -17,6 +17,7 @@ class Album < ActiveRecord::Base
   after_initialize :set_default_value
   after_save :creator_follow
 
+
   def set_cover_image(image)
     update cover_image_id: image.id
   end
@@ -46,6 +47,15 @@ class Album < ActiveRecord::Base
     true
   end
 
+  def joined_by(user, send_noti=true)
+    return if user.has_joined_album? self
+    UsersAlbums.create user: user, album: self, access_type: UsersAlbums::ACCESS_TYPE[:joined]
+    self.touch
+    if send_noti
+      send_notification(maker: user, action: Notification::ACTION[:join_card], object: self, receiver: creator)
+    end
+  end
+
   private
   def set_default_value
     self.hidden ||= false
@@ -53,9 +63,12 @@ class Album < ActiveRecord::Base
   end
 
   def creator_follow
-    creator.joins_album self
+    joined_by creator, false
+  end
+
+  def send_notification(options={})
+    Notification.create options
   end
 end
 
-Album.import
 

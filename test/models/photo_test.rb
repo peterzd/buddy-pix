@@ -67,4 +67,29 @@ describe Photo do
       end
     end
   end
+
+  describe ".tag_user" do
+    before do
+      photo.tag_user peter
+      photo.tag_user allen
+    end
+
+    it "adds the user to the photo's tagged_users list" do
+      photo.tagged_users.must_match_array [peter, allen]
+    end
+
+    it "sends notification to the tagged users" do
+      peter_noti = peter.notifications.last
+      peter_noti.maker.must_equal nil
+      peter_noti.action.must_equal Notification::ACTION[:tagged]
+      peter_noti.object.must_equal photo
+      peter_noti.receiver.must_equal peter
+
+      allen_noti = allen.notifications.last
+      allen_noti.maker.must_equal nil
+      allen_noti.action.must_equal Notification::ACTION[:tagged]
+      allen_noti.object.must_equal photo
+      allen_noti.receiver.must_equal allen
+    end
+  end
 end

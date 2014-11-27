@@ -44,7 +44,7 @@ class AlbumPolicy < ApplicationPolicy
     user && user.persisted?
   end
 
-  def follow
+  def follow?
     unfollow?
   end
 end

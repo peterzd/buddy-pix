@@ -21,12 +21,31 @@ describe Invitation do
     it "adds the receiver to the card's followers list" do
       album.followers.must_include allen
     end
+
+    it "sends an accepted notification to peter" do
+      notification = peter.notifications.last
+      notification.maker.must_equal allen
+      notification.action.must_equal Notification::ACTION[:accept_invitation]
+      notification.object.must_equal invitation
+      notification.receiver.must_equal peter
+    end
   end
 
   describe ".rejected" do
-    it "updates the invitation's status to rejected" do
+    before do
       invitation.reject
+    end
+
+    it "updates the invitation's status to rejected" do
       invitation.status.must_equal Invitation::STATUS[:rejected]
+    end
+
+    it "sends an decline_invitation notification to peter" do
+      notification = peter.notifications.last
+      notification.maker.must_equal allen
+      notification.action.must_equal Notification::ACTION[:decline_invitation]
+      notification.object.must_equal invitation
+      notification.receiver.must_equal peter
     end
   end
 end
