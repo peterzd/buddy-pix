@@ -28,6 +28,7 @@ describe Invitation do
       notification.action.must_equal Notification::ACTION[:accept_invitation]
       notification.object.must_equal invitation
       notification.receiver.must_equal peter
+      notification.is_read.must_equal false
     end
   end
 
