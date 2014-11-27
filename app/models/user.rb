@@ -211,6 +211,10 @@ class User < ActiveRecord::Base
       invited_cards << invitation.card
     end
   end
+
+  def unread_notifications
+    notifications.where is_read: false
+  end
   
   private
   def password_required?

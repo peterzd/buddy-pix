@@ -2,7 +2,7 @@
 - invitation = notification.object
 - card = invitation.card
 
-.p10.noti-row.clearfix
+.p10.noti-row.clearfix{ id: dom_id(notification) }
   %figure.fl.round.img_fill
     = image_tag notification.maker.profile_cover_url(:thumb)
   %aside
@@ -11,5 +11,5 @@
       = link_to card.name, card_path(card)
       = "#{card.decorate.private_text} Category."
       = "#{time_ago_in_words notification.created_at} ago"
-  %a.pe-7s-close-circle.close{:href => "#"}
+  = link_to "", read_notification_path(notification), remote: true, class: "pe-7s-close-circle close"
 

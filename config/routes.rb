@@ -20,6 +20,12 @@ Rails.application.routes.draw do
   get :my_wall, to: "users#my_wall"
   get :alerts, to: "users#alerts"
 
+  resources :notifications do
+    member do
+      get :read
+    end
+  end
+
   resources :albums, as: :cards, path: :cards do
     post :invite_by_email, to: "invitations#invite_by_email"
     resources :invitations do

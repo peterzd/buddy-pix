@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def alerts
     @invitations = current_user.my_pending_invitations + current_user.my_rejected_invitations
-    @notifications = current_user.notifications
+    @notifications = current_user.unread_notifications
   end
 
   def update_account_settings

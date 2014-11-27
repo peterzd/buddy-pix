@@ -4,4 +4,11 @@ class Notification < ActiveRecord::Base
   belongs_to :maker, class_name: "User", foreign_key: :maker_id
   belongs_to :object, polymorphic: true
   belongs_to :receiver, class_name: "User", foreign_key: :receiver_id
+
+  after_initialize :set_read
+
+  private
+  def set_read
+    is_read ||= false
+  end
 end
