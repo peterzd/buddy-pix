@@ -215,6 +215,10 @@ class User < ActiveRecord::Base
   def unread_notifications
     notifications.where is_read: false
   end
+
+  def alerts_count
+    my_pending_invitations.count + unread_notifications.count
+  end
   
   private
   def password_required?
