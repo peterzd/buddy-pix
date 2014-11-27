@@ -32,108 +32,12 @@
               = link_to "#{card.name}", card_path(card)
               = "#{card.decorate.private_text} Category."
         %aside.fr.link_btns
-          = link_to content_tag(:i, "", class: 'pe-7s-check') + content_tag(:span, "Accept"), accept_card_invitation_path(card, invitation)
-          = link_to content_tag(:i, "", class: 'pe-7s-close-circle') + content_tag(:span, "Decline"), reject_card_invitation_path(card, invitation)
+          = link_to content_tag(:i, "", class: 'pe-7s-check') + content_tag(:span, "Accept"), accept_card_invitation_path(card, invitation), remote: true
+          = link_to content_tag(:i, "", class: 'pe-7s-close-circle') + content_tag(:span, "Decline"), reject_card_invitation_path(card, invitation), remote: true
     / invites
     .mt20.noti-list
       %h4 Notifications
       .note_link
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
-        .p10.noti-row.clearfix
-          %figure.fl.round.img_fill
-            %img{:src => "assets/img/dummy_img/profile_pic.jpg"}/
-          %aside
-            %p
-              Malisa added cart
-              %a{:href => "#"} My Heart Touch
-              Public Category. 01 minutes ago
-          %a.pe-7s-close-circle.close{:href => "#"}
+        - @notifications.each do |noti|
+          = render "users/alerts/#{noti.action}", notification: noti
+

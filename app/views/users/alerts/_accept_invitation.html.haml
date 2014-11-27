@@ -1,0 +1,15 @@
+- maker = notification.maker
+- invitation = notification.object
+- card = invitation.card
+
+.p10.noti-row.clearfix
+  %figure.fl.round.img_fill
+    = image_tag notification.maker.profile_cover_url(:thumb)
+  %aside
+    %p
+      = "#{maker.user_name} has accepted your invitation for"
+      = link_to card.name, card_path(card)
+      = "#{card.decorate.private_text} Category."
+      = "#{time_ago_in_words notification.created_at} ago"
+  %a.pe-7s-close-circle.close{:href => "#"}
+
