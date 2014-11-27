@@ -1,4 +1,6 @@
 class InvitationsController < ApplicationController
+  respond_to :html, :json
+
   def new
     @users = User.where(type: nil).where.not(id: current_user.id)
   end
@@ -11,6 +13,16 @@ class InvitationsController < ApplicationController
     end
 
     redirect_to card_path(card)
+  end
+
+  def accept
+    @invitation = Invitation.find params[:id]
+    @invitation.accept
+  end
+
+  def reject
+    @invitation = Invitation.find params[:id]
+    @invitation.reject
   end
 
   def invite_by_email

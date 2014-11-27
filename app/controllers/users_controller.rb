@@ -22,6 +22,11 @@ class UsersController < ApplicationController
     @photos = current_user.my_wall_pics
   end
 
+  def alerts
+    @invitations = current_user.my_pending_invitations
+    @notifications = current_user.notifications
+  end
+
   def update_account_settings
     user = User.find params[:id]
     user.update user_params.except(:profile_cover, :cover_photo)
