@@ -14,6 +14,8 @@ class Album < ActiveRecord::Base
   belongs_to :cover_image, class_name: "Image"
   has_many :photos
 
+  has_many :invitation_tokens, as: :action
+
   after_initialize :set_default_value
   after_save :creator_follow
 
