@@ -5,13 +5,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
   def sign_up(resource_name, resource)
-    logger.info "customize sign up"
     sign_in(resource_name, resource)
     token = params[:invitation_token]
 
     if token
       action = get_token_action token
       current_user.joins_album action
+      @invitation_token.expire
     end
   end
 

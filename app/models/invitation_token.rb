@@ -14,4 +14,8 @@ class InvitationToken < ActiveRecord::Base
       token
     end
   end
+
+  def expire
+    update expired: true
+  end
 end

@@ -3,10 +3,21 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token, only: [:destroy]
 
   def new
-    if params[:invitation_token]
-      @invitation_token = params[:invitation_token]
+    token = params[:invitation_token]
+    if token
+      self.resource = resource_class.new(sign_in_params)
+      clean_up_passwords(resource)
+
+      invitation_token = InvitationToken.find_by token: token
+      if invitation_token.expired
+        flash[:error] = "invitation token is expired"
+        redirect_to new_user_session_path
+      else
+        @invitation_token = params[:invitation_token]
+      end
+    else
+      super
     end
-    super
   end
 
   def create
@@ -19,6 +30,7 @@ class Users::SessionsController < Devise::SessionsController
       invitation_token = InvitationToken.find_by token: token
       action = invitation_token.action
       current_user.joins_album action
+      invitation_token.expire
       redirect_to card_path action
     else
       yield resource if block_given?
