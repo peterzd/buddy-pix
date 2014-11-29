@@ -24,6 +24,8 @@
           %h4 Sign up
           %p Nulla hendrerit maximus tellus a pharetra. Nunc vehicula, justo a eleifend ultrices, justo turpis hendrerit eros, eu fermentum libero diam non tortor.
         .ph10
+          = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
+        .ph10
           = f.email_field :email, autofocus: true, placeholder: "Email id"
         .p10.mt10
           = f.password_field :password, autocomplete: "off", placeholder: "Password"
