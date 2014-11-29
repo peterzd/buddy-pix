@@ -6,6 +6,8 @@
           %h4 Login
           %p Nullam efficitur viverra arcu eget ullamcorper. Vestibulum tincidunt lacinia massa nec lacinia.
         .ph10
+          = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
+        .ph10
           = f.email_field :email, autofocus: true, placeholder: "Email Id"
         .p10.mt10
           = f.password_field :password, autocomplete: "off", placeholder: "Password"
