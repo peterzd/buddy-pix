@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_notifications
-    notifications.where is_read: false
+    notifications.where(is_read: false).order(created_at: :desc)
   end
 
   def alerts_count

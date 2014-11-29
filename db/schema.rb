@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141127112321) do
+ActiveRecord::Schema.define(version: 20141128153303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,21 @@ ActiveRecord::Schema.define(version: 20141127112321) do
   end
 
   add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
+
+  create_table "invitation_tokens", force: true do |t|
+    t.string   "token"
+    t.integer  "inviter_id"
+    t.integer  "action_id"
+    t.string   "action_type"
+    t.string   "invitation_mode"
+    t.string   "info"
+    t.boolean  "expired",         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invitation_tokens", ["action_id", "action_type"], name: "index_invitation_tokens_on_action_id_and_action_type", using: :btree
+  add_index "invitation_tokens", ["inviter_id"], name: "index_invitation_tokens_on_inviter_id", using: :btree
 
   create_table "invitations", force: true do |t|
     t.integer  "sender_id"
