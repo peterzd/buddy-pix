@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
     to_url = email_params[:to_url]
     content = email_params[:content]
     token = InvitationToken.generate_token(action: card, info: to_url, invitation_mode: InvitationToken::MODE[:email], inviter: current_user)
-    InvitationMailer.invite(current_user, to_url, content, card, token).deliver
+    InvitationMailer.invite(current_user, to_url, content, card, token, request).deliver
 
     redirect_to card_path(card)
   end
