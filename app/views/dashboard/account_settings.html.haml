@@ -19,14 +19,6 @@
           = password_field_tag "new_password", nil, placeholder: "New Password"
         .p10
           = password_field_tag "confirm_password", nil, placeholder: "Confirm Password"
-        .box_link.p10.ac.fl.w50
-          %a.fb{:href => "#"}
-            %i.fa.fa-facebook
-            Connect To Facebook
-        .box_link.p10.ac.fl.w50
-          %a.g{:href => "#"}
-            %i.fa.fa-google
-            Disconnect To Google
         .p10.fl
           = f.submit "Save Changes"
         .p10.fl.white_btn
@@ -34,16 +26,26 @@
       %aside.fl.w50.p10.ac
         %h4.ph10.mt10.al
           %small Cover Photo
+        -# %figure.uplaod.cover_img{ class: @user.cover_photo ? "img_fill" : ""}
         %figure.uplaod.cover_img
+          = image_tag @user.profile_cover_url(:medium), class: "img_fill_parent"
         .btn.browse_btn.inline.mt20
           = f.fields_for :cover_photo do |photo|
             = photo.file_field "picture"
           Browse Images
         %h4.ph10.mt10.al
           %small Profile Photo
+        -# %figure.uplaod.round.profile_photo.cm{ class: @user.profile_cover ? "img_fill" : "" }
         %figure.uplaod.round.profile_photo.cm
+          = image_tag @user.profile_cover_url(:medium), class: "img_fill_parent round"
         .btn.browse_btn.inline.mt20
           = f.fields_for :profile_cover do |photo|
             = photo.file_field "picture"
           Browse Images
+
+:coffee
+  $("#user_cover_photo_picture").on "change", ->
+    preview_image(this, $(".cover_img img"))
+  $("#user_profile_cover_picture").on "change", ->
+    preview_image(this, $(".profile_photo img"))
 
