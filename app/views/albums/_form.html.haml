@@ -8,7 +8,8 @@
   %aside.fl.w50.ac.ph10
     %h4.al
       %small Cover Photo
-    %figure.uplaod.cover_img{ class: @album.persisted? ? "img_fill" : "" }
+    -# %figure.uplaod.cover_img{ class: @album.persisted? ? "img_fill" : "" }
+    %figure.uplaod.cover_img
       = image_tag @album.cover_image_url(:medium), class: "img_fill_parent"
     .btn.browse_btn.inline.mt20
       = f.fields_for :cover_image do |cover|
