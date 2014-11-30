@@ -34,7 +34,8 @@
       %aside.fl.w50.p10.ac
         %h4.ph10.mt10.al
           %small Cover Photo
-        %figure.uplaod.cover_img
+        %figure.uplaod.cover_img{ class: @user.profile_cover ? "img_fill" : ""}
+          = image_tag @user.profile_cover_url(:medium), class: "img_fill_parent"
         .btn.browse_btn.inline.mt20
           = f.fields_for :cover_photo do |photo|
             = photo.file_field "picture"
@@ -47,3 +48,6 @@
             = photo.file_field "picture"
           Browse Images
 
+:coffee
+  $("#user_cover_photo_picture").on "change", ->
+    preview_image(this, $(".cover_img img"))
