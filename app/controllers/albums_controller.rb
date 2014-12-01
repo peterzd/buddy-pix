@@ -41,14 +41,12 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params.except(:cover_image).merge(creator: current_user))
     authorize @album
-    @album.save
 
-    if album_params[:cover_image]
-      image = Image.create album_params[:cover_image]
-      @album.set_cover_image image
+    if AlbumsService.new(@album).save_album(album_params)
+      redirect_to cards_path
+    else
+      render edit
     end
-
-    redirect_to cards_path
   end
 
   def update
