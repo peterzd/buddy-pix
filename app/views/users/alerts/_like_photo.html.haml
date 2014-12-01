@@ -1,15 +1,19 @@
 - maker = notification.maker
 - photo = notification.object
-- card = photo.album
+- card = photo.album if photo
 
 .p10.noti-row.clearfix{ id: dom_id(notification) }
   %figure.fl.round.img_fill
     = image_tag notification.maker.profile_cover_url(:thumb)
   %aside
-    %p
-      = "#{maker.user_name} has liked in your post"
-      = link_to photo.title, card_photo_path(card, photo)
-      = "#{card.decorate.private_text} Category."
-      = "#{time_ago_in_words notification.created_at} ago"
+    - if photo
+      %p
+        = "#{maker.user_name} has liked in your post"
+        = link_to photo.title, card_photo_path(card, photo)
+        = "#{card.decorate.private_text} Category."
+        = "#{time_ago_in_words notification.created_at} ago"
+    - else
+      %p
+        = "image has been removed by #{maker.user_name}"
   = link_to "", read_notification_path(notification), remote: true, class: "pe-7s-close-circle close"
 
