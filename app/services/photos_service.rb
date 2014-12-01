@@ -8,7 +8,6 @@ class PhotosService
     if @photo.save
       process_tagged_users
       process_image
-      # later this method could be placed in background work
       send_notifications
       true
     else
@@ -29,13 +28,11 @@ class PhotosService
   # Later we can use background job to make it faster
   def process_image
     if @params[:image]
-      image = Image.create @params[:image]
-      @photo.image = image
-#         name = photo_params[:image][:picture].original_filename
-#         directory = "tmp/uploaded_images"
-#         path = File.join(directory, name)
-#         File.open(path, "wb") { |f| f.write(photo_params[:image][:picture].read) }
-#         @photo.set_image path
+      name = @params[:image][:picture].original_filename
+      directory = "tmp/uploaded_images"
+      path = File.join(directory, name)
+      File.open(path, "wb") { |f| f.write(@params[:image][:picture].read) }
+      @photo.set_image path
     end
   end
 
