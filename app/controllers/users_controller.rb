@@ -32,13 +32,11 @@ class UsersController < ApplicationController
     user.update user_params.except(:profile_cover, :cover_photo)
 
     if user_params[:profile_cover]
-      image = Image.create user_params[:profile_cover]
-      user.set_profile_cover image
+      UsersService.new(user).update_profile_cover(user_params, :profile_cover)
     end
 
     if user_params[:cover_photo]
-      image = Image.create user_params[:cover_photo]
-      user.set_cover_photo image
+      UsersService.new(user).update_cover_photo(user_params, :cover_photo)
     end
 
     current_pwd = params[:current_password]

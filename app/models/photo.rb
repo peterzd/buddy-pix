@@ -78,6 +78,7 @@ class Photo < ActiveRecord::Base
     album.touch
     send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator)
   end
+
 end
 
 
