@@ -13,6 +13,10 @@ class AlbumsService
     end
   end
 
+  def update_cover(album_params)
+    process_image(album_params)
+  end
+
   protected
   def process_image(object_params)
     if object_params[:cover_image]

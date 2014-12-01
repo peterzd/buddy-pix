@@ -54,8 +54,7 @@ class AlbumsController < ApplicationController
     @album.update(album_params.except(:cover_image))
 
     if album_params[:cover_image]
-      image = Image.create album_params[:cover_image]
-      @album.set_cover_image image
+      AlbumsService.new(@album).update_cover(album_params)
     end
     redirect_to card_path @album
   end
