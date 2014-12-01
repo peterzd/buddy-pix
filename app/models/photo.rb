@@ -60,7 +60,7 @@ class Photo < ActiveRecord::Base
     user = User.find user_id
     return if tagged_users.include? user
     tagged_users << user
-    send_notification(maker: nil, action: Notification::ACTION[:tagged], object: self, receiver: user)
+    send_notification(maker: creator, action: Notification::ACTION[:tagged], object: self, receiver: user)
   end
 
   def visible_to_world?
