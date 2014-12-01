@@ -20,7 +20,7 @@ class PhotosController < ApplicationController
     photo = @card.photos.build photo_params.except(:image, :tagged_users).merge(creator: current_user)
     authorize photo
 
-    if PhotosService.new(photo, photo_params).save_photo
+    if PhotosService.new(photo).save_photo(photo_params)
       redirect_to card_path @card
     else
       render nothing: true

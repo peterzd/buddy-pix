@@ -67,10 +67,6 @@ class Photo < ActiveRecord::Base
     album.visible_to_world?
   end
 
-  def set_image(image_path)
-    PhotoImageWorker.perform_async image_path, self.id
-  end
-
   private
   def send_notification(options={})
     Notification.create options
