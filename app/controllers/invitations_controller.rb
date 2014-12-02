@@ -29,8 +29,9 @@ class InvitationsController < ApplicationController
     card = Album.find params[:card_id]
     to_url = email_params[:to_url]
     content = email_params[:content]
-    token = InvitationToken.generate_token(action: card, info: to_url, invitation_mode: InvitationToken::MODE[:email], inviter: current_user)
-    InvitationMailer.invite(current_user, to_url, content, card, token, request).deliver
+    email_host = request.host_with_port
+
+    InvitationsService.send_email(current_user, card, to_url, content, email_host)
 
     redirect_to card_path(card)
   end
