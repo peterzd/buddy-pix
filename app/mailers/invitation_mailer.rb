@@ -1,8 +1,8 @@
 class InvitationMailer < ActionMailer::Base
   default from: "buddypix.info@gmail.com"
 
-  def invite(sender, to_url, content=nil, card, token, request)
-    host = request.host_with_port
+  def invite(sender, to_url, content=nil, card, token, email_host)
+    host = email_host
     @user = sender
     @content = content || "I would like to invite you on BuddyPix to check our latest Card and Images. Please click on this link to access:"
     @card = card
