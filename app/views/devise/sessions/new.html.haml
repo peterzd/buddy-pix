@@ -28,6 +28,10 @@
         .ph10
           = f.email_field :email, autofocus: true, placeholder: "Email id"
         .p10.mt10
+          = f.text_field :first_name, placeholder: "First Name"
+        .p10
+          = f.text_field :last_name, placeholder: "Last Name"
+        .p10.mt10
           = f.password_field :password, autocomplete: "off", placeholder: "Password"
         .p10
           = f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm Password"
