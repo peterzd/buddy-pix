@@ -37,8 +37,9 @@
                 %i.fa.fa-comment
                 = sanitize "#{card.total_comments}"
 
-            %aside.fr.p10
-              = link_to "Unfollow", unfollow_card_path(card, from: "following_page"), class: "btn dull inline min_btn"
+            - unless card.creator == current_user
+              %aside.fr.p10
+                = link_to "Unfollow", unfollow_card_path(card, from: "following_page"), class: "btn dull inline min_btn"
 
       / feed box
       .loading_feed.feed_box.fl.w100.p10

@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def following_cards
-    joined_albums - created_albums
+    joined_albums
   end
 
   def unfollow_album(album)
