@@ -23,6 +23,7 @@ class SupportsController < ApplicationController
     @support = Support.new(support_params)
 
     if @support.save
+      SupportMailer.support_email(@support).deliver
       redirect_to welcome_support_path
     end
   end

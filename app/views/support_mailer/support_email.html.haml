@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Hi, Admin
+    %p
+      There's a new support feedback from #{@support.sender_name}(#{@support.email}) for you
+      %br
+      subject: #{@support.subject}
+      %br
+      message: #{@support.message}
+    %p
+      Regards
+
