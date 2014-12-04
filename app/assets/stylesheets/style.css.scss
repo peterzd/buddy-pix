@@ -172,7 +172,7 @@ select{ width:100%;}
 textarea,button,input{width:100%;}
 button:focus,input:focus{outline:none;}
 
-textarea,input[type="text"],input[type="password"],input[type="search"],input[type="number"],input[type="email"],input[type="tel"]{padding:0 15px; height:50px; font-size:15px; font-family:inherit; color:#333; background-color:#fff; border:0 none;}
+textarea,input[type="text"],input[type="password"],input[type="search"],input[type="number"]{padding:0 15px; height:50px; font-size:15px; font-family:inherit; color:#333; background-color:#fff; border:0 none;}
 textarea{ resize:none; height:150px; padding:10px;}
 
 /*
@@ -423,7 +423,10 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .f_share_select .prettycheckbox{background:image-url('fshare_btn.png') no-repeat 0px 0px; width:274px; height:41px; cursor:pointer;}
 .f_share_select .prettycheckbox.active{background-image:image-url('fshare_btn_check.png');}
 
-.up_img_list .img figure{ height:150px; background-color:#000;}
+.up_img_list .img figure{ height:136px; background-color:#000;}
+.up_img_list .img{position:relative;}
+.up_img_list .img .fa-times{position:absolute; width:30px; height:30px; line-height:30px; text-align:center; background-color:#fff; right:10px; top:10px; text-decoration:none;}
+.up_img_list .img .fa-times:hover{background-color:#333; color:#fff;}
 
 .cmt_row{padding:10px 0; border-bottom: 1px solid #fff;}
 .cmt_row figure{width:80px; height:80px; float:left; background-color:#000; }
@@ -521,6 +524,17 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 
 .light_box{width:600px;}
 
+/*Carsoul navigation styling*/
+.owl-buttons div{width:35px; height:60px; background:image-url('anchor_arrow.png') no-repeat 0px 0px; position:absolute; top:50%; margin-top:-17.5px; text-indent:100px; overflow:hidden; opacity:.3}
+.owl-buttons div.owl-prev{left:20px;}
+.owl-buttons div.owl-next{right:20px; background-position:-33px 0px;}
+#owl-demo:hover div{opacity:1;}
+
+.set_up_box{margin:70px auto 0 auto; min-height:0; width:400px;}
+
+.table-striped{width:100%;}
+.table-striped td{vertical-align:middle;}
+.table-striped .name{width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
 /* ==========================================================================
         Responsive styling Styling
