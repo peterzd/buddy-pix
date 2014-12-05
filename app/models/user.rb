@@ -44,7 +44,6 @@ class User < ActiveRecord::Base
     # copied from [devise wiki](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview),
     # for omniauth login
     def from_omniauth(auth)
-      # where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       where(email: auth.info.email).first_or_create do |user|
         user.email = auth.info.email
         user.password = Devise.friendly_token[0,20]
@@ -56,7 +55,6 @@ class User < ActiveRecord::Base
     end
 
     def find_for_google_oauth2(auth)
-      # where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       where(email: auth.info.email).first_or_create do |user|
         user.email = auth.info.email
         user.password = Devise.friendly_token[0,20]
