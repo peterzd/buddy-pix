@@ -30,53 +30,50 @@
     .upload_btn.ac.bs.fl.w100
       = link_to image_tag("upload_img_btn.png", alt: "upload Image"), new_card_photo_path(@album), class: "fl w100"
     #m-container.fl.w100.clearfix
-      - @photos.each do |photo|
-        - uploader = photo.creator
-        .p10.feed_box.fl.w50{ id: dom_id(photo) }
-          .top_row.clearfix
-            %aside.fl.p10.user_info
-              %figure.img_fill.round.fl
-                = image_tag uploader.profile_cover_url(:medium)
-              .info_side
-                %h3= uploader.user_name
-                %p
-                  = "#{time_ago_in_words photo.updated_at} ago"
-            %aside.fr.p10.h3.ar
-              %h3= photo.title
-              %p= @album.decorate.private_text
+      = render partial: "photo", collection: @photos, locals: { from: "card" }
+    %nav#page-nav
+      = link_to "", next_batch_photos_card_path(page: 1)
 
-          %figure.post_img.img_fill.clearfix
-            = link_to image_tag(photo.picture_url(:medium), alt: "post img"), card_photo_path(@album, photo)
-            %h2= photo.description
-          .f_bottom.clearfix.fl.w100
-            %aside.fl.mt5
-              = link_to content_tag(:i, "", class: "pe-7s-like") + content_tag(:strong, "#{photo.likes.count}"), card_photo_path(@album, photo), class: "p10 inline like_btn"
-              = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(@album, photo), class: "p10 inline"
-            %aside.fr.p10
-              = photo.decorate.remove_link
-            .fl.w100.like_box.bs.hide
-              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
-              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
-              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: "like_icon cool", title: "cool", remote: true
-              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: "like_icon sad", title: "sad", remote: true
-              = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: "like_icon cheer", title: "cheer up", remote: true
-
-      .loading_feed.feed_box.fl.w100.p10
-        = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
-        %span
-          Loading
-          %blink ...
+    .loading_feed.feed_box.fl.w100.p10
+      = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+      %span
+        Loading
+        %blink ...
 
 :javascript
   jQuery(function($) {
-      var container = document.querySelector('#m-container');
-      var msnry =  new Masonry( container, {
-          itemSelector: '.feed_box'
+      var container = $('#m-container');
+      container.masonry({
+        itemSelector: '.feed_box'
       });
       $('.like_btn').click(function(){
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
-              msnry.layout();// this is masonry layout reset function we can user with other events
+              container.masonry();
           });
           return false;
       });
+
+      container.infinitescroll('bind');
+      container.infinitescroll({
+        errorCallback: function(){
+          $('.loading_feed').remove();
+        },
+        navSelector  : '#page-nav',    // selector for the paged navigation 
+        nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+        itemSelector : '.feed_box',     // selector for all items you'll retrieve
+        loading: {
+            finishedMsg: 'No more pages to load.',
+            msgText: "<em>Loading the next set of posts...</em>",
+          }
+        },
+        // trigger Masonry as a callback
+        function( newElements, opts ) {
+          $(".img_fill").imgLiquid({ fill: true });
+          $(".img_set").imgLiquid({ fill: false });
+          var $newElems = $( newElements );
+          container.append($newElems).masonry( 'appended', $newElems, true);
+        }
+      );
   });
+
+

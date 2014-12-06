@@ -1,64 +1,51 @@
 %section.clearfix.inner_body
   .pc.cm
     #m-container.fl.w100.mt20
-      - @cards.each do |card|
-        - creator = card.creator
-        .p10.feed_box.fl.w50.card_box
-          / feed box
-          .top_row.clearfix
-            %aside.fl.p10.user_info
-              %figure.img_fill.round.fl
-                = image_tag creator.profile_cover_url(:medium)
-              .info_side
-                %h3= creator.user_name
-                %p= "#{time_ago_in_words card.updated_at} ago"
-            %aside.fr.p10.h3.ar.cat_side
-              %h3
-                = link_to card.name, card_path(card)
-              %p= card.decorate.private_text
-          %figure.post_img.img_fill.clearfix
-            = link_to image_tag(card.cover_image_url(:medium)), card_path(card)
-            %h2= card.caption
-          .f_bottom.clearfix
-            %aside.fl.p10.mt5.card_count
-              %span
-                %i.fa.fa-group
-                = sanitize "#{card.followers.count}"
-              %span
-                %i.fa.fa-image
-                = sanitize "#{card.photos.count}"
-              %span
-                %i.fa.fa-heart
-                = sanitize "#{card.total_likes}"
-              %span
-                %i.fa.fa-eye
-                = sanitize "#{card.hit_count}"
-              %span
-                %i.fa.fa-comment
-                = sanitize "#{card.total_comments}"
-
-            - unless card.creator == current_user
-              %aside.fr.p10
-                = link_to "Unfollow", unfollow_card_path(card, from: "following_page"), class: "btn dull inline min_btn"
+      = render partial: "card_detail", collection: @cards, as: :card
+    %nav#page-nav
+      = link_to "", following_cards_batch_cards_path(page: 1)
 
       / feed box
-      .loading_feed.feed_box.fl.w100.p10
-        = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
-        %span
-          Loading
-          %blink ...
+    .loading_feed.feed_box.fl.w100.p10
+      = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+      %span
+        Loading
+        %blink ...
 
 :javascript
   jQuery(function($) {
-      var container = document.querySelector('#m-container');        
-      var msnry =  new Masonry( container, {
-          itemSelector: '.feed_box',
-          columnWidth: 0
+      var container = $('#m-container');
+      container.masonry({
+        itemSelector: '.feed_box'
       });
       $('.like_btn').click(function(){
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
-              msnry.layout();// this is masonry layout reset function we can user with other events
+              container.masonry();
           });
           return false;
       });
+
+      container.infinitescroll('bind');
+      container.infinitescroll({
+        errorCallback: function(){
+          $('.loading_feed').remove();
+        },
+        navSelector  : '#page-nav',    // selector for the paged navigation 
+        nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+        itemSelector : '.feed_box',     // selector for all items you'll retrieve
+        loading: {
+            finishedMsg: '',
+            msgText: "",
+          }
+        },
+        // trigger Masonry as a callback
+        function( newElements, opts ) {
+          $(".img_fill").imgLiquid({ fill: true });
+          $(".img_set").imgLiquid({ fill: false });
+          var $newElems = $( newElements );
+          container.append($newElems).masonry( 'appended', $newElems, true);
+        }
+      );
   });
+
+

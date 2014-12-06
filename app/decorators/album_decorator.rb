@@ -19,6 +19,7 @@ class AlbumDecorator < Draper::Decorator
   end
 
   def follow_btn_link(user)
+    return "" if object.creator == user
     if user.has_joined_album? object
       link_to "UnFollow", unfollow_card_path(object), class: "btn dull"
     else

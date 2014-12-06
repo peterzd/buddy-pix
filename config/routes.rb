@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
   get :my_wall, to: "users#my_wall"
+  get :my_wall_next_batch, to: "users#my_wall_next_batch"
   get :alerts, to: "users#alerts"
 
   resources :notifications do
@@ -37,9 +38,11 @@ Rails.application.routes.draw do
     collection do
       get :hidden_cards
       get :following_cards
+      get :following_cards_batch
     end
 
     member do
+      get :next_batch_photos
       post :hide_card
       post :publish_card
       get :follow
