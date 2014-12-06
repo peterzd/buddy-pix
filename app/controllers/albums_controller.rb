@@ -31,7 +31,11 @@ class AlbumsController < ApplicationController
   def next_batch_photos
     page = params[:page].to_i - 1
     @photos = @album.photos.order(updated_at: :desc).limit(3).offset(page * 3)
-    render partial: "photo", collection: @photos
+    if @photos.empty?
+      render nothing: true, status: 404
+    else
+      render partial: "photo", collection: @photos, locals: { from: "card" }
+    end
   end
 
   def new

@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
   end
 
   def my_wall_pics
-    Photo.where(album: joined_albums).order(updated_at: :desc)
+    Photo.where(album: joined_albums).order(updated_at: :desc).limit(3).offset(0)
   end
 
   def comments_photo(photo, comment_content="", image=nil)
