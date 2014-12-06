@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def my_wall_next_batch
     page = params[:page].to_i - 1
-    @photos = Photo.where(album: current_user.joined_albums).order(updated_at: :desc).limit(3).offset(page * 3)
+    @photos = PhotosQuery.user_wall_pics(current_user, page * PhotosQuery::NUMBER_FACTOR)
     if @photos.empty?
       render nothing: true, status: 404
     else

@@ -24,13 +24,13 @@ class AlbumsController < ApplicationController
   def show
     authorize @album
     @album.update hit_count: @album.hit_count + 1
-    @photos = @album.photos.order(updated_at: :desc).limit(3).offset(0)
+    @photos = PhotosQuery.album_batch(@album)
     respond_with(@album)
   end
 
   def next_batch_photos
     page = params[:page].to_i - 1
-    @photos = @album.photos.order(updated_at: :desc).limit(3).offset(page * 3)
+    @photos = PhotosQuery.album_batch(@album, page * PhotosQuery::NUMBER_FACTOR)
     if @photos.empty?
       render nothing: true, status: 404
     else
