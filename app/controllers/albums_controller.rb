@@ -1,7 +1,7 @@
 class AlbumsController < ApplicationController
   protect_from_forgery except: [ :hide_card, :view_card ]
   respond_to :html, :json
-  before_action :set_album, except: [:index, :hidden_cards, :following_cards, :new, :create]
+  before_action :set_album, except: [:index, :hidden_cards, :following_cards, :following_cards_batch, :new, :create]
 
   # Peter at 11.3: can the two methods extract the same code into another method?
   def index
@@ -18,7 +18,18 @@ class AlbumsController < ApplicationController
   end
 
   def following_cards
-    @cards = current_user.following_cards
+    @cards = AlbumsQuery.user_following_cards(current_user)
+  end
+
+  def following_cards_batch
+    page = params[:page].to_i - 1
+    @cards = AlbumsQuery.user_following_cards(current_user, page * AlbumsQuery::NUMBER_FACTOR)
+
+    if @cards.empty?
+      render nothing: true, status: 404
+    else
+      render partial: "albums/card_detail", collection: @cards, as: :card
+    end
   end
 
   def show

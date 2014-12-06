@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     collection do
       get :hidden_cards
       get :following_cards
+      get :following_cards_batch
     end
 
     member do
