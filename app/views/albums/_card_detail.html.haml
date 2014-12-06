@@ -1,0 +1,39 @@
+- user = current_user || User.new
+- creator = card.creator
+.p10.feed_box.fl.w50.card_box
+  / feed box
+  .top_row.clearfix
+    %aside.fl.p10.user_info
+      %figure.img_fill.round.fl
+        = image_tag creator.profile_cover_url(:medium)
+      .info_side
+        %h3= creator.user_name
+        %p= "#{time_ago_in_words card.updated_at} ago"
+    %aside.fr.p10.h3.ar.cat_side
+      %h3
+        = link_to card.name, card_path(card)
+      %p= card.decorate.private_text
+  %figure.post_img.img_fill.clearfix
+    = link_to image_tag(card.cover_image_url(:medium)), card_path(card)
+    %h2= card.caption
+  .f_bottom.clearfix
+    %aside.fl.p10.mt5.card_count
+      %span
+        %i.fa.fa-group
+        = sanitize "#{card.followers.count}"
+      %span
+        %i.fa.fa-image
+        = sanitize "#{card.photos.count}"
+      %span
+        %i.fa.fa-heart
+        = sanitize "#{card.total_likes}"
+      %span
+        %i.fa.fa-eye
+        = sanitize "#{card.hit_count}"
+      %span
+        %i.fa.fa-comment
+        = sanitize "#{card.total_comments}"
+
+
+    %aside.fr.p10
+      = card.decorate.follow_btn_link(user)

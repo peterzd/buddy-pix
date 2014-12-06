@@ -22,6 +22,16 @@ class UsersController < ApplicationController
     @photos = current_user.my_wall_pics
   end
 
+  def my_wall_next_batch
+    page = params[:page].to_i - 1
+    @photos = PhotosQuery.user_wall_pics(current_user, page * PhotosQuery::NUMBER_FACTOR)
+    if @photos.empty?
+      render nothing: true, status: 404
+    else
+      render partial: "albums/photo", collection: @photos, locals: { from: "my_wall" }
+    end
+  end
+
   def alerts
     @invitations = current_user.my_pending_invitations + current_user.my_rejected_invitations
     @notifications = current_user.unread_notifications
