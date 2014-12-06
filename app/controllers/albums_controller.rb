@@ -24,8 +24,14 @@ class AlbumsController < ApplicationController
   def show
     authorize @album
     @album.update hit_count: @album.hit_count + 1
-    @photos = @album.photos.order updated_at: :desc
+    @photos = @album.photos.order(updated_at: :desc).limit(3).offset(0)
     respond_with(@album)
+  end
+
+  def next_batch_photos
+    page = params[:page].to_i - 1
+    @photos = @album.photos.order(updated_at: :desc).limit(3).offset(page * 3)
+    render partial: "photo", collection: @photos
   end
 
   def new

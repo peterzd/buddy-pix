@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      get :next_batch_photos
       post :hide_card
       post :publish_card
       get :follow

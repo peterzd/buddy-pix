@@ -1,0 +1,34 @@
+- album = photo.album
+- uploader = photo.creator
+.p10.feed_box.fl.w50{ id: dom_id(photo) }
+  .top_row.clearfix
+    %aside.fl.p10.user_info
+      %figure.img_fill.round.fl
+        = image_tag uploader.profile_cover_url(:medium)
+      .info_side
+        %h3= uploader.user_name
+        %p
+          = "#{time_ago_in_words photo.updated_at} ago"
+    %aside.fr.p10.h3.ar
+      %h3= photo.title
+      %p= album.decorate.private_text
+
+  %figure.post_img.img_fill.clearfix
+    = link_to image_tag(photo.picture_url(:medium), alt: 'post img'), card_photo_path(album, photo)
+    %h2= photo.description
+  .f_bottom.clearfix.fl.w100
+    %aside.fl.mt5
+      = link_to content_tag(:i, "", class: 'pe-7s-like') + content_tag(:strong, "#{photo.likes.count}"), card_photo_path(album, photo), class: 'p10 inline like_btn'
+      = link_to content_tag(:i, "", class: 'pe-7s-chat') + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(album, photo), class: 'p10 inline'
+    %aside.fr.p10
+      = photo.decorate.remove_link
+    .fl.w100.like_box.bs.hide
+      = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: 'like_icon happy', title: 'happy', remote: true
+      = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: 'like_icon like', title: 'like', remote: true
+      = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cool] }), class: 'like_icon cool', title: 'cool', remote: true
+      = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:sad] }), class: 'like_icon sad', title: 'sad', remote: true
+      = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:cheer_up] }), class: 'like_icon cheer', title: 'cheer up', remote: true
+
+:javascript
+
+
