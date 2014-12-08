@@ -16,7 +16,7 @@ module API
           requires :email, type: String, desc: "user's email"
           requires :password, type: String, desc: "user's password"
           requires :password_confirmation, type: String, desc: "user's password confirmation"
-          requires :picture, type: Rack::Multipart::UploadedFile, desc: "profile image"
+          requires :picture, type: String, desc: "profile image, base64 format"
         end
         post :sign_up do
           error!("password are not same") unless same_password?
@@ -24,11 +24,16 @@ module API
             email: params[:email],
             password: params[:password]
           )
-          uploaded_pic = params[:picture]
-          image = Image.create picture: uploaded_pic
-          user.set_profile_cover image
 
           if user.save
+            open(Rails.root.join("tmp", "uploaded_images", "profile_img.png"), "wb") do |file|
+              file.write(Base64.decode64(params[:picture]))
+            end
+
+            uploaded_pic = params[:picture]
+            image = Image.create picture: File.new("tmp/uploaded_images/profile_img.png", "r")
+            user.set_profile_cover image
+
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
