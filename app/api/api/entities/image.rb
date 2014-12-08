@@ -6,7 +6,8 @@ module API
 
       private
       def url
-        object.picture.url :medium
+        host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
+        "#{host}#{object.picture.url :medium}"
       end
     end
   end
