@@ -7,20 +7,23 @@
         = link_to "Email", "#email"
 
     #app_contact.cover_box.tab.hide
-      .search_row.fl.w100.p10.contect_search
-        .btn_box.fr
-          %button{:type => "submit"}
-            %i.pe-7s-search
-        .input
-          %input{:placeholder => "Search ...", :type => "text"}/
-      = form_tag card_invitations_path do
-        %ul.ph10.contact_search_list.cr
-          - User.all_other_users(current_user).each do |user|
-            %li
-              %figure.fl.round.img_fill
-                = image_tag user.profile_cover_url(:medium)
-              .check
-                = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}", data: { label: "#{user.user_name}", labelposition: "left" }
+      #users-list
+        .search_row.fl.w100.p10.contect_search
+          .btn_box.fr
+            %button{:type => "submit"}
+              %i.pe-7s-search
+          .input
+            %input{:placeholder => "Search ...", :type => "text", class: "search"}
+        = form_tag card_invitations_path do
+          %ul.ph10.contact_search_list.cr.list
+            - User.all_other_users(current_user).each do |user|
+              %li
+                %span.name{ style: "display: none" }
+                  = user.user_name
+                %figure.fl.round.img_fill
+                  = image_tag user.profile_cover_url(:medium)
+                .check
+                  = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}", data: { label: "#{user.user_name}", labelposition: "left" }
         .p20.ac
           = submit_tag "Invite Friends"
     #email.cover_box.tab.p10.hide
@@ -37,3 +40,8 @@
       $('.tab_box').tabs();
   });
 
+:coffee
+  options = valueNames: [
+    "name"
+  ]
+  user_list = new List('users-list', options)
