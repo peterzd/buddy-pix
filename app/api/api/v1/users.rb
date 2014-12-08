@@ -16,6 +16,7 @@ module API
           requires :email, type: String, desc: "user's email"
           requires :password, type: String, desc: "user's password"
           requires :password_confirmation, type: String, desc: "user's password confirmation"
+          requires :picture, type: Rack::Multipart::UploadedFile, desc: "profile image"
         end
         post :sign_up do
           error!("password are not same") unless same_password?
@@ -23,8 +24,13 @@ module API
             email: params[:email],
             password: params[:password]
           )
+          uploaded_pic = params[:picture]
+          image = Image.create picture: uploaded_pic
+          user.set_profile_cover image
+
           if user.save
-            present user, with: API::Entities::User
+            present :status, "true"
+            present :user, user, with: API::Entities::User, type: :access_token
           else
             error!("#{user.errors.full_messages}")
           end
