@@ -39,7 +39,7 @@ class PhotosService
     receivers = @photo.album.followers
     maker = @photo.creator
     receivers.each do |receiver|
-      send_notification(maker: maker, action: Notification::ACTION[:post_photo], object: @photo, receiver: receiver)
+      send_notification(maker: maker, action: Notification::ACTION[:post_photo], object: @photo, receiver: receiver) unless maker == receiver
     end
   end
 

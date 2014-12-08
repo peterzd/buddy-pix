@@ -76,7 +76,7 @@ class Photo < ActiveRecord::Base
     touch
     update_last_updater user
     album.touch
-    send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator)
+    send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator) unless user == creator
   end
 
 end
