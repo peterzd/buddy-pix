@@ -45,19 +45,23 @@
   .tag_box.clearfix.cover_box.cm
     %i.tag_close X
     %h3.ac.mt5 Select Tag User
-    .search_row.fl.w100.p10.contect_search
-      .btn_box.fr
-        %button{:type => "submit"}
-          %i.pe-7s-search
-      .input
-        %input{:placeholder => "Search ...", :type => "text"}/
-    %ul.ph10.contact_search_list.cr
-      - User.all_other_users(current_user).each do |user|
-        %li
-          %figure.fl.round.img_fill
-            = image_tag user.profile_cover_url(:thumb)
-          .check
-            %input{ "data-label" => "#{user.user_name}", "data-labelposition" => "left", :name => "tagged_user", :type => "checkbox", value: user.id }
+    #users-list
+      .search_row.fl.w100.p10.contect_search
+        .btn_box.fr
+          %button{:type => "submit"}
+            %i.pe-7s-search
+        .input
+          %input{:placeholder => "Search ...", :type => "text", class: "search"}/
+      %ul.ph10.contact_search_list.cr.list
+        - User.all_other_users(current_user).each do |user|
+          %li
+            %span.name{ style: "display: none" }
+              = user.user_name
+            %figure.fl.round.img_fill
+              = image_tag user.profile_cover_url(:thumb)
+            .check
+              %input{ "data-label" => "#{user.user_name}", "data-labelposition" => "left", :name => "tagged_user", :type => "checkbox", value: user.id }
+              = hidden_field_tag "name", user.user_name
     .p20.ac
       %button.inline{:type => "submit", id: "invite_users_btn"} Tag Friends
 
@@ -77,3 +81,8 @@
   $("#invite_users_btn").on "click", ->
     total_checked = $("input[name='tagged_user']:checked").serialize()
     $("#photo_tagged_users").val(total_checked)
+
+  options = valueNames: [
+    "name"
+  ]
+  user_list = new List('users-list', options)
