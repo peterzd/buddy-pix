@@ -16,7 +16,7 @@
             = f.fields_for :image do |img|
               = img.file_field "picture"
             -# %input{:type => "file"}>/
-            Browse Images
+            Upload Images
         .up_img_list.cr
           - @card.recent_photos(3).each do |p|
             .fl.w33.p10.img
@@ -27,19 +27,17 @@
           %h4.al
             %small Tag Friends
           = link_to "Add", "#", class: "btn inline add_tag_btn"
-          .fr.chose_tager
-            %ul.fl
-              %li
-                %figure
-              %li
-                %figure
-              %li
-                %figure
-              %li
-                %figure
-            + Others
-        .f_share_select.cr.mt20
-          %input{"data-label" => "Public", :name => "post_type", :type => "checkbox"}/
+          -# .fr.chose_tager
+          -#   %ul.fl
+          -#     %li
+          -#       %figure
+          -#     %li
+          -#       %figure
+          -#     %li
+          -#       %figure
+          -#     %li
+          -#       %figure
+          -#   + Others
         .fl.mt20
           = f.submit "Post Now"
 
@@ -61,7 +59,7 @@
           .check
             %input{ "data-label" => "#{user.user_name}", "data-labelposition" => "left", :name => "tagged_user", :type => "checkbox", value: user.id }
     .p20.ac
-      %button.inline{:type => "submit", id: "invite_users_btn"} Invte Friends
+      %button.inline{:type => "submit", id: "invite_users_btn"} Tag Friends
 
 :javascript
   jQuery(function($) {
