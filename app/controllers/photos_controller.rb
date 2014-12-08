@@ -3,7 +3,8 @@ class PhotosController < ApplicationController
   before_action :set_photo, except: [:new, :create]
 
   def show
-    authorize @card, :show?
+    card = @photo.album
+    authorize card, :show?
   end
 
   def like
@@ -28,7 +29,8 @@ class PhotosController < ApplicationController
   end
 
   def download
-    authorize @card, :show?
+    card = @photo.album
+    authorize card, :show?
     file_name = @photo.image.picture_file_name
     file_type = @photo.image.picture_content_type
 
