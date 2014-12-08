@@ -8,6 +8,6 @@ class InvitationMailer < ActionMailer::Base
     @card = card
     @link_url = "http://#{host}/users/sign_in?invitation_token=#{token}"
 
-    mail(to: to_url, subject: "Invite you to BuddyPix")
+    mail(to: to_url, subject: "Invitation to BuddyPix")
   end
 end
