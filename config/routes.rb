@@ -84,4 +84,9 @@ Rails.application.routes.draw do
   end
 
   get "search", to: "search#search", as: :search
+  resources :images do
+    collection do
+      post :photo_upload
+    end
+  end
 end
