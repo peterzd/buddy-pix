@@ -58,7 +58,7 @@
             %h4.fl= comment.commenter.user_name
             %p.fr
               %strong= "#{time_ago_in_words(comment.created_at)} ago"
-            %p.fl= comment.content
+            %p.fl.w100= comment.content
             = image_tag comment.picture_url(:medium)
             = link_to content_tag(:i, "", class: "fa fa-reply") + "Reply", "#reply", class: "fl fancybox", data: { commenter: comment.commenter.user_name, "comment-id" => comment.id }
         - if comment.replies.count > 0
