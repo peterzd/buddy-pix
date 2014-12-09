@@ -13,8 +13,12 @@
         %aside.fr.p10.h3.ar.cat_side
           %h3= card.name
           %p= card.private? ? "Private" : "Public"
-      %figure.clearfix.ac.fig_img
-        = image_tag @photo.picture_url :medium
+
+      %figure#owl-demo.clearfix.ac.fig_img.owl-carousel
+        - @photo.images.each do |image|
+          %div
+            = image_tag image.picture.url(:medium)
+
       .f_bottom.clearfix.fl.w100{ id: dom_id(@photo)  }
         .p10
           %p
@@ -129,6 +133,16 @@
       $('.like_btn').click(function(){
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0);
           return false;
+      });
+      $("#owl-demo").owlCarousel({
+          autoPlay : 3000,
+          stopOnHover : true,
+          navigation:true,
+          paginationSpeed : 1000,
+          goToFirstSpeed : 2000,
+          singleItem : true,
+          autoHeight : true,
+          transitionStyle:"fade"
       });
   });
 

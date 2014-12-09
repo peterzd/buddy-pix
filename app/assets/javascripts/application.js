@@ -27,4 +27,15 @@
 //= require ckeditor-jquery
 //= require jquery.infinitescroll.min
 //= require list.min
+//= require jquery.ui.widget
+//= require tmpl.min
+//= require load-image.all.min
+//= require jquery.iframe-transport
+//= require jquery.fileupload
+//= require jquery.fileupload-process
+//= require jquery.fileupload-image
+//= require jquery.fileupload-validate
+//= require jquery.fileupload-ui
+//= require main-fileupload
+//= require owl.carousel.min
 //= require_tree .

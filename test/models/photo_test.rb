@@ -12,11 +12,11 @@ describe Photo do
 
   describe "relations with image" do
     before do
-      photo.image = image
+      photo.images << image
     end
 
     it "must have an image" do
-      photo.image.must_equal image
+      photo.images.must_include image
     end
 
     it "the image should belong to the photo" do
