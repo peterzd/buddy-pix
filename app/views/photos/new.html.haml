@@ -164,6 +164,9 @@
           $('.tag_frd_overlay').toggleClass('hide');
           return false;
       });
+      $('.cancel.btn').on('click',function(){
+        $(this).parents('.template-upload').remove();
+      });
   });
 
 :coffee
