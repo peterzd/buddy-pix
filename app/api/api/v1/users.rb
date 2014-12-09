@@ -51,6 +51,18 @@ module API
           end
         end
 
+        desc "my wall, my feed post"
+        get :my_wall_batch do
+          authenticate!
+          page = params[:page]
+          photos = PhotosQuery.user_wall_pics(current_user, page * PhotosQuery::NUMBER_FACTOR)
+
+          present :status, "true"
+          present :posts, photos, with: API::Entities::Photo
+
+        end
+
+
         desc "upload profile photo"
         params do
           requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
