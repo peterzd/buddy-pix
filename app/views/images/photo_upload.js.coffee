@@ -1,2 +1,2 @@
-ele = $("#photo_image_ids");
+ele = $("#photo_image_ids")
 ele.val(ele.val() + ",<%= @image.id %>")
