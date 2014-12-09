@@ -7,7 +7,6 @@ module API
         def same_password?
           params[:password] == params[:password_confirmation]
         end
-
       end
 
       resources :users do
@@ -26,12 +25,7 @@ module API
           )
 
           if user.save
-            open(Rails.root.join("tmp", "uploaded_images", "profile_img.png"), "wb") do |file|
-              file.write(Base64.decode64(params[:picture]))
-            end
-
-            uploaded_pic = params[:picture]
-            image = Image.create picture: File.new("tmp/uploaded_images/profile_img.png", "r")
+            image = Image.create image_data: params[:picture]
             user.set_profile_cover image
 
             present :status, "true"
