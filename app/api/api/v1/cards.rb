@@ -10,12 +10,10 @@ module API
         end
 
         desc "returns my following cards"
-        params do
-        end
         get "following_cards_batch" do
           authenticate!
           page = params[:page].to_i
-          cards = AlbumsQuery.user_following_cards(current_user)
+          cards = AlbumsQuery.user_following_cards(current_user, page * AlbumsQuery::NUMBER_FACTOR)
           present :status, "true"
           present :cards, cards, with: API::Entities::Card
         end
