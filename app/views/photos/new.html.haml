@@ -2,7 +2,7 @@
   .pc.cm
     = form_for @photo, url: card_photos_path(@card), html: { class: "mt20" } do |f|
       = hidden_field_tag "photo[tagged_users]"
-      = hidden_field_tag "photo[image_ids][]"
+      = hidden_field_tag "photo[image_ids]"
       %h4.ph10 Upload Images
       %aside.fl.w50.mt10
         .p10
