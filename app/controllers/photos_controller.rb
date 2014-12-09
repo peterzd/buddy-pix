@@ -18,7 +18,7 @@ class PhotosController < ApplicationController
   end
 
   def create
-    photo = @card.photos.build photo_params.except(:image, :tagged_users).merge(creator: current_user)
+    photo = @card.photos.build photo_params.except(:image_ids, :tagged_users).merge(creator: current_user)
     authorize photo
 
     if PhotosService.new(photo).save_photo(photo_params)
@@ -56,7 +56,7 @@ class PhotosController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:id, :title, :description, { image: [:picture] }, :tagged_users)
+    params.require(:photo).permit(:id, :title, :description, :image_ids, :tagged_users)
   end
 end
 

@@ -4,7 +4,7 @@ class Photo < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  has_one :image, as: :imageable, dependent: :destroy
+  has_many :images, as: :imageable, dependent: :destroy
   belongs_to :album, touch: true
   belongs_to :creator, class_name: "User"
   belongs_to :last_updater, class_name: "User"
@@ -27,9 +27,13 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  def first_image
+    images.first
+  end
+
   def picture_url(format=:original)
-    return "" if image.nil?
-    image.picture.url format
+    return "" if images.empty?
+    first_image.picture.url format
   end
 
   def recent_likes(count)

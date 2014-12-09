@@ -6,7 +6,8 @@ class PhotosService
   def save_photo(photo_params)
     if @photo.save
       process_tagged_users(photo_params)
-      process_image(photo_params)
+      process_images(photo_params)
+      # process_image(photo_params)
       send_notifications
       true
     else
@@ -25,6 +26,7 @@ class PhotosService
   end
 
   # Later we can use background job to make it faster
+  # only for one image
   def process_image(object_params)
     if object_params[:image]
       name = object_params[:image][:picture].original_filename
@@ -32,6 +34,14 @@ class PhotosService
       path = File.join(directory, name)
       File.open(path, "wb") { |f| f.write(object_params[:image][:picture].read) }
       PhotoImageWorker.perform_async path, @photo.id
+    end
+  end
+
+  # uploaded multiple images
+  def process_images(object_params)
+    ids = object_params[:image_ids][1..-1].split(",").map &:to_i
+    ids.each do |id|
+      @photo.images << Image.find(id)
     end
   end
 

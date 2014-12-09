@@ -83,6 +83,7 @@ describe PhotosController do
   end
 
   describe "POST create" do
+
     before do
       album.update creator: peter
     end
@@ -99,19 +100,19 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
 
         it "set the creator as allen" do
-          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           Photo.last.creator.must_equal allen
         end
       end
@@ -123,19 +124,19 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
 
         it "set the creator as peter" do
-          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+          post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           Photo.last.creator.must_equal peter
         end
       end
@@ -147,14 +148,14 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
       end
@@ -173,7 +174,7 @@ describe PhotosController do
 
         it "can not create a new photo for the card" do
           assert_no_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to root_path
         end
@@ -187,14 +188,14 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
 
@@ -207,14 +208,14 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
       end
@@ -226,14 +227,14 @@ describe PhotosController do
 
         it "can create a new photo for the card" do
           assert_difference("Photo.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
           assert_redirected_to card_path album
         end
 
         it "adds one photo for the card" do
           assert_difference("album.photos.count") do
-            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image: image)
+            post :create, card_id: album.id, photo: attributes_for(:photo, title: "photo title", description: "this is photo description", image_ids: ",#{image.id}")
           end
         end
       end
