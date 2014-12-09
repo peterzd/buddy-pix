@@ -37,4 +37,5 @@
 //= require jquery.fileupload-validate
 //= require jquery.fileupload-ui
 //= require main-fileupload
+//= require owl.carousel.min
 //= require_tree .
