@@ -4,7 +4,8 @@ class InvitationMailer < ActionMailer::Base
   def invite(sender, to_url, content=nil, card, token, email_host)
     host = email_host
     @user = sender
-    @content = content || "I would like to invite you on BuddyPix to check our latest Card and Images. Please click on this link to access:"
+    @default_content = "Hi, #{sender.user_name} has sent you an invitation to join BuddyPix, a new interest-based social platform.  You can click on the link below to accept their invitation and create an account"
+    @content = content
     @card = card
     @link_url = "http://#{host}/users/sign_in?invitation_token=#{token}"
 
