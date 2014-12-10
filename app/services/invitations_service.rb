@@ -5,7 +5,10 @@ class InvitationsService
 
   class << self
     def send_email(sender, card, to_url, content, email_host)
-      SendEmailWorker.perform_async sender.id, card.id, to_url, content, email_host
+      to_url.split(",").each do |url|
+        u = url.strip
+        SendEmailWorker.perform_async sender.id, card.id, u, content, email_host
+      end
     end
   end
 end
