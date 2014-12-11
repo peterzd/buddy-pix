@@ -4,9 +4,9 @@ module API
       expose :title, :description, :created_at, :updated_at
       expose :image_url
       expose :images, using: API::Entities::Image
-      expose :likes
+      expose :likes, using: API::Entities::Like
       expose :likes_count
-      expose :comments
+      expose :comments, using: API::Entities::Comment
       expose :comments_count
       expose :creator, using: API::Entities::User
       expose :followers_count
