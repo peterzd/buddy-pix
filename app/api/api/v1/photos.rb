@@ -28,7 +28,7 @@ module API
             else
               current_user.like_photo photo, mood: params[:mood]
               present :status, "true"
-              present :post, photo, with: API::Entities::Photo
+              present :likes_count, photo.likes.count
             end
           end
 
