@@ -11,7 +11,8 @@ module API
       expose :creator, using: API::Entities::User
       expose :followers_count
       expose :privacy
-
+      expose :album, as: :card
+        
       private
       def image_url
         host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
