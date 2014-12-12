@@ -8,11 +8,11 @@
     %nav#page-nav
       = link_to "", my_wall_next_batch_path(page: 1)
 
-    .loading_feed.feed_box.fl.w100.p10
-      = image_tag "preloader.png", alt: "Loading ...", class: "rotate"
-      %span
-        Loading
-        %blink ...
+    -# .loading_feed.feed_box.fl.w100.p10
+    -#   = image_tag "preloader.png", alt: "Loading ...", class: "rotate"
+    -#   %span
+    -#     Loading
+    -#     %blink ...
 
 
 :javascript
@@ -28,29 +28,7 @@
           return false;
       });
 
-      container.infinitescroll('bind');
-      container.infinitescroll({
-        errorCallback: function(){
-          $('.loading_feed').remove();
-        },
-        navSelector  : '#page-nav',    // selector for the paged navigation 
-        nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-        itemSelector : '.feed_box',     // selector for all items you'll retrieve
-        loading: {
-            finishedMsg: 'No more pages to load.',
-            msgText: "<em>Loading the next set of posts...</em>",
-          }
-        },
-        // trigger Masonry as a callback
-        function( newElements ) {
-          if(jQuery.isEmptyObject(newElements)) {
-            alert("nothing more");
-          }
-            
-          $(".img_fill").imgLiquid({ fill: true });
-          $(".img_set").imgLiquid({ fill: false });
-          var $newElems = $( newElements );
-          container.append($newElems).masonry( 'appended', $newElems, true);
-        }
-      );
   });
+
+  load_more($("#m-container"));
+
