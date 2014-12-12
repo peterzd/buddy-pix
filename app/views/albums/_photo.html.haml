@@ -25,7 +25,10 @@
       = link_to content_tag(:i, "", class: 'pe-7s-like') + content_tag(:strong, "#{photo.likes.count}"), "", class: 'p10 inline like_btn'
       = link_to content_tag(:i, "", class: 'pe-7s-chat') + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(album, photo), class: 'p10 inline'
     %aside.fr.p10
-      = photo.decorate.remove_link
+      - if from == "my_wall"
+        = "#{album.followers.count} Followers"
+      - else
+        = photo.decorate.remove_link
     .fl.w100.like_box.bs.hide
       = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: 'like_icon happy', title: 'happy', remote: true
       = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: 'like_icon like', title: 'like', remote: true
