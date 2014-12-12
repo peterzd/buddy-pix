@@ -4,11 +4,12 @@ module API
       expose :name, :private, :caption, :created_at, :last_name, :hidden
       expose :creator, using: API::Entities::User, unless: { type: :with_cards }
       expose :cover_image, using: API::Entities::Image
-      expose :photos, using: API::Entities::Photo, if: { type: :need_photos }
+      expose :photos, using: API::Entities::Photo, if: { type: :detail }
       expose :photos_count
       expose :likes
       expose :comments
       expose :followers_count
+      expose :hit_count, if: { type: :detail }
 
 
       private
