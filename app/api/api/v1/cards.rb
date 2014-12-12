@@ -32,7 +32,8 @@ module API
         end
         get ":id" do
           card = Album.find params[:id]
-          present card, with: API::Entities::Card
+          present :status, "true"
+          present :card, card, with: API::Entities::Card, type: :detail
         end
 
       end
