@@ -10,7 +10,7 @@
 # 
 
 # global $, window 
-file_upload = ->
+@file_upload = ->
   "use strict"
   
   # Initialize the jQuery File Upload widget:
@@ -19,8 +19,19 @@ file_upload = ->
       
       # Uncomment the following to send cross-domain cookies:
       #xhrFields: {withCredentials: true},
-      dataType: "script"
       url: "/images/photo_upload"
+      autoUpload: true,
+      add: (e, data)->
+        # for file in data.files
+        #   data.context = $(tmpl("template-upload", file))
+        #   $('#fileupload').append(data.context)
+        data.submit()
+      done: (e, data)->
+        ele = $("#photo_image_ids")
+        ele.val(ele.val() + ",#{data.result.id}")
+        $("#fileupload").append("<div><img src=#{data.result.thumb_url}><a data-method='delete' href=/images/#{data.result.id} class='btn btn-warning remove' data-remote=true>remove</a></div>")
+
+
 
     
     # Enable iframe cross-domain access via redirect option:
@@ -71,5 +82,5 @@ file_upload = ->
   return
 
 
-$(document).on "page:load ready", ->
-  file_upload()
+# $(document).on "page:load ready", ->
+#   file_upload()

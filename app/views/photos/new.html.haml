@@ -18,9 +18,9 @@
                 %input{:multiple => "multiple", :name => "image[picture]", :type => "file"}
                   %i.fa.fa-upload
                   &nbsp;&nbsp;Add Images
-              %button.btn.btn-primary.start.inline{:type => "submit"}
-                %i.glyphicon.glyphicon-upload
-                %span Start upload
+              -# %button.btn.btn-primary.start.inline{:type => "submit"}
+              -#   %i.glyphicon.glyphicon-upload
+              -#   %span Start upload
               /
                 <button type="reset" class="btn btn-warning cancel inline">
                 <i class="glyphicon glyphicon-ban-circle"></i>
@@ -179,3 +179,6 @@
     "name"
   ]
   user_list = new List('users-list', options)
+  $("body").on "click", "#fileupload .remove", (e)->
+    $(e.target).parent("div").remove()
+  file_upload()

@@ -10,6 +10,10 @@ class Image < ActiveRecord::Base
   do_not_validate_attachment_file_type :picture
   # validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
+  def to_json
+    { thumb_url: "http://localhost:3000/#{self.picture.url(:thumb) }", id: self.id }
+  end
+
   private
   def set_image
     # for client uploaded base64 image
