@@ -11,7 +11,13 @@ class Image < ActiveRecord::Base
   # validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
   def to_json
-    { thumb_url: "http://localhost:3000/#{self.picture.url(:thumb) }", id: self.id }
+    host = if Rails.env == "development"
+             "http://localhost:3000/"
+           else
+             "http://www.buddypix.net/"
+           end
+
+    { thumb_url: "#{host}#{self.picture.url(:thumb) }", id: self.id }
   end
 
   private
