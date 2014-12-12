@@ -6,11 +6,11 @@
       = link_to "", following_cards_batch_cards_path(page: 1)
 
       / feed box
-    .loading_feed.feed_box.fl.w100.p10
-      = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
-      %span
-        Loading
-        %blink ...
+    -# .loading_feed.feed_box.fl.w100.p10
+    -#   = image_tag "preloader.png", class: "rotate", alt: "Loading ..."
+    -#   %span
+    -#     Loading
+    -#     %blink ...
 
 :javascript
   jQuery(function($) {
@@ -25,27 +25,8 @@
           return false;
       });
 
-      container.infinitescroll('bind');
-      container.infinitescroll({
-        errorCallback: function(){
-          $('.loading_feed').remove();
-        },
-        navSelector  : '#page-nav',    // selector for the paged navigation 
-        nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-        itemSelector : '.feed_box',     // selector for all items you'll retrieve
-        loading: {
-            finishedMsg: '',
-            msgText: "",
-          }
-        },
-        // trigger Masonry as a callback
-        function( newElements, opts ) {
-          $(".img_fill").imgLiquid({ fill: true });
-          $(".img_set").imgLiquid({ fill: false });
-          var $newElems = $( newElements );
-          container.append($newElems).masonry( 'appended', $newElems, true);
-        }
-      );
   });
+
+  load_more($("#m-container"));
 
 
