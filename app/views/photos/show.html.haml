@@ -17,7 +17,7 @@
       %figure#owl-demo.clearfix.ac.fig_img.owl-carousel
         - @photo.images.each do |image|
           %div
-            = image_tag image.picture.url(:show)
+            = image_tag "", class: "lazyOwl", data: { src: "#{image.picture.url(:original)}" }
 
       .f_bottom.clearfix.fl.w100{ id: dom_id(@photo)  }
         .p10
@@ -135,6 +135,7 @@
           return false;
       });
       $("#owl-demo").owlCarousel({
+          lazyLoad: true,
           autoPlay : 3000,
           stopOnHover : true,
           navigation:true,
