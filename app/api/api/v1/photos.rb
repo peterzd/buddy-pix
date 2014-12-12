@@ -32,6 +32,26 @@ module API
             end
           end
 
+          desc "comments on a photo"
+          params do
+            requires :content, type: String, desc: "the content of the comment"
+            optional :picture, type: String, desc: "comment image"
+          end
+          post :comment do
+            authenticate!
+            photo = Photo.find params[:id]
+            if params[:picture]
+              p "will create image"
+              image = Image.create image_data: params[:picture]
+              current_user.comments_photo photo, params[:content], image
+            else
+              current_user.comments_photo photo, params[:content]
+            end
+            present :status, "true"
+            present :comments_count, photo.comments.count
+          end
+
+
         end
       end
 
