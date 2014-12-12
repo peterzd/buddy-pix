@@ -530,6 +530,11 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .owl-buttons div.owl-next{right:20px; background-position:-33px 0px;}
 #owl-demo:hover div{opacity:1;}
 
+.owl-item.loading{
+ min-height: 150px;
+ background: image-url('AjaxLoader.gif') no-repeat center center
+}
+
 .set_up_box{margin:70px auto 0 auto; min-height:0; width:400px;}
 
 .table-striped{width:100%;}
