@@ -15,7 +15,15 @@ module API
           page = params[:page].to_i
           cards = AlbumsQuery.user_following_cards(current_user, page * AlbumsQuery::NUMBER_FACTOR)
           present :status, "true"
-          present :cards, cards, with: API::Entities::Card, type: :detail
+          present :cards, cards, with: API::Entities::Card
+        end
+
+        desc "returns my hidden cards"
+        get "my_hidden_cards" do
+          authenticate!
+          cards = current_user.hidden_cards
+          present :status, "true"
+          present :cards, cards, with: API::Entities::Card
         end
 
         desc "returns one card"
