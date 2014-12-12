@@ -17,7 +17,7 @@
       %figure#owl-demo.clearfix.ac.fig_img.owl-carousel
         - @photo.images.each do |image|
           %div
-            = image_tag image.picture.url(:medium)
+            = image_tag image.picture.url(:show)
 
       .f_bottom.clearfix.fl.w100{ id: dom_id(@photo)  }
         .p10
