@@ -46,4 +46,5 @@ group :development, :test do
   gem 'factory_girl_rails', "~> 4.0"
   gem 'minitest-rails-capybara'
   gem "simplecov", "~> 0.9.0"
+  gem 'rest-client'
 end
