@@ -62,31 +62,6 @@ module API
 
         end
 
-
-        desc "upload profile photo"
-        params do
-          requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
-        end
-        post :profile_cover do
-          authenticate!
-          uploaded_pic = params[:picture]
-          image = Image.create picture: uploaded_pic
-          current_user.set_profile_cover image
-          present current_user, with: API::Entities::User
-        end
-
-        desc "upload cover photo"
-        params do
-          requires :picture, type: Rack::Multipart::UploadedFile, desc: "uploaded image"
-        end
-        post :cover_photo do
-          authenticate!
-          uploaded_pic = params[:picture]
-          image = Image.create picture: uploaded_pic
-          current_user.set_cover_photo image
-          present current_user, with: API::Entities::User
-        end
-
         desc "returns the user's profile"
         get :profile do
           authenticate!
