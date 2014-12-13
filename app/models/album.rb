@@ -16,6 +16,8 @@ class Album < ActiveRecord::Base
 
   has_many :invitation_tokens, as: :action
 
+  validates :name, uniqueness: true
+
   after_initialize :set_default_value
   after_save :creator_follow
 
