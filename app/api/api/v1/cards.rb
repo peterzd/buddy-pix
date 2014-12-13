@@ -36,6 +36,58 @@ module API
           present :card, card, with: API::Entities::Card, type: :detail
         end
 
+        desc "create a new card"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :name, type: String, desc: "the name of the card"
+          requires :private, type: String, desc: "if the card is a private one"
+          optional :description, type: String, desc: "the description of the card"
+          requires :picture, type: String, desc: "cover picture of the card"
+        end
+        post "create" do
+          authenticate!
+          private_bool = params[:private] == "true"
+          card = Album.new name: params[:name],
+                           private: private_bool,
+                           caption: params[:description],
+                           creator: current_user
+
+          if card.save
+            image = Image.create image_data: params[:picture]
+            card.set_cover_image image
+            present :status, "true"
+            present :card, card, with: API::Entities::Card
+          else
+            error!({status: "false", messages: "#{card.errors.full_messages}"})
+          end
+        end
+
+        route_param :id do
+          desc "hide a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "hide" do
+            authenticate!
+            card = Album.find params[:id]
+            error!({status: "false", message: "unauthorized to do"}) unless AlbumPolicy.new(current_user, card).hide_card?
+            card.update hidden: true
+            present :status, "true"
+          end
+
+          desc "unhide a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "unhide" do
+            authenticate!
+            card = Album.find params[:id]
+            card.update hidden: false
+            present :status, "true"
+          end
+
+        end
+
       end
     end
   end
