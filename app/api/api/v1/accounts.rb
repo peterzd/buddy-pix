@@ -42,6 +42,24 @@ module API
           present :user, current_user, with: API::Entities::User
         end
 
+        desc "send a feedback to system manager"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :subject, type: String, desc: "subject of the feedback"
+          requires :message, type: String, desc: "message of the feedback"
+        end
+        post :feedback do
+          authenticate!
+          support = Support.new sender_name: current_user.user_name,
+                                   email: current_user.email,
+                                   subject: params[:subject],
+                                   message: params[:message]
+          if support.save
+            SupportMailer.support_email(support).deliver
+            present :status, "true"
+          end
+        end
+
       end
     end
   end
