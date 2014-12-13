@@ -36,6 +36,31 @@ module API
           present :card, card, with: API::Entities::Card, type: :detail
         end
 
+        route_param :id do
+          desc "hide a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "hide" do
+            authenticate!
+            card = Album.find params[:id]
+            card.update hidden: true
+            present :status, "true"
+          end
+
+          desc "unhide a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "unhide" do
+            authenticate!
+            card = Album.find params[:id]
+            card.update hidden: false
+            present :status, "true"
+          end
+
+        end
+
       end
     end
   end
