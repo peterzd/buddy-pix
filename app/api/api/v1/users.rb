@@ -71,6 +71,42 @@ module API
 
           present :status, "true"
           present :invitations, invitations, with: API::Entities::Invitation
+        end
+
+        namespace :invitations do
+          route_param :id do
+            desc "accept an invitation"
+            params do
+              requires :access_token, type: String, desc: "the token of the user"
+            end
+            post :accept do
+              authenticate!
+              invitation = Invitation.find params[:id]
+              if invitation.receiver == current_user
+                invitation.accept
+                present :status, "true"
+                present :invitation_status, invitation.status
+              else
+                error!({status: "false", message: "can not do this action!"})
+              end
+            end
+
+            desc "decline an invitation"
+            params do
+              requires :access_token, type: String, desc: "the token of the user"
+            end
+            post :decline do
+              authenticate!
+              invitation = Invitation.find params[:id]
+              if invitation.receiver == current_user
+                invitation.reject
+                present :status, "true"
+                present :invitation_status, invitation.status
+              else
+                error!({status: "false", message: "can not do this action!"})
+              end
+            end
+          end
 
         end
 
