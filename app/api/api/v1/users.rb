@@ -59,6 +59,18 @@ module API
 
           present :status, "true"
           present :posts, photos, with: API::Entities::Photo
+        end
+
+        desc "get my invitations list"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post :my_invitations_list do
+          authenticate!
+          invitations = current_user.my_pending_invitations
+
+          present :status, "true"
+          present :invitations, invitations, with: API::Entities::Invitation
 
         end
 
