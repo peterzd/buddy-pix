@@ -31,7 +31,7 @@ module API
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
-            error!("#{user.errors.full_messages}")
+            error!({ status: "false", messages: "#{user.errors.full_messages}"})
           end
         end
 
