@@ -1,0 +1,15 @@
+%h3 Admin Static Pages
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left All Static Pages list
+  %table.table.table-striped
+    %tr
+      %th Page Name
+      %th Actions
+    - @pages.each do |page|
+      %tr
+        %td= page.name
+        %th
+          = link_to "edit", edit_admin_static_page_path(page)
+

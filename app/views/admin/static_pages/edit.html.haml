@@ -1,0 +1,11 @@
+%h3 Admin Edit #{@page.name} Static Pages
+
+= form_for @page, url: admin_static_page_path(@page) do |f|
+  .field
+    = f.label :content
+    = f.text_area :content, class: "ckeditor"
+  .actions
+    = f.submit 'Save'
+
+:coffee
+  $('.ckeditor').ckeditor({ })

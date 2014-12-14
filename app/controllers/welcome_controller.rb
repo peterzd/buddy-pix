@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
   end
 
   def terms
+    @page = StaticPages.find_by name: "terms"
   end
 
   def blog
