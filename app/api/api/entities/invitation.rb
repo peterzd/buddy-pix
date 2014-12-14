@@ -1,6 +1,7 @@
 module API
   module Entities
     class Invitation < Grape::Entity
+      expose :id
       expose :sender_name
       expose :sender_profile_cover
       expose :card
