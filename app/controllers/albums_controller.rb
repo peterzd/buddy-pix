@@ -58,8 +58,7 @@ class AlbumsController < ApplicationController
   def validate_name
     name = params[:name]
     card = Album.find_by name: name
-    @show_msg = card.nil?
-    render "validate_name"
+    render json: { status: card.nil? }
   end
 
   def edit
