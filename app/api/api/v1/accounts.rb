@@ -4,7 +4,7 @@ module API
       include API::V1::Helper
 
       resources :accounts do
-        desc "get user's account info"
+        desc "get user's account info with created cards"
         params do
           requires :access_token, type: String, desc: "the token of the user"
         end
