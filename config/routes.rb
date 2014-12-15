@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       get :hidden_cards
       get :following_cards
       get :following_cards_batch
+      post :validate_name
     end
 
     member do

@@ -1,4 +1,17 @@
 %section.clearfix.inner_body
   .pc.cm
+    #msg
     = render "form", action_text: "Create card", url_path: cards_path
+
+:coffee
+  $("#album_name").on "blur", ->
+    value = $(this).val()
+    $.ajax(
+      type: "post",
+      url: "/cards/validate_name",
+      data: { name: value },
+      dataType: "script"
+    
+    )
+
 
