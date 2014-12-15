@@ -134,25 +134,6 @@ module API
           present :user, current_user, with: API::Entities::User, type: :with_cards
         end
 
-        desc "update user's profile"
-        params do
-          optional :first_name, type: String, desc: "user's first name"
-          optional :last_name, type: String, desc: "user's last name"
-          optional :email, type: String, desc: "user's email"
-          optional :phone_number, type: String, desc: "user's phone number"
-        end
-        post :update_profile do
-          authenticate!
-          current_user.update!(
-            first_name: params[:first_name],
-            last_name: params[:last_name],
-            email: params[:email],
-            phone_number: params[:phone_number]
-          )
-          present current_user #, with: API::Entities::User
-        end
-
-
       end
     end
   end

@@ -60,7 +60,38 @@ module API
           end
         end
 
-      end
+        desc "update user's profile"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          optional :first_name, type: String, desc: "user's first name"
+          optional :last_name, type: String, desc: "user's last name"
+          optional :email, type: String, desc: "user's email"
+          optional :phone_number, type: String, desc: "user's phone number"
+        end
+        post :update_profile do
+          authenticate!
+          if params[:first_name]
+            current_user.update first_name: params[:first_name]
+          end
+
+          if params[:last_name]
+            current_user.update last_name: params[:last_name]
+          end
+
+          if params[:email]
+            current_user.update email: params[:email]
+          end
+
+          if params[:phone_number]
+            current_user.update phone_number: params[:phone_number]
+          end
+
+          present :status, "true"
+          present :user, current_user, with: API::Entities::User
+        end
+
+
+      end # end of resources accounts
     end
   end
 end
