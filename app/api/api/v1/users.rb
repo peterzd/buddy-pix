@@ -52,9 +52,13 @@ module API
         end
 
         desc "my wall, my feed post"
-        get :my_wall_batch do
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :page, type: String, desc: "request page"
+        end
+        post :my_wall_batch do
           authenticate!
-          page = params[:page]
+          page = params[:page].to_i
           photos = PhotosQuery.user_wall_pics(current_user, page * PhotosQuery::NUMBER_FACTOR)
 
           present :status, "true"
@@ -111,15 +115,23 @@ module API
         end
 
         desc "returns the user's profile"
-        get :profile do
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post :profile do
           authenticate!
-          present current_user, with: API::Entities::User
+          present :status, "true"
+          present :user, current_user, with: API::Entities::User
         end
 
         desc "returns my created cards"
-        get :my_cards do
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post :my_cards do
           authenticate!
-          present current_user, with: API::Entities::User, type: :with_cards
+          present :status, "true"
+          present :user, current_user, with: API::Entities::User, type: :with_cards
         end
 
         desc "update user's profile"

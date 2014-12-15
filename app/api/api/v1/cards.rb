@@ -10,7 +10,11 @@ module API
         end
 
         desc "returns my following cards"
-        get "my_cards" do
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :page, type: String, desc: "request page"
+        end
+        post "my_cards" do
           authenticate!
           page = params[:page].to_i
           cards = AlbumsQuery.user_following_cards(current_user, page * AlbumsQuery::NUMBER_FACTOR)
@@ -19,7 +23,10 @@ module API
         end
 
         desc "returns my hidden cards"
-        get "my_hidden_cards" do
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post "my_hidden_cards" do
           authenticate!
           cards = current_user.hidden_cards
           present :status, "true"
@@ -30,7 +37,7 @@ module API
         params do
           requires :id, type: String, desc: "card id"
         end
-        get ":id" do
+        post "get_card" do
           card = Album.find params[:id]
           present :status, "true"
           present :card, card, with: API::Entities::Card, type: :detail

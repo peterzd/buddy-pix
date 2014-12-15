@@ -6,7 +6,7 @@ module API
 
       resource :welcome do
         desc "Returns list all all blogs"
-        get :blog do
+        post :blogs do
           Blog.order :created_at
         end
 
