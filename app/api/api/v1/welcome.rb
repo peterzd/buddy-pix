@@ -10,21 +10,20 @@ module API
           Blog.order :created_at
         end
 
-        desc "Creates a support feedback"
-        params do
-          requires :sender_name, type: String, desc: "Sender's name"
-          requires :email, type: String, desc: "Sender's email"
-          requires :subject, type: String, desc: "Message's subject"
-          requires :message, type: String, desc: "Feedback's message"
+        desc "get privacy content"
+        post :privacy do
+          content = StaticPages.find_by(name: "privacy").content
+          present :status, 'true'
+          present :content, content
         end
-        post :support do
-          Support.create(
-            sender_name: params[:sender_name],
-            email: params[:email],
-            subject: params[:subject],
-            message: params[:message]
-          )
+
+        desc "get terms content"
+        post :terms do
+          content = StaticPages.find_by(name: "terms").content
+          present :status, 'true'
+          present :content, content
         end
+
       end
     end
   end
