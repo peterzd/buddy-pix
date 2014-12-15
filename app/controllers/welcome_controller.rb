@@ -3,6 +3,7 @@ class WelcomeController < ApplicationController
   end
 
   def about_us
+    @page = StaticPages.find_by name: "about_us"
   end
 
   def terms
@@ -18,5 +19,6 @@ class WelcomeController < ApplicationController
   end
 
   def privacy
+    @page = StaticPages.find_by name: "privacy"
   end
 end
