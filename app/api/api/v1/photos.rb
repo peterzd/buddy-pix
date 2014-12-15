@@ -6,9 +6,9 @@ module API
       resources :posts do
         desc "returns a post"
         params do
-          requires :id, type: String, desc: "photo id"
+          requires :access_token, type: String, desc: "the token of the user"
         end
-        get ":id" do
+        post ":id" do
           authenticate!
           photo = Photo.find params[:id]
           present :status, "true"
