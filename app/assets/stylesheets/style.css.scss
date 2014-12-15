@@ -546,6 +546,11 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .progress .progress-bar{background-color:#93b509; height:15px;}
 /*=================Progress bar==============*/
 
+/*=================upload image thumbnails==============*/
+.uploadimg_thumb{float: left; position: relative; padding: 10px; margin: 0px 10px 10px 0px;}
+.uploadimg_thumb .btn{padding: 0; position: absolute; height: 30px; line-height: 28px; width: 30px; top: 10px; right: 10px;}
+/*=================upload image thumbnails==============*/
+
 /* ==========================================================================
         Responsive styling Styling
    ========================================================================== */
