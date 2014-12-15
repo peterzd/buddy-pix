@@ -1,6 +1,11 @@
 %section.clearfix.inner_body
   .pc.cm
     #msg
+      - if flash[:danger]
+        .msg.danger
+          %i.fa.fa-times
+          = flash[:danger]
+
     = render "form", action_text: "Create card", url_path: cards_path
 
 :coffee

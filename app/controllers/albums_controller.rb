@@ -58,11 +58,8 @@ class AlbumsController < ApplicationController
   def validate_name
     name = params[:name]
     card = Album.find_by name: name
-    if card.nil?
-      render nothing: true
-    else
-      render "validate_name"
-    end
+    @show_msg = card.nil?
+    render "validate_name"
   end
 
   def edit
@@ -76,7 +73,8 @@ class AlbumsController < ApplicationController
     if AlbumsService.new(@album).save_album(album_params)
       redirect_to cards_path
     else
-      render edit
+      flash[:danger] = "this name is been taken. Please choose another one"
+      render "new"
     end
   end
 
