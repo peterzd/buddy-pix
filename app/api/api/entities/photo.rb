@@ -1,7 +1,7 @@
 module API
   module Entities
     class Photo < Grape::Entity
-      expose :title, :description, :created_at, :updated_at
+      expose :id, :title, :description, :created_at, :updated_at
       expose :image_url
       expose :images, using: API::Entities::Image
       expose :likes, using: API::Entities::Like
