@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
 
     resources :users
+    resources :static_pages
   end
 
   resources :supports, :blogs
