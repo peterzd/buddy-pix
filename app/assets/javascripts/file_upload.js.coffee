@@ -29,7 +29,7 @@
       done: (e, data)->
         ele = $("#photo_image_ids")
         ele.val(ele.val() + ",#{data.result.id}")
-        $("#fileupload").append("<div><img src=#{data.result.thumb_url}><a data-method='delete' href=/images/#{data.result.id} class='btn btn-warning remove' data-remote=true>remove</a></div>")
+        $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{data.result.thumb_url}><a data-method='delete' href=/images/#{data.result.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
 
 
 
