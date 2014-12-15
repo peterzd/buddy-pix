@@ -6,14 +6,21 @@ class UsersService
 
   def update_profile_cover(user_params, image_type)
     process_image(user_params, image_type)
+    # process_image_background(user_params, image_type)
   end
 
   def update_cover_photo(user_params, image_type)
     process_image(user_params, image_type)
+    # process_image_background(user_params, image_type)
   end
 
   private
-  def process_image(object_params, image_type)
+  def process_image(user_params, image_type)
+    image = Image.create user_params[image_type]
+    @user.send("set_#{image_type}", image)
+  end
+
+  def process_image_background(object_params, image_type)
     if object_params[image_type]
       name = object_params[image_type][:picture].original_filename
       directory = "tmp/uploaded_images"
