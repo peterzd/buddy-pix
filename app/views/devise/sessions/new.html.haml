@@ -1,5 +1,11 @@
 %section.clearfix.inner_body
   .pc.cm
+    #msg
+      - if flash[:danger]
+        .msg.danger
+          %i.fa.fa-times
+          = flash[:danger]
+
     = form_for(resource, as: resource_name, url: session_path(resource_name), class: "mt20 form_box p20 clearfix") do |f|
       %aside.fl.w50.mt10
         %article.p10
