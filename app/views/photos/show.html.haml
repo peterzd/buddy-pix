@@ -16,7 +16,7 @@
 
       %figure#owl-demo.clearfix.ac.fig_img.owl-carousel
         - @photo.images.each do |image|
-          %div
+          %div{ data: {"image-id" => image.id} }
             = image_tag "", class: "lazyOwl", data: { src: "#{image.picture.url(:original)}" }
 
       .f_bottom.clearfix.fl.w100{ id: dom_id(@photo)  }
@@ -30,7 +30,7 @@
           = link_to content_tag(:i, "", class: "pe-7s-chat") + content_tag(:strong, "#{@photo.comments.count}"), "#commt_box", class: "p10 inline"
         - if card.private?
           %aside.fr
-            = link_to content_tag(:i, "", class: "fa fa-download") + content_tag(:strong, "Download Image"), download_card_photo_path(card, @photo), class: "p10 inline"
+            = link_to content_tag(:i, "", class: "fa fa-download") + content_tag(:strong, "Download Image"), "", class: "p10 inline", id: "download_link"
         .like_box.bs.hide.clearfix.cr{ id: dom_id(@photo) }
           = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:happy] }), class: "like_icon happy", title: "happy", remote: true
           = link_to "", like_card_photo_path(@photo.album, @photo, { mood: Like::MOOD[:like] }), class: "like_icon like", title: "like", remote: true
@@ -134,23 +134,31 @@
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0);
           return false;
       });
-      $("#owl-demo").owlCarousel({
-          lazyLoad: true,
-          autoPlay : 3000,
-          stopOnHover : true,
-          navigation:true,
-          paginationSpeed : 1000,
-          goToFirstSpeed : 2000,
-          singleItem : true,
-          autoHeight : true,
-          transitionStyle:"fade"
-      });
   });
 
 :coffee
+  $("#owl-demo").owlCarousel({
+      lazyLoad: true,
+      autoPlay : 3000,
+      stopOnHover : true,
+      navigation:true,
+      paginationSpeed : 1000,
+      goToFirstSpeed : 2000,
+      singleItem : true,
+      autoHeight : true,
+      transitionStyle:"fade",
+      afterAction: ->
+        current_index = this.owl.currentItem
+        image_id = $(".owl-wrapper .owl-item").eq(current_index).find("div").data("image-id")
+        download_href = "/images/" + image_id + "/download"
+        $("#download_link").attr("href", download_href)
+  })
   $('.fancybox').on 'click', ->
     commenter = $(this).data("commenter")
     comment_id = $(this).data("comment-id")
     $("#reply p strong").html "Reply To " + commenter
     $('#reply form').attr "action", "/comments/" + comment_id + "/reply"
 
+  set_download_path = ()->
+    alert "works"
+    alert this.owl.currentItem
