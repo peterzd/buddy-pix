@@ -1,8 +1,7 @@
 module API
   module V1
     class Welcome < Grape::API
-      version 'v1'
-      format :json
+      include API::V1::Helper
 
       resource :welcome do
         desc "Returns list all all blogs"
@@ -22,6 +21,17 @@ module API
           content = StaticPages.find_by(name: "terms").content
           present :status, 'true'
           present :content, content
+        end
+
+        desc "fetch all users id and name"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post :users do
+          authenticate!
+          users = User.all_other_users(current_user)
+          present :status, "true"
+          present :users, users, with: API::Entities::User
         end
 
       end
