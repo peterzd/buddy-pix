@@ -44,25 +44,33 @@ class User < ActiveRecord::Base
     # copied from [devise wiki](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview),
     # for omniauth login
     def from_omniauth(auth)
-      where(email: auth.info.email).first_or_create do |user|
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0,20]
-        user.first_name = auth.info.first_name
-        user.last_name = auth.info.last_name
-        user.username = auth.info.username   # assuming the user model has a name
-        user.image_url = auth.info.image # assuming the user model has an image
+      user = where(email: auth.info.email).first
+      if user.nil?
+        user = User.new email: auth.info.email,
+                        password: Devise.friendly_token[0,20],
+                        first_name: auth.info.first_name,
+                        last_name: auth.info.last_name,
+                        username: auth.info.username,   # assuming the user model has a name
+                        image_url: auth.info.image # assuming the user model has an image
+        user.skip_confirmation!
+        user.save!
       end
+      user
     end
 
     def find_for_google_oauth2(auth)
-      where(email: auth.info.email).first_or_create do |user|
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0,20]
-        user.first_name = auth.info.first_name
-        user.last_name = auth.info.last_name
-        user.username = auth.info.name
-        user.image_url = auth.info.image
+      user = where(email: auth.info.email).first
+      if user.nil?
+        user = User.new email: auth.info.email,
+                        password: Devise.friendly_token[0,20],
+                        first_name: auth.info.first_name,
+                        last_name: auth.info.last_name,
+                        username: auth.info.name,
+                        image_url: auth.info.image
+        user.skip_confirmation!
+        user.save!
       end
+      user
     end
 
     def new_with_session(params, session)
