@@ -1,7 +1,12 @@
 class CustomFailure < Devise::FailureApp
     def redirect_url
       #return super unless [:worker, :employer, :user].include?(scope) #make it specific to a scope
-      flash[:danger] = "email or password error"
+      user = User.find_by email: params[:user][:email]
+      if user
+        flash[:danger] = "Please confirm your account in your email first"
+      else
+        flash[:danger] = "email or password error"
+      end
       new_user_session_path
     end
 
