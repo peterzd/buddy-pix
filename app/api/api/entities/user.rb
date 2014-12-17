@@ -10,6 +10,7 @@ module API
       expose :uploaded_pics_count, if: { type: :detail }
       expose :total_likes_count, if: { type: :detail }
       expose :total_comments_count, if: { type: :detail }
+      expose :followers_count, if: { type: :detail }
 
       private
       def created_cards_count
@@ -26,6 +27,12 @@ module API
 
       def total_comments_count
         object.total_comments
+      end
+
+      def followers_count
+        object.created_albums.inject(sum=0) do |sum, card|
+          sum += card.followers.count
+        end
       end
     end
   end
