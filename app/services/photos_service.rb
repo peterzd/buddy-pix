@@ -15,6 +15,21 @@ class PhotosService
     end
   end
 
+  def save_photo_api(image, tagged_ids)
+    if @photo.save
+      if tagged_ids
+        tagged_ids.each do |tagged_hash|
+          @photo.tag_user tagged_hash[:id].to_i
+        end
+      end
+      @photo.images << image
+      send_notifications
+      true
+    else
+      false
+    end
+  end
+
   private
   def process_tagged_users(photo_params)
     tagged_users = photo_params[:tagged_users]
@@ -27,15 +42,15 @@ class PhotosService
 
   # Later we can use background job to make it faster
   # only for one image
-  def process_image(object_params)
-    if object_params[:image]
-      name = object_params[:image][:picture].original_filename
-      directory = "tmp/uploaded_images"
-      path = File.join(directory, name)
-      File.open(path, "wb") { |f| f.write(object_params[:image][:picture].read) }
-      PhotoImageWorker.perform_async path, @photo.id
-    end
-  end
+  # def process_image(object_params)
+  #   if object_params[:image]
+  #     name = object_params[:image][:picture].original_filename
+  #     directory = "tmp/uploaded_images"
+  #     path = File.join(directory, name)
+  #     File.open(path, "wb") { |f| f.write(object_params[:image][:picture].read) }
+  #     PhotoImageWorker.perform_async path, @photo.id
+  #   end
+  # end
 
   # uploaded multiple images
   def process_images(object_params)

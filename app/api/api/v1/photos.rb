@@ -4,6 +4,32 @@ module API
       include API::V1::Helper
 
       resources :posts do
+        desc "create a new photo"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :title, type: String, desc: "title of the post"
+          requires :card_id, type: String, desc: "the card the post should belongs to"
+          requires :picture, type: String, desc: "uploaded image"
+          optional :description, type: String, desc: "description of the post"
+          optional :tagged_friend_ids, type: Array do
+            requires :id, type: String, desc: "the id of the user"
+          end
+        end
+        post :upload_image do
+          authenticate!
+          image = Image.create image_data: params[:picture]
+          card = Album.find params[:card_id].to_i
+          photo = card.photos.build title: params[:title],
+                                    description: params[:description],
+                                    creator: current_user
+
+          if PhotosService.new(photo).save_photo_api(image, params[:tagged_friend_ids])
+            present :status, "true"
+          else
+            present :status, "false"
+          end
+        end
+
         desc "returns a post"
         params do
           requires :access_token, type: String, desc: "the token of the user"
@@ -18,6 +44,7 @@ module API
         route_param :id do
           desc "likes a photo"
           params do
+            requires :access_token, type: String, desc: "the token of the user"
             requires :mood, type: String, desc: "the mood of the like"
           end
           post "like" do
@@ -34,6 +61,7 @@ module API
 
           desc "comments on a photo"
           params do
+            requires :access_token, type: String, desc: "the token of the user"
             requires :content, type: String, desc: "the content of the comment"
             optional :picture, type: String, desc: "comment image"
           end
@@ -50,12 +78,11 @@ module API
             present :status, "true"
             present :comments_count, photo.comments.count
           end
-
-
         end
-      end
+
+
+      end # end of resources :posts
 
     end
   end
-
 end
