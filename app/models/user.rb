@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
 
   has_many :notifications, foreign_key: :receiver_id
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
