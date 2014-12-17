@@ -54,7 +54,6 @@ Rails.application.routes.draw do
     resources :photos do
       member do
         get :like
-        get :download
       end
       resources :comments
     end
@@ -87,6 +86,9 @@ Rails.application.routes.draw do
 
   get "search", to: "search#search", as: :search
   resources :images do
+    member do
+      get :download
+    end
     collection do
       post :photo_upload
     end
