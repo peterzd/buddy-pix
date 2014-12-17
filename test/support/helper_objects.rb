@@ -1,8 +1,8 @@
 def helper_objects
   # users
-  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god" }
-  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" }
-  let(:allen) { create :user, email: "allen@test.com", password: "11111111", first_name: "allen", last_name: "wang" }
+  let(:admin) { create :admin_user, email: "admin@example.com", password: "password", first_name: "admin", last_name: "god", confirmed_at: Time.now }
+  let(:peter) { create :user, email: "peter@test.com", password: "11111111", first_name: "peter", last_name: "zhao" , confirmed_at: Time.now}
+  let(:allen) { create :user, email: "allen@test.com", password: "11111111", first_name: "allen", last_name: "wang" , confirmed_at: Time.now}
 
   # albums (cards)
   let(:album) { create :album, caption: "album caption", name: "first album", private: true, creator: peter }
