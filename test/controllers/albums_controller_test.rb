@@ -190,7 +190,7 @@ describe AlbumsController do
 
   describe "GET hidden cards" do
     before do
-      @cards = create_list :album, 5, caption: "non hidden card", name: "new card", private: false, creator: peter
+      [album, private_album, public_album]
     end
 
     describe "the user does not have any hidden cards" do
@@ -206,7 +206,9 @@ describe AlbumsController do
 
     describe "the user has some hidden cards" do
       before do
-        @hidden_cards = create_list :album, 5, caption: "non hidden card", name: "new card", private: false, hidden: true, creator: peter
+        [album, private_album, public_album].each do |card|
+          card.update hidden: true
+        end
         sign_in peter
       end
 
@@ -217,7 +219,7 @@ describe AlbumsController do
 
       it "lists all the user's hidden cards" do
         get :hidden_cards
-        assigns[:cards].must_match_array @hidden_cards
+        assigns[:cards].must_match_array [album, private_album, public_album]
       end
     end
   end
