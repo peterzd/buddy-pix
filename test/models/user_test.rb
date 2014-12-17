@@ -64,9 +64,10 @@ describe User do
 
   describe ".hidden_cards" do
     it "lists all the user's hidden cards" do
-      cards = create_list :album, 5, creator: peter, hidden: false
-      hidden_cards = create_list :album, 5, creator: peter, hidden: true
-      peter.hidden_cards.must_match_array hidden_cards
+      [album, private_album, public_album].each do |card|
+        card.update hidden: true
+      end
+      peter.hidden_cards.must_match_array [album, private_album, public_album]
     end
 
   end
