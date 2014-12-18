@@ -67,6 +67,10 @@ module API
           optional :last_name, type: String, desc: "user's last name"
           optional :email, type: String, desc: "user's email"
           optional :phone_number, type: String, desc: "user's phone number"
+          optional :password, type: Hash do
+            requires :old, type: String, desc: "the old password"
+            requires :new, type: String, desc: "the old password"
+          end
         end
         post :update_profile do
           authenticate!
@@ -84,6 +88,12 @@ module API
 
           if params[:phone_number]
             current_user.update phone_number: params[:phone_number]
+          end
+
+          if params[:password]
+            old = params[:password][:old]
+            error!({status: "false", message: "old password is invalid"}) unless current_user.valid_password?(old)
+            error!({status: "false", message: current_user.errors.full_messages.first}) unless current_user.update(password: params[:password][:new])
           end
 
           present :status, "true"
