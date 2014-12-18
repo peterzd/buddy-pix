@@ -31,7 +31,8 @@ class InvitationsController < ApplicationController
     content = email_params[:content]
     email_host = request.host_with_port
 
-    InvitationsService.send_email(current_user, card, to_url, content, email_host)
+    to_url_array = to_url.split(",")
+    InvitationsService.send_email(current_user, card, to_url_array, content, email_host)
 
     redirect_to card_path(card)
   end
