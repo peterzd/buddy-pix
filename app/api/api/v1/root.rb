@@ -6,6 +6,7 @@ module API
       mount API::V1::Users
       mount API::V1::Photos
       mount API::V1::Accounts
+      mount API::V1::Invitations
     end
   end
 end
