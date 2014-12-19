@@ -100,7 +100,15 @@ module API
           present :user, current_user, with: API::Entities::User
         end
 
-
+        desc "delete a user's account"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post :delete_account do
+          authenticate!
+          UsersService.new(current_user).destroy_account
+          present :status, "true"
+        end
       end # end of resources accounts
     end
   end
