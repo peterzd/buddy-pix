@@ -38,32 +38,38 @@ class UsersController < ApplicationController
   end
 
   def update_account_settings
-    user = User.find params[:id]
-    user.update user_params.except(:profile_cover, :cover_photo)
+    if params[:commit] == "Delete Account"
+      user = current_user
+      sign_out_and_redirect current_user
+      UsersService.new(user).destroy_account
+    else
+      user = User.find params[:id]
+      user.update user_params.except(:profile_cover, :cover_photo)
 
-    if user_params[:profile_cover]
-      UsersService.new(user).update_profile_cover(user_params, :profile_cover)
-    end
-
-    if user_params[:cover_photo]
-      UsersService.new(user).update_cover_photo(user_params, :cover_photo)
-    end
-
-    current_pwd = params[:current_password]
-    new_pwd = params[:new_password]
-    confirm_pwd = params[:confirm_password]
-
-    if current_pwd.present? && new_pwd.present? && confirm_pwd.present?
-      if process_password(current_pwd, new_pwd, confirm_pwd)
-        flash[:success] = "updated password"
-        logger.info "updated password"
-      else
-        flash[:error] = "can not update password"
-        logger.info "can not update password"
+      if user_params[:profile_cover]
+        UsersService.new(user).update_profile_cover(user_params, :profile_cover)
       end
-    end
 
-    redirect_to dashboard_account_settings_path
+      if user_params[:cover_photo]
+        UsersService.new(user).update_cover_photo(user_params, :cover_photo)
+      end
+
+      current_pwd = params[:current_password]
+      new_pwd = params[:new_password]
+      confirm_pwd = params[:confirm_password]
+
+      if current_pwd.present? && new_pwd.present? && confirm_pwd.present?
+        if process_password(current_pwd, new_pwd, confirm_pwd)
+          flash[:success] = "updated password"
+          logger.info "updated password"
+        else
+          flash[:error] = "can not update password"
+          logger.info "can not update password"
+        end
+      end
+
+      redirect_to dashboard_account_settings_path
+    end
   end
 
   private
