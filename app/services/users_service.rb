@@ -16,7 +16,6 @@ class UsersService
 
   def destroy_account
     @user.destroy
-
   end
 
   private
