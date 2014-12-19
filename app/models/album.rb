@@ -12,7 +12,7 @@ class Album < ActiveRecord::Base
 
   # relations with images
   belongs_to :cover_image, class_name: "Image"
-  has_many :photos
+  has_many :photos, dependent: :destroy
 
   has_many :invitation_tokens, as: :action
 

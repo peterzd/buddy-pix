@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :created_albums, class_name: "Album", foreign_key: :creator_id
-  has_many :uploaded_photos, class_name: "Photo", foreign_key: :creator_id
+  has_many :created_albums, class_name: "Album", foreign_key: :creator_id, dependent: :destroy
+  has_many :uploaded_photos, class_name: "Photo", foreign_key: :creator_id, dependent: :destroy
 
-  has_many :album_relations, class_name: "UsersAlbums"
+  has_many :album_relations, class_name: "UsersAlbums", dependent: :destroy
   has_many :joined_albums, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :album_relations, source: :album
 
   # relations with images
@@ -15,16 +15,18 @@ class User < ActiveRecord::Base
   has_many :commented_images, through: :comments, source: :commentable, source_type: "Photo"
 
   # relations with like
-  has_many :likes, foreign_key: :liker_id
+  has_many :likes, foreign_key: :liker_id, dependent: :destroy
   has_many :liked_photos, through: :likes, source: :likeable
 
   # invitations
   has_many :received_invitations, class_name: "Invitation", foreign_key: :receiver_id
+  has_many :sent_invitaions, class_name: "Invitation", foreign_key: :sender_id, dependent: :destroy
 
   has_many :taggings
   has_many :tagged_photos, through: :taggings, source: :photo
 
   has_many :notifications, foreign_key: :receiver_id
+  has_many :sent_notifications, class_name: "Notification", foreign_key: :maker_id, dependent: :destroy
 
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,

@@ -36,3 +36,15 @@ class ActionController::TestCase
   include Devise::TestHelpers
 end
 
+class MiniTest::Spec
+  include FactoryGirl::Syntax::Methods
+
+  def setup
+    DatabaseCleaner.start
+  end
+
+  def teardown
+    DatabaseCleaner.clean
+  end
+end
+
