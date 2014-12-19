@@ -41,6 +41,7 @@ class AlbumsController < ApplicationController
 
   def next_batch_photos
     page = params[:page].to_i - 1
+    page = 1 if page == 0
     @photos = PhotosQuery.album_batch(@album, page * PhotosQuery::NUMBER_FACTOR)
     if @photos.empty?
       render nothing: true, status: 404

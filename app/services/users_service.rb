@@ -14,6 +14,10 @@ class UsersService
     # process_image_background(user_params, image_type)
   end
 
+  def destroy_account
+    @user.destroy
+  end
+
   private
   def process_image(user_params, image_type)
     image = Image.create user_params[image_type]
