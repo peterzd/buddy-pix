@@ -11,14 +11,14 @@ class Photo < ActiveRecord::Base
 
   # relations with comments
   # has_many :comments, foreign_key: :commentable_id
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :commenters, through: :comments, source: :commenter
 
   # relations with likes
-  has_many :likes, foreign_key: :likeable_id
+  has_many :likes, foreign_key: :likeable_id, dependent: :destroy
   has_many :likers, through: :likes, source: :liker
 
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tagged_users, through: :taggings, source: :user
 
   class << self
