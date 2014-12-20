@@ -38,6 +38,8 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'sidekiq'
 
+gem 'kaminari'
+
 group :development, :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
