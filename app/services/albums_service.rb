@@ -17,6 +17,12 @@ class AlbumsService
     process_image(album_params)
   end
 
+  class << self
+    def search_cards_batch(search_params, page)
+      cards = Album.search(search_params).page(page).per(8).records
+    end
+  end
+
   protected
   def process_image(object_params)
     if object_params[:cover_image]
