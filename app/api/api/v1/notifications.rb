@@ -15,6 +15,18 @@ module API
           present :notifications, notifications, with: API::Entities::Notification
         end
 
+        desc "read the notification"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :id, type: String, desc: "the notification's id"
+        end
+        post "read" do
+          authenticate!
+          notification = Notification.find params[:id]
+          notification.update is_read: true
+          present :status, "true"
+        end
+
       end # end of resources
     end
   end
