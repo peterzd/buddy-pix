@@ -7,6 +7,7 @@ module API
       mount API::V1::Photos
       mount API::V1::Accounts
       mount API::V1::Invitations
+      mount API::V1::Notifications
     end
   end
 end
