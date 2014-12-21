@@ -1,3 +1,6 @@
+Kaminari::Hooks.init
+Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
+
 module API
   module V1
     class Cards < Grape::API
@@ -30,7 +33,7 @@ module API
         end
         post "search_cards" do
           authenticate!
-          cards = AlbumsService.search_cards_batch(params[:search_params], params[:page].to_i)
+          cards = Album.search(params[:search_params]).page(params[:page].to_i).per(8).records
           present :status, "true"
           present :cards, cards, with: API::Entities::Card
         end
