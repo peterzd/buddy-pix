@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
 
     resources :users
+    resources :photos
     resources :static_pages
   end
 
