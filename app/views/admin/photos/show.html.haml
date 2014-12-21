@@ -43,28 +43,3 @@
         %td
           = link_to "destroy", admin_photo_comment_path(@photo, comment), method: :delete, data: { confirm: "sure to destroy this comment?" }
 
-     
-
-
-    -# %tr
-    -#   %th Photo ID
-    -#   %th Photo Title
-    -#   %th Photo description
-    -#   %th Creator
-    -#   %th Album
-    -#   %th Crated_at
-    -#   %th Public/Private
-    -#   %th Actions
-    -# - @photos.each do |photo|
-    -#   %tr
-    -#     %td= link_to photo.id, admin_photo_path(photo)
-    -#     %td= link_to photo.title, admin_photo_path(photo)
-    -#     %td= photo.description
-    -#     %td= photo.creator.user_name
-    -#     %td= photo.album.name
-    -#     %td= photo.created_at
-    -#     %td= photo.album.private? ? "Private" : "Public"
-
-    -#     %th
-    -#       = link_to "destroy", admin_photo_path(photo), method: :delete, data: { confirm: "sure to destroy this photo?" }
-
