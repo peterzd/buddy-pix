@@ -7,6 +7,16 @@ class Comment < ActiveRecord::Base
 
   has_many :replies, class_name: "Comment", as: :commentable
 
+  class << self
+    def total_comments_per_day(date)
+      comments = []
+      all.each do |comment|
+        comments << comment if comment.created_at.to_date == date
+      end
+      comments
+    end
+  end
+
   def picture_url(format=:medium)
     return "" if image.nil?
     image.picture.url format

@@ -25,6 +25,14 @@ class Photo < ActiveRecord::Base
     def all_visible_items
       includes(:album).where("albums.private" => [false, nil]).references(:albums)
     end
+
+    def total_posts_per_day(date)
+      posts = []
+      all.each do |post|
+        posts << post if post.created_at.to_date == date
+      end
+      posts
+    end
   end
 
   def first_image

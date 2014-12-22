@@ -27,13 +27,13 @@
           .links
             %ul.nav.navbar-nav
               %li
+                = link_to "Dashboard", admin_path
+              %li
                 = link_to "Users", admin_users_path
               %li
                 = link_to "Cards", admin_albums_path
               %li
                 = link_to "Photos", admin_photos_path
-              %li
-                = link_to "Comments", "#"
               %li
                 = link_to "Static Pages", admin_static_pages_path
             %ul.nav.navbar-nav.navbar-right
