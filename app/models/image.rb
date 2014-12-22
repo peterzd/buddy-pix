@@ -8,6 +8,7 @@ class Image < ActiveRecord::Base
 
   has_attached_file :picture, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   do_not_validate_attachment_file_type :picture
+  after_post_process :get_ratio
   # validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
   def to_json
@@ -21,6 +22,17 @@ class Image < ActiveRecord::Base
   end
 
   private
+  def get_ratio
+    tempfile = picture.queued_for_write[:medium]
+    unless tempfile.nil?
+      geometry = Paperclip::Geometry.from_file(tempfile)
+      width = geometry.width.to_i
+      height = geometry.height.to_i
+      ratio = width.to_f / height
+      self.ratio = ratio
+    end
+  end
+
   def set_image
     # for client uploaded base64 image
     if self.image_data.present?
