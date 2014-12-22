@@ -13,8 +13,13 @@ module API
       expose :followers_count
       expose :privacy
       expose :album, as: :card
+      expose :images_count
         
       private
+      def images_count
+        object.images.count
+      end
+
       def image_url
         host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
         "#{host}#{object.picture_url :medium}"
