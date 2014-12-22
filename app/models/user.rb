@@ -93,6 +93,14 @@ class User < ActiveRecord::Base
       all_user
     end
 
+    def inactive_users
+      users = []
+      order(:id).all.each do |user|
+        users << user if (user.last_sign_in_at.nil? ) or (user.last_sign_in_at.to_date - Date.today > 13)
+      end
+      users
+    end
+
   end # end of class methods
   
   def ensure_authentication_token

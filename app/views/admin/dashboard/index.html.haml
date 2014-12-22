@@ -1,3 +1,20 @@
+%h3 Inacitve Users for 14 days(more than)
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left Inacitve Users
+  %table.table.table-striped
+    %tr
+      %th User ID
+      %th User Name
+      %th Crated_at
+      %th Last sign in
+    - @inactive_users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.user_name
+        %td= user.created_at
+        %td= user.last_sign_in_at.nil? ? "" : user.last_sign_in_at.to_date
+
 %h3 Reports for recent 7 days
 
 - 7.times do |i|
