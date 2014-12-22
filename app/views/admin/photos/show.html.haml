@@ -1,0 +1,45 @@
+%h3 Detail Photo page for #{@photo.title}
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left Photo Detail
+    .pull-right
+  %table.table.table-striped
+    %tr
+      %td ID
+      %td= @photo.id
+    %tr
+      %td Title
+      %td= @photo.title
+    %tr
+      %td Description
+      %td= @photo.description
+    %tr
+      %td Creator
+      %td= @photo.creator.user_name
+    %tr
+      %td Belongs to Album
+      %td= "#{@photo.album.name} (#{@photo.album.decorate.private_text})"
+    %tr
+      %td Likes count
+      %td= @photo.likes.count
+
+.panel.panel-success
+  .panel-heading.clearfix
+    .pull-left Comments on this photo
+  %table.table.table-striped
+    %tr
+      %th Comment ID
+      %th Commenter's name
+      %th Content of the comment
+      %th Commented time
+      %th Action
+    - @photo.comments.each do |comment|
+      %tr
+        %td= comment.id
+        %td= comment.commenter.user_name
+        %td= comment.content
+        %td= comment.created_at
+        %td
+          = link_to "destroy", admin_photo_comment_path(@photo, comment), method: :delete, data: { confirm: "sure to destroy this comment?" }
+

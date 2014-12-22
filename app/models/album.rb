@@ -22,6 +22,32 @@ class Album < ActiveRecord::Base
   after_save :creator_follow
 
 
+  class << self
+    def total_private_cards_per_day(date)
+      cards = []
+      Album.all.each do |card|
+        cards << card if card.created_at.to_date == date and card.private
+      end
+      cards
+    end
+
+    def total_public_cards_per_day(date)
+      cards = []
+      Album.all.each do |card|
+        cards << card if card.created_at.to_date == date and !card.private
+      end
+      cards
+    end
+
+    def total_cards_per_day(date)
+      cards = []
+      Album.all.each do |card|
+        cards << card if card.created_at.to_date == date
+      end
+      cards
+    end
+  end
+
   def set_cover_image(image)
     update cover_image_id: image.id
   end
