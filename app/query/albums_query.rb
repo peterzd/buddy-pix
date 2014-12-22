@@ -3,7 +3,7 @@ class AlbumsQuery
 
   class << self
     def user_following_cards(user, offset=0)
-      user.joined_albums.limit(NUMBER_FACTOR).offset(offset)
+      user.joined_albums.where(hidden: [nil, false]).limit(NUMBER_FACTOR).offset(offset)
     end
   end
 end
