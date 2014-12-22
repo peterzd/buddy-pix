@@ -1,3 +1,6 @@
+Kaminari::Hooks.init
+Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
+
 module API
   module V1
     class Photos < Grape::API
@@ -28,6 +31,20 @@ module API
           else
             present :status, "false"
           end
+        end
+
+
+        desc "search for posts"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+          requires :search_params, type: String, desc: "the search content"
+          requires :page, type: String, desc: "the page for search content"
+        end
+        post "search_posts" do
+          authenticate!
+          posts = Photo.search(params[:search_params]).page(params[:page].to_i).per(8).records
+          present :status, "true"
+          present :cards, posts, with: API::Entities::Photo
         end
 
         desc "returns a post"
