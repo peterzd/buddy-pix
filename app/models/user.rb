@@ -84,7 +84,16 @@ class User < ActiveRecord::Base
         end
       end
     end
-  end
+
+    def registered_per_day(date)
+      all_user = []
+      User.all.each do |u|
+        all_user << u if u.created_at.to_date == date
+      end
+      all_user
+    end
+
+  end # end of class methods
   
   def ensure_authentication_token
     self.authentication_token ||= generate_authentication_token
