@@ -3,6 +3,7 @@ module API
     class Photo < Grape::Entity
       expose :id, :title, :description, :created_at, :updated_at
       expose :image_url
+      expose :image_height, unless: { type: :need_height }
       expose :images, using: API::Entities::Image
       expose :likes, using: API::Entities::Like
       expose :likes_count
@@ -17,6 +18,10 @@ module API
       def image_url
         host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
         "#{host}#{object.picture_url :medium}"
+      end
+
+      def image_height
+        (750 / object.first_image.ratio).to_i
       end
 
       def followers_count
