@@ -3,6 +3,8 @@ module API
     class User < Grape::Entity
       expose :id, :email, :user_name, :first_name, :last_name, :phone_number
       expose :profile_cover, :cover_photo, using: API::Entities::Image
+      expose :profile_cover_url
+      expose :cover_photo_url
       expose :created_albums, using: API::Entities::Card, if: { type: :with_cards }
       expose :authentication_token, if: { type: :access_token }, as: :access_token
 
