@@ -6,81 +6,26 @@
           %i.fa.fa-times
           = flash[:danger]
 
-    = form_for(resource, as: resource_name, url: session_path(resource_name), class: "mt20 form_box p20 clearfix") do |f|
-      %aside.fl.w50.mt10
-        %article.p10
-          %h4 Login
-          %p Nullam efficitur viverra arcu eget ullamcorper. Vestibulum tincidunt lacinia massa nec lacinia.
-        .ph10
-          = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
-        .ph10
-          = f.email_field :email, autofocus: true, placeholder: "Email Id"
-        .p10.mt10
-          = f.password_field :password, autocomplete: "off", placeholder: "Password"
-        .box_link.p10.ac.fl.w50
-          = link_to content_tag(:i, "", class: "fa fa-facebook") + "Facebook Login", user_omniauth_authorize_path(:facebook), class: "fb"
-        .box_link.p10.ac.fl.w50
-          = link_to content_tag(:i, "", class: "fa fa-google") + "Google Login", user_omniauth_authorize_path(:google_oauth2), class: "g"
-        .p10.fl
-          = f.submit "Login"
+    = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
+      -# %aside.fl.w50.mt10
+      %article.p10
+        %h4 Login
+        %p Nullam efficitur viverra arcu eget ullamcorper. Vestibulum tincidunt lacinia massa nec lacinia.
+      .ph10
+        = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
+      .ph10
+        = f.email_field :email, autofocus: true, placeholder: "Email Id"
+      .p10.mt10.ar
+        = f.password_field :password, autocomplete: "off", placeholder: "Password"
+        = link_to "Forgot Password?", "#", class: "mt10 inline"
+      .p10
+        = f.submit "Login"
+      .box_link.p10.ac.fl.w50.mt10
+        = link_to content_tag(:i, "", class: "fa fa-facebook") + "Facebook Login", user_omniauth_authorize_path(:facebook), class: "fb"
+      .box_link.p10.ac.fl.w50.mt10
+        = link_to content_tag(:i, "", class: "fa fa-google") + "Google Login", user_omniauth_authorize_path(:google_oauth2), class: "g"
+      %p.mt10.fl.w100.ac
+        %strong
+          if you Don't have an account?
+          = link_to "Sign Up", ""
 
-    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "register_user" }) do |f|
-      %aside.fl.w50.mt10
-        %article.p10
-          %h4 Sign up
-          %p Nulla hendrerit maximus tellus a pharetra. Nunc vehicula, justo a eleifend ultrices, justo turpis hendrerit eros, eu fermentum libero diam non tortor.
-        .ph10
-          = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
-        .ph10
-          = f.email_field :email, autofocus: true, placeholder: "Email id", id: "register_user_email"
-        .p10.mt10
-          = f.text_field :first_name, placeholder: "First Name", id: "register_user_first_name"
-        .p10
-          = f.text_field :last_name, placeholder: "Last Name", id: "register_user_last_name"
-        .p10.mt10
-          = f.password_field :password, autocomplete: "off", placeholder: "Password", id: "register_user_password"
-        .p10
-          = f.password_field :password_confirmation, autocomplete: "off", placeholder: "Confirm Password", id: "register_user_password_confirmation"
-        .p10.fl
-          = f.submit "Send"
-
-:coffee
-  # validate the comment form when it is submitted
-  $("#commentForm").validate()
-  
-  # validate signup form on keyup and submit
-  $("#register_user").validate
-    rules:
-      "user[first_name]": "required"
-      "user[last_name]": "required"
-
-      "user[password]":
-        required: true,
-        minlength: 8
-
-      "user[password_confirmation]":
-        equalTo: "#register_user_password",
-        required: true,
-        minlength: 8
-
-      "user[email]":
-        required: true
-        email: true
-
-    messages:
-      "user[first_name]": "Please enter your firstname"
-      "user[last_name]": "Please enter your lastname"
-      "user[password]":
-        required: "Please provide a password"
-        minlength: "Your password must be at least 8 characters long"
-
-      "user[password_confirmation]":
-        required: "Please provide a password"
-        minlength: "Your password must be at least 8 characters long"
-        equalTo: "Please enter the same password as above"
-
-      "user[email]": "Please enter a valid email address"
-
-  return
-
-  
