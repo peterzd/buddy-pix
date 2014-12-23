@@ -10,6 +10,26 @@ module API
       end
 
       resources :users do
+        desc "log in via omniauth"
+        params do
+          requires :email, type: String, desc: "user's email"
+          requires :first_name, type: String, desc: "user's first_name"
+          requires :last_name, type: String, desc: "user's last_name"
+          requires :image_url, type: String, desc: "the url got from Facebook auth"
+        end
+        post :omni_login do
+          user = User.where(email: params[:email]).first_or_create do |user|
+            user.email = params[:email]
+            user.password = Devise.friendly_token[0,20]
+            user.first_name = params[:first_name]
+            user.last_name = params[:last_name]
+            user.image_url = params[:image_url]
+          end
+
+          present :status, "true"
+          present :user, user, with: API::Entities::User, type: :access_token
+        end
+
         desc "signs up a user via REST api"
         params do
           requires :email, type: String, desc: "user's email"
@@ -111,8 +131,7 @@ module API
               end
             end
           end
-
-        end
+        end # end of invitations
 
         desc "returns the user's profile"
         params do
