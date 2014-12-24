@@ -23,8 +23,8 @@ class SearchController < ApplicationController
     return Album.order(updated_at: :desc).where(private: [nil, false]) if query.blank?
     result = Album.search query
     result.results.inject([]) do |records, r|
-      card = Album.find r.id
-      if card.visible_to_world?
+      card = Album.where(id: r.id).first
+      if card and card.visible_to_world?
         records << card
       else
         records
@@ -36,8 +36,8 @@ class SearchController < ApplicationController
     return Photo.all_visible_items if query.blank?
     result = Photo.search query
     result.results.inject([]) do |records, r|
-      photo = Photo.find r.id
-      if photo.visible_to_world?
+      photo = Photo.where(id: r.id).first
+      if photo and photo.visible_to_world?
         records << photo
       else
         records
