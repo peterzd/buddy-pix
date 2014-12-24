@@ -11,7 +11,8 @@
             %h3=  creator.user_name
             %p= @photo.created_at.strftime("%I:%M %p,%d %b %Y")
         %aside.fr.p10.h3.ar.cat_side
-          %h3= card.name
+          %h3
+            = link_to card.name, card_path(card)
           %p= card.private? ? "Private" : "Public"
 
       %figure#owl-demo.clearfix.ac.fig_img.owl-carousel
@@ -139,7 +140,6 @@
 :coffee
   $("#owl-demo").owlCarousel({
       lazyLoad: true,
-      autoPlay : 3000,
       stopOnHover : true,
       navigation:true,
       paginationSpeed : 1000,
