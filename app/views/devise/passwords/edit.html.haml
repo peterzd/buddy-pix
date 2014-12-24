@@ -1,14 +1,16 @@
-%h2 Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = devise_error_messages!
-  = f.hidden_field :reset_password_token
-  %div
-    = f.label :password, "New password"
-    %br/
-    = f.password_field :password, autofocus: true, autocomplete: "off"
-  %div
-    = f.label :password_confirmation, "Confirm new password"
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  %div= f.submit "Change my password"
-= render "devise/shared/links"
+%section.clearfix.inner_body
+  .pc.cm
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
+      = devise_error_messages!
+      %article.ph10
+        %h4 Change Password
+        %p Nullam efficitur viverra arcu eget ullamcorper. Vestibulum tincidunt lacinia massa nec lacinia.
+      .p10
+        = f.hidden_field :reset_password_token
+      .p10
+        = f.password_field :password, placeholder: "Enter Your New Password", autofocus: true
+      .p10
+        = f.password_field :password_confirmation, placeholder: "Enter Your Password Confirmation"
+      .p10
+        = f.submit "Change my password"
+

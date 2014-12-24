@@ -230,9 +230,11 @@ label{display:block; font-size:18px;}
 .blog_post .continue_link{color:#93b509; font-size:18px; text-transform:uppercase; font-family:'roboto_condensedbold'; text-decoration:none;}
 
 .box_link a{height:50px; line-height:50px; display:block; color:#fff; text-decoration:none;}
-.box_link a i{margin-right:10px;}
+.box_link a i{margin-right:10px; font-size:20px; vertical-align:middle; }
 .box_link a.fb{background-color:#0072bc;}
 .box_link a.g{background-color:#dc3c28;}
+
+.log_box{margin-top:40px;}
 
 /* ==========================================================================
         Page styling Styling
@@ -447,7 +449,7 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .card_slider .owl-buttons div.owl-next{right:-70px;}
 
 .form_box{background-color:#fff;}
-.form_box input[type="text"]{border: 1px solid #E7E7E7;}
+.form_box input[type="text"],input[type="email"],input[type="password"]{border: 1px solid #E7E7E7;}
 .form_box p{font-size:15px; line-height:18px;}
 
 .contect_search.search_row .input{width:auto; margin-right:50px;}
@@ -550,6 +552,8 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .uploadimg_thumb{float: left; position: relative; padding: 10px; margin: 0px 10px 10px 0px;}
 .uploadimg_thumb .btn{padding: 0; position: absolute; height: 30px; line-height: 28px; width: 30px; top: 10px; right: 10px;}
 /*=================upload image thumbnails==============*/
+
+.log_box{width:500px;}
 
 /* ==========================================================================
         Responsive styling Styling
