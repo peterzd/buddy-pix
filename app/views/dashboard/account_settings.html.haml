@@ -22,7 +22,7 @@
         .p10.fl
           = f.submit "Save Changes"
         .p10.fl.white_btn
-          = f.submit "Delete Account"
+          = f.submit "Delete Account", id: "delete-account-button"
       %aside.fl.w50.p10.ac
         %h4.ph10.mt10.al
           %small Cover Photo
@@ -48,4 +48,9 @@
     preview_image(this, $(".cover_img img"))
   $("#user_profile_cover_picture").on "change", ->
     preview_image(this, $(".profile_photo img"))
-
+  $("#delete-account-button").on "click", (e)->
+    if window.confirm("sure to destroy your account?")
+      $(e.target.form).submit()
+    else
+      e.preventDefault()
+    
