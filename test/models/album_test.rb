@@ -67,4 +67,39 @@ describe Album do
     end
   end
 
+  describe "destroys a card" do
+    before do
+      # @new_user =  create :user, email: "new@test.com", password: "11111111", first_name: "allen", last_name: "wang" , confirmed_at: Time.now
+      photo.update album: album
+      peter.send_invitation allen.id, album
+      # peter.send_invitation @new_user.id, album
+      allen.joins_album album
+
+      album.destroy
+    end
+
+    it "destroys the card record in DB" do
+      Album.all.wont_include album
+    end
+
+    it "removes the invitations related to it" do
+      Invitation.count.must_equal 0
+      allen.received_invitations.must_be :empty?
+    end
+
+    it "removes the notifications related to it" do
+      Notification.count.must_equal 0
+      allen.notifications.must_be :empty?
+    end
+
+    it "removes all the photos in the card" do
+      Photo.all.wont_include photo
+    end
+
+    it "removes the relatinos with followers" do
+      peter.joined_albums.wont_include album
+      allen.joined_albums.wont_include album
+    end
+  end
+
 end

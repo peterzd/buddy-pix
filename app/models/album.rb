@@ -6,15 +6,19 @@ class Album < ActiveRecord::Base
 
   belongs_to :creator, class_name: "User"
 
-  has_many :user_relations, class_name: "UsersAlbums"
+  has_many :user_relations, class_name: "UsersAlbums", dependent: :destroy
   has_many :users, through: :user_relations
   has_many :followers, -> { where("users_albums.access_type = ?", UsersAlbums::ACCESS_TYPE[:joined]) }, through: :user_relations, source: :user
 
   # relations with images
-  belongs_to :cover_image, class_name: "Image"
+  belongs_to :cover_image, class_name: "Image", dependent: :destroy
   has_many :photos, dependent: :destroy
 
   has_many :invitation_tokens, as: :action
+
+  # relations with invitations and notifications
+  has_many :related_invitations, class_name: "Invitation", foreign_key: :card_id, dependent: :destroy
+  has_many :related_notifications, class_name: "Notification", as: :object, dependent: :destroy
 
   validates :name, uniqueness: true
 
