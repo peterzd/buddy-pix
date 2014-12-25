@@ -108,20 +108,34 @@ class AlbumsController < ApplicationController
     end
   end
 
+  # def follow
+  #   authorize @album
+  #   current_user.joins_album @album
+  #   redirect_to card_path @album
+  # end
+
   def follow
     authorize @album
     current_user.joins_album @album
-    redirect_to card_path @album
   end
 
+  # def unfollow
+  #   authorize @album
+  #   current_user.unfollow_album @album
+  #   if params[:from] and params[:from] == "following_page"
+  #     redirect_to following_cards_cards_path
+  #   else
+  #     redirect_to card_path @album
+  #   end
+  # end
   def unfollow
     authorize @album
     current_user.unfollow_album @album
-    if params[:from] and params[:from] == "following_page"
-      redirect_to following_cards_cards_path
-    else
-      redirect_to card_path @album
-    end
+    # if params[:from] and params[:from] == "following_page"
+    #   redirect_to following_cards_cards_path
+    # else
+    #   redirect_to card_path @album
+    # end
   end
 
   private

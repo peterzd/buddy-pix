@@ -21,7 +21,7 @@
             = sanitize "#{@album.hit_count} &nbsp;|&nbsp;"
             %i.fa.fa-comment
             = sanitize "#{@album.total_comments}"
-      .album_bar.fl.w100
+      .album_bar.fl.w100{ id: dom_id(@album) }
         %aside.p20.fr.invite_btn
           = @album.decorate.invite_btn_links
         %aside.p20.para
