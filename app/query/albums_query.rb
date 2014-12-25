@@ -1,5 +1,5 @@
 class AlbumsQuery
-  NUMBER_FACTOR = 12
+  NUMBER_FACTOR = 6
 
   class << self
     def user_following_cards(user, offset=0)
