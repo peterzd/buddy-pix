@@ -1,5 +1,5 @@
 class PhotosQuery
-  NUMBER_FACTOR = 12
+  NUMBER_FACTOR = 6
 
   class << self
     def album_batch(album, offset=0)
