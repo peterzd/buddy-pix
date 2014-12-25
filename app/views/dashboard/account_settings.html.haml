@@ -26,7 +26,6 @@
       %aside.fl.w50.p10.ac
         %h4.ph10.mt10.al
           %small Cover Photo
-        -# %figure.uplaod.cover_img{ class: @user.cover_photo ? "img_fill" : ""}
         %figure.uplaod.cover_img
           = image_tag @user.cover_photo_url(:medium), class: "img_fill_parent"
         .btn.browse_btn.inline.mt20
@@ -35,7 +34,6 @@
           Browse Images
         %h4.ph10.mt10.al
           %small Profile Photo
-        -# %figure.uplaod.round.profile_photo.cm{ class: @user.profile_cover ? "img_fill" : "" }
         %figure.uplaod.round.profile_photo.cm
           = image_tag @user.profile_cover_url(:medium), class: "img_fill_parent round"
         .btn.browse_btn.inline.mt20
@@ -53,4 +51,19 @@
       $(e.target.form).submit()
     else
       e.preventDefault()
-    
+  $("form[id^=edit_user]").validate
+    rules:
+      "new_password":
+        minlength: 8
+      "confirm_password":
+        minlength: 8
+        equalTo: "#new_password"
+
+    messages:
+      "new_password":
+        minlength: "Your password must be at least 8 characters long"
+
+      "confirm_password":
+        minlength: "Your password must be at least 8 characters long"
+        equalTo: "Please enter the same password as above"
+
