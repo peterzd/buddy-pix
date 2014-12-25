@@ -1,18 +1,43 @@
 %section.clearfix.inner_body
   .pc.cm
-    = form_for @support do |f|
-      %h4 Support
+    #msg
+      = ApplicationDecorator.flash_message
+    = form_for @support, html: { class: "mt20" } do |f|
+      %h4.ph20 Support
       %aside.fl.w50.p10
         .p10
           = f.text_field :sender_name, placeholder: "Your Name"
         .p10
           = f.text_field :subject, placeholder: "Subject"
         .p10
-          = f.text_field :email, placeholder: "Email id"
+          = f.email_field :email, placeholder: "Email id"
         .p10
           = f.text_area :message, placeholder: "Message"
         .p10
           = f.submit "Send Message"
-    %aside.fl.w50.p10
-      %h1 Please Send Us your Valueable Suggestion and feedback.
+    %aside.fl.w50
+      %h1.support_box.ac Please Send Us your Valueable Suggestion and feedback.
       
+
+:coffee
+  $("#new_support").validate
+    rules:
+      "support[sender_name]": "required"
+      "support[subject]": "required"
+
+      "support[email]":
+        required: true
+
+      "support[message]":
+        required: true
+
+    messages:
+      "support[sender_name]": "Please enter your name"
+      "support[subject]": "Please enter the subject"
+      "support[email]":
+        required: "Please provide your email"
+
+      "support[message]":
+        required: "Please fill in the message"
+
+  return
