@@ -12,18 +12,18 @@ class AlbumDecorator < Draper::Decorator
     if current_user == object.creator
       link_to "Invite user", new_card_invitation_path(object), class: "btn"
     elsif current_user.has_joined_album? object
-      link_to "UnFollow", unfollow_card_path(object), class: "btn dull"
+      link_to "UnFollow", unfollow_card_path(object), class: "btn dull", remote: true
     else
-      link_to "Follow", follow_card_path(object), class: "btn"
+      link_to "Follow", follow_card_path(object), class: "btn", remote: true
     end
   end
 
   def follow_btn_link(user)
     return "" if object.creator == user
     if user.has_joined_album? object
-      link_to "UnFollow", unfollow_card_path(object), class: "btn dull"
+      link_to "UnFollow", unfollow_card_path(object), class: "btn dull", remote: true
     else
-      link_to "Follow", follow_card_path(object), class: "btn"
+      link_to "Follow", follow_card_path(object), class: "btn", remote: true
     end
 
   end
