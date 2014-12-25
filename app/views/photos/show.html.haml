@@ -53,7 +53,7 @@
     #commt_box.fl.w100
       - @photo.comments.each do |comment|
         .cmt_row.bs.clearfix
-          %figure.img_fill
+          %figure.img_fill.round
             = image_tag comment.commenter.profile_cover_url(:thumb)
           %aside
             %h4.fl= comment.commenter.user_name
@@ -65,7 +65,7 @@
         - if comment.replies.count > 0
           - comment.replies.each do |reply|
             .cmt_row.bs.clearfix.reply_box
-              %figure.img_fill
+              %figure.img_fill.round
                 = image_tag reply.commenter.profile_cover_url(:thumb)
               %aside
                 %h4.fl= reply.commenter.user_name
@@ -75,7 +75,7 @@
                   = reply.content
 
       .cmt_row.bs.clearfix.mt10.txt_area
-        %figure.img_fill
+        %figure.img_fill.round
           = image_tag current_user.profile_cover_url(:thumb)
         %aside
           = form_tag card_photo_comments_path(card, @photo), multipart: true do
