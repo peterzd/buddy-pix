@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   protect_from_forgery except: [ :hide_card, :view_card ]
-  respond_to :html, :json
+  respond_to :html, :json, :js
   before_action :set_album, except: [:index, :hidden_cards, :following_cards, :following_cards_batch, :new, :create, :validate_name]
 
   # Peter at 11.3: can the two methods extract the same code into another method?
@@ -89,8 +89,8 @@ class AlbumsController < ApplicationController
   end
 
   def destroy
+    @id = @album.id
     @album.destroy
-    respond_with(@album)
   end
 
   def hide_card
