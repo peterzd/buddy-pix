@@ -8,7 +8,7 @@
         .p10
           = f.text_field :subject, placeholder: "Subject"
         .p10
-          = f.text_field :email, placeholder: "Email id"
+          = f.email_field :email, placeholder: "Email id"
         .p10
           = f.text_area :message, placeholder: "Message"
         .p10
@@ -18,3 +18,24 @@
       
 
 :coffee
+  $("#new_support").validate
+    rules:
+      "support[sender_name]": "required"
+      "support[subject]": "required"
+
+      "support[email]":
+        required: true
+
+      "support[message]":
+        required: true
+
+    messages:
+      "support[sender_name]": "Please enter your name"
+      "support[subject]": "Please enter the subject"
+      "support[email]":
+        required: "Please provide your email"
+
+      "support[message]":
+        required: "Please fill in the message"
+
+  return
