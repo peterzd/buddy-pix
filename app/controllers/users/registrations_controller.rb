@@ -33,7 +33,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if token
       action = get_token_action token
-      current_user.joins_album action
+      current_user.joins_album action if action
       @invitation_token.expire
     end
   end
