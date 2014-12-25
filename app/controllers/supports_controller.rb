@@ -24,6 +24,7 @@ class SupportsController < ApplicationController
 
     if @support.save
       SupportMailer.support_email(@support).deliver
+      flash[:success] = "your feedback is sent out. Thank you !"
       redirect_to welcome_support_path
     end
   end
