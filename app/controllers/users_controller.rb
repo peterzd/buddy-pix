@@ -57,18 +57,18 @@ class UsersController < ApplicationController
       if user_params[:profile_cover]
         UsersService.new(user).update_profile_cover(user_params, :profile_cover)
         if flash[:success]
-          flash[:success] << "\nupdated profile cover"
+          flash[:success] << "\nprofile cover updated "
         else
-          flash[:success] = "\nupdated profile cover"
+          flash[:success] = "\nprofile cover updated "
         end
       end
 
       if user_params[:cover_photo]
         UsersService.new(user).update_cover_photo(user_params, :cover_photo)
         if flash[:success]
-          flash[:success] << "\nupdated cover photo"
+          flash[:success] << "\ncover photo updated "
         else
-          flash[:success] = "\nupdated cover photo"
+          flash[:success] = "\ncover photo updated "
         end
       end
 
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
       if current_pwd.present? && new_pwd.present? && confirm_pwd.present?
         if process_password(current_pwd, new_pwd, confirm_pwd)
-          flash[:info] = "updated password"
+          flash[:info] = "password updated"
         else
           flash[:danger] = "can not update password"
         end
