@@ -44,14 +44,32 @@ class UsersController < ApplicationController
       UsersService.new(user).destroy_account
     else
       user = User.find params[:id]
-      user.update user_params.except(:profile_cover, :cover_photo)
+      # set attributes, check if the attributes are changed
+      user.first_name = user_params[:first_name]
+      user.last_name = user_params[:last_name]
+      user.email = user_params[:email]
+      user.phone_number = user_params[:phone_number]
+      if user.changed_attributes.any?
+        user.save
+        flash[:success] = "profile updated"
+      end
 
       if user_params[:profile_cover]
         UsersService.new(user).update_profile_cover(user_params, :profile_cover)
+        if flash[:success]
+          flash[:success] << "\nprofile cover updated "
+        else
+          flash[:success] = "\nprofile cover updated "
+        end
       end
 
       if user_params[:cover_photo]
         UsersService.new(user).update_cover_photo(user_params, :cover_photo)
+        if flash[:success]
+          flash[:success] << "\ncover photo updated "
+        else
+          flash[:success] = "\ncover photo updated "
+        end
       end
 
       current_pwd = params[:current_password]
@@ -60,11 +78,9 @@ class UsersController < ApplicationController
 
       if current_pwd.present? && new_pwd.present? && confirm_pwd.present?
         if process_password(current_pwd, new_pwd, confirm_pwd)
-          flash[:success] = "updated password"
-          logger.info "updated password"
+          flash[:info] = "password updated"
         else
-          flash[:error] = "can not update password"
-          logger.info "can not update password"
+          flash[:danger] = "can not update password"
         end
       end
 
