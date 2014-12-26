@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :supports, :blogs
 
-  devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
+  devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations", confirmations: "users/confirmations" }
   get :my_wall, to: "users#my_wall"
   get :my_wall_next_batch, to: "users#my_wall_next_batch"
   get :alerts, to: "users#alerts"
