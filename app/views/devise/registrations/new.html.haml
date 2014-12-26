@@ -1,10 +1,7 @@
 %section.clearfix.inner_body
   .pc.cm
     #msg
-      - if flash[:danger]
-        .msg.danger
-          %i.fa.fa-times
-          = flash[:danger]
+      = ApplicationDecorator.flash_message
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "register_user", class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
       %article.p10
         %h4 Sign up
