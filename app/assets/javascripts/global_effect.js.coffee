@@ -58,6 +58,10 @@ class Global
     $(".prettycheckbox").on "click", ->
       $(this).toggleClass "active"  if $(this).find(".checked")
       return
+    elem = click_radio_elem()
+    $(elem).click()
+
+
 
   remove_msg: ->
     $(".msg .fa-times").on 'click', ->
