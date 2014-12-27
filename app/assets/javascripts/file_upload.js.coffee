@@ -22,9 +22,9 @@
       url: "/images/photo_upload",
       autoUpload: true,
       add: (e, data)->
+        uploaded_files = $(".uploadimg_thumb").length
         original_files = data.originalFiles.length
-        console.log "original_files is #{original_files}"
-        if original_files > 10
+        if (uploaded_files + original_files) > 10
           alert "can not upload more than 10 files"
           return false
         else
