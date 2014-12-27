@@ -19,13 +19,19 @@
       
       # Uncomment the following to send cross-domain cookies:
       #xhrFields: {withCredentials: true},
-      url: "/images/photo_upload"
+      url: "/images/photo_upload",
       autoUpload: true,
       add: (e, data)->
+        original_files = data.originalFiles.length
+        console.log "original_files is #{original_files}"
+        if original_files > 10
+          alert "can not upload more than 10 files"
+          return false
+        else
+          data.submit()
         # for file in data.files
         #   data.context = $(tmpl("template-upload", file))
         #   $('#fileupload').append(data.context)
-        data.submit()
       done: (e, data)->
         ele = $("#photo_image_ids")
         ele.val(ele.val() + ",#{data.result.id}")
