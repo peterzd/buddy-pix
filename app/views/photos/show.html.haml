@@ -78,7 +78,7 @@
         %figure.img_fill.round
           = image_tag current_user.profile_cover_url(:thumb)
         %aside
-          = form_tag card_photo_comments_path(card, @photo), multipart: true do
+          = form_tag card_photo_comments_path(card, @photo), multipart: true, id: "comment-form" do
             = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
             .mt10
               .btn.browse_btn.inline.fl.dark
@@ -109,7 +109,7 @@
     %figure.img_fill
       = image_tag current_user.profile_cover_url(:thumb)
     %aside
-      = form_tag reply_comment_path, multipart: true do
+      = form_tag reply_comment_path, multipart: true, id: "reply-form" do
         = hidden_field_tag "card_id", card.id
         = hidden_field_tag "photo_id", @photo.id
         = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
@@ -153,15 +153,25 @@
         download_href = "/images/" + image_id + "/download"
         $("#download_link").attr("href", download_href)
   })
+
   $('.fancybox').on 'click', ->
     commenter = $(this).data("commenter")
     comment_id = $(this).data("comment-id")
     $("#reply p strong").html "Reply To " + commenter
     $('#reply form').attr "action", "/comments/" + comment_id + "/reply"
 
-  set_download_path = ()->
-    alert "works"
-    alert this.owl.currentItem
-
   toggle_like()
 
+  $("#comment-form").validate
+    rules:
+      "comment[content]": "required"
+    messages:
+      "comment[content]":
+        required: "Please type something"
+      
+  $("#reply-form").validate
+    rules:
+      "comment[content]": "required"
+    messages:
+      "comment[content]":
+        required: "Please type something"
