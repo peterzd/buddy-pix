@@ -1,6 +1,8 @@
 - creator = @album.creator
 %section.clearfix.inner_body
   .pc.cm
+    #msg
+      = ApplicationDecorator.flash_message
     .p10
       %figure.profile_cover.card_profile_cover.img_fill.fl.w100.album_cover
         = image_tag @album.cover_image_url

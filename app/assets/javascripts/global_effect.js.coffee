@@ -48,7 +48,11 @@ class Global
     j = inputcheck.length - 1
 
     while j >= 0
-      $(inputcheck[j]).prettyCheckable()
+      elem = $(inputcheck[j])
+      elem.prettyCheckable()
+      if elem.data("invited")
+        elem.prettyCheckable "check"
+        elem.prettyCheckable "disable"
       j--
     $(".prettyradio").on "click", ->
       $(".prettyradio").removeClass "active"
