@@ -100,7 +100,7 @@ describe User do
     before do
       photo.update album: album, creator: allen
       album.update_columns updated_at: 1.day.ago
-      peter.comments_photo photo
+      peter.comments_photo photo, "some content"
     end
 
     it "creates a new comment" do
@@ -144,9 +144,9 @@ describe User do
   describe ".reply_comment" do
     before do
       photo.update album: album
-      peter.comments_photo photo
+      peter.comments_photo photo, "first content"
       @comment = Comment.last
-      allen.reply_comment @comment
+      allen.reply_comment @comment, "some content"
     end
 
     it "adds a reply to the comment" do

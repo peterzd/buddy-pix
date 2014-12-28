@@ -106,7 +106,7 @@
   %p
     %strong Reply To Joseph
   .cmt_row.bs.clearfix.txt_area
-    %figure.img_fill
+    %figure.round.img_fill
       = image_tag current_user.profile_cover_url(:thumb)
     %aside
       = form_tag reply_comment_path, multipart: true, id: "reply-form" do
