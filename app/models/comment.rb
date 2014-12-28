@@ -7,6 +7,8 @@ class Comment < ActiveRecord::Base
 
   has_many :replies, class_name: "Comment", as: :commentable
 
+  validates :content, presence: true
+
   class << self
     def total_comments_per_day(date)
       comments = []
