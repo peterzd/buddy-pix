@@ -43,17 +43,8 @@
           %h4.al
             %small Tag Friends
           = link_to "Add", "#", class: "btn inline add_tag_btn"
-          -# .fr.chose_tager
-          -#   %ul.fl
-          -#     %li
-          -#       %figure
-          -#     %li
-          -#       %figure
-          -#     %li
-          -#       %figure
-          -#     %li
-          -#       %figure
-          -#   + Others
+          .fr.chose_tager#tagger_images
+            %ul.fl
         .fl.mt20
           = f.submit "Post Now"
 
@@ -171,9 +162,7 @@
   });
 
 :coffee
-  $("#invite_users_btn").on "click", ->
-    total_checked = $("input[name='tagged_user']:checked").serialize()
-    $("#photo_tagged_users").val(total_checked)
+  get_tagged_ids()
 
   options = valueNames: [
     "name"
