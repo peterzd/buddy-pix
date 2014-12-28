@@ -13,6 +13,7 @@ class InvitationsController < ApplicationController
         current_user.send_invitation id, card
       end
     end
+    flash[:success] = "your invitation has been sent successfully"
 
     redirect_to card_path(card)
   end
