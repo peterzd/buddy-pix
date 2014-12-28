@@ -49,14 +49,20 @@
         itemSelector: '.feed_box'
       });
       $('.like_btn').click(function(){
-          $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
-              container.masonry();
-          });
-          return false;
+        $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
+            container.masonry();
+        });
+        return false;
       });
 
   });
 
   load_more($("#m-container"));
 
+:coffee
+  container = $("#m-container")
+  $(".like_icon").on "click", ->
+    $(this).parent("div.like_box").fadeToggle(0, ->
+      container.masonry()
+    )
 
