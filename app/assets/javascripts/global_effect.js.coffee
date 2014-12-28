@@ -74,7 +74,8 @@ class Global
       $(this).parents('.invite_row').addClass 'decline'
 
   fancy_box: ->
-    $(".fancybox").fancybox()
+    $(".fancybox").fancybox
+      parent: "body"
 
   smoothScroll: ->
     $("a[href*=#]:not([href=#])").not(".fancybox").click ->
