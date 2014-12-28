@@ -2,14 +2,16 @@ class InvitationsController < ApplicationController
   respond_to :html, :json
 
   def new
-    @users = User.where(type: nil).where.not(id: current_user.id)
+    @card = Album.find params[:card_id]
   end
 
   def create
     user_ids = params[:user_ids]
     card = Album.find params[:card_id]
-    user_ids.each do |id|
-      current_user.send_invitation id, card
+    if user_ids
+      user_ids.each do |id|
+        current_user.send_invitation id, card
+      end
     end
 
     redirect_to card_path(card)
