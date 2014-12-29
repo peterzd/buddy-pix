@@ -30,7 +30,7 @@
         %h4.ph10.mt10.al
           %small Cover Photo
         %figure.uplaod.cover_img
-          = image_tag @user.cover_photo_url(:medium), class: "img_fill_parent"
+          = image_tag (ImageDecorator.cover_photo_img(@user)), class: "img_fill_parent"
         .btn.browse_btn.inline.mt20
           = f.fields_for :cover_photo do |photo|
             = photo.file_field "picture"
