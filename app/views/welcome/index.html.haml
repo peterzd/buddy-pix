@@ -3,7 +3,9 @@
     %aside.fl.w50.article_side.bs
       %h1 Share your story
       %h2 Share experiences together with photo groups for hobbies, events, or everyday life.
-      = link_to image_tag("app_icon.png") + image_tag("app_store_icon.png"), "#"
+      %span.inline
+        = image_tag "app_icon.png", class: "app_icon"
+      = link_to(image_tag("app_store_icon.png", class: "app_store_icon"), "#", class: "inline")
     %aside.fl.w50.img_side.ac.figure_img
       = image_tag "iphone_app_on_hand.png", alt: "app demo"
 %section.clearfix
