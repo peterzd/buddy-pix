@@ -13,13 +13,6 @@ describe InvitationsController do
         [admin, peter, allen, another_user]
         sign_in peter
       end
-
-      it "lists all users but no Admin user nor the current_user self" do
-        get :new, card_id: album.id
-        assigns[:users].wont_include admin
-        assigns[:users].wont_include peter
-        assigns[:users].must_match_array [allen, another_user]
-      end
     end
 
   end
