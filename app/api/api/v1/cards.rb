@@ -109,6 +109,17 @@ module API
             present :status, "true"
           end
 
+          desc "destroys a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "destroy" do
+            authenticate!
+            card = Album.find params[:id]
+            card.destroy if current_user == card.creator
+            present :status, "true"
+          end
+
         end
 
       end
