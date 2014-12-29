@@ -23,7 +23,7 @@ class Global
         $('.drop_overlay').on "mouseover", ->
           $('.drop_nav_links').slideUp 0
           $('.expand_nav_point').removeClass "active"
-          $('.drop_overlay').remove
+          $('.drop_overlay').remove()
       if $(window).width() < 1025
         $('body').toggleClass 'suffle'
     $(".min_nav_btn").on "click", ->
