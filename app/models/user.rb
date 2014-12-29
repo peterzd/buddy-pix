@@ -167,7 +167,7 @@ class User < ActiveRecord::Base
   end
 
   def cover_photo_url(format=:original)
-    return "" if cover_photo.nil?
+    return nil if cover_photo.nil?
     cover_photo.picture.url(format)
   end
 
