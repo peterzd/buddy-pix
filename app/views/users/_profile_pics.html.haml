@@ -2,7 +2,7 @@
   %figure.profile_pic.round.img_fill
     = image_tag @user.profile_cover_url(:medium)
   %figure.profile_cover.img_fill.fl.w100
-    = image_tag @user.cover_photo_url
+    = image_tag (ImageDecorator.cover_photo_img(@user))
     %hgroup.head_row.bs
       %h2= @user.user_name
     .info_row

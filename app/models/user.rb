@@ -162,12 +162,13 @@ class User < ActiveRecord::Base
   end
 
   def profile_cover_url(format=:original)
+    return "dummy_img/profile_pic.jpg" if profile_cover.nil? and image_url.nil?
     return image_url if profile_cover.nil?
     profile_cover.picture.url(format)
   end
 
   def cover_photo_url(format=:original)
-    return "" if cover_photo.nil?
+    return nil if cover_photo.nil?
     cover_photo.picture.url(format)
   end
 
