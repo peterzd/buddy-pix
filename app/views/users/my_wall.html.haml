@@ -8,13 +8,6 @@
     %nav#page-nav
       = link_to "", my_wall_next_batch_path(page: 1)
 
-    -# .loading_feed.feed_box.fl.w100.p10
-    -#   = image_tag "preloader.png", alt: "Loading ...", class: "rotate"
-    -#   %span
-    -#     Loading
-    -#     %blink ...
-
-
 :javascript
   jQuery(function($) {
       var container = $('#m-container');
@@ -22,10 +15,16 @@
         itemSelector: '.feed_box'
       });
       $('.like_btn').click(function(){
+        liked = $(this).data("liked")
+        if(liked){
+          return false;
+        }
+        else{
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0,function(){
               container.masonry();
           });
           return false;
+        }
       });
 
   });
