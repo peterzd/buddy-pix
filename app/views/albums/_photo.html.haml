@@ -22,7 +22,9 @@
     %h2= photo.description
   .f_bottom.clearfix.fl.w100
     %aside.fl.mt5
-      = link_to content_tag(:i, "", class: 'pe-7s-like') + content_tag(:strong, "#{photo.likes.count}"), "", class: 'p10 inline like_btn', data: { liked: (current_user.liked_photos.include? photo) }
+      - liked = current_user.liked_photos.include? photo
+      - liked_class = liked ? "active" : ""
+      = link_to content_tag(:i, "", class: 'pe-7s-like') + content_tag(:strong, "#{photo.likes.count}"), "", class: "p10 inline like_btn #{liked_class}", data: { liked: liked }
       = link_to content_tag(:i, "", class: 'pe-7s-chat') + content_tag(:strong, "#{photo.comments.count}"), card_photo_path(album, photo), class: 'p10 inline'
     %aside.fr.p10
       - if from == "my_wall"
