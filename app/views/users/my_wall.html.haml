@@ -6,9 +6,9 @@
         .p10.feed_box.fl.w100.ac.mt20.msg_box
           %h4 Hmmm....you don't seem to have any interests.  We know you're not boring so get started now by following a card or creating one yourself below
           %br
-          %a.btn.inline{:href => "#"} Search Cards
+          = link_to "Search Cards", search_path, class: "btn inline"
           &nbsp;&nbsp;
-          %a.btn.inline{:href => "#"} Create Cards
+          = link_to "Create Cards", new_card_path, class: "btn inline"
       - else
         = render partial: "albums/photo", collection: @photos, locals: { from: "my_wall" }
 
