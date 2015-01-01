@@ -6,16 +6,31 @@
     %hgroup.head_row.bs
       %h2= @user.user_name
     .info_row
-      .info_cell.bs
+      .info_cell.bs.tooltip{ title: "Albums" }
         %i.pe-7s-albums
         %span= @user.created_albums.count
-      .info_cell.bs
+      .info_cell.bs.tooltip{:title => "Gallery"}
         %i.pe-7s-photo-gallery
         %span= @user.uploaded_photos.count
-      .info_cell.bs
+      .info_cell.bs.tooltip{:title => "Likes"}
         %i.pe-7s-like
         %span= @user.total_likes
-      .info_cell.bs
+      .info_cell.bs.tooltip{:title => "Comments"}
         %i.pe-7s-chat
         %span= @user.total_comments
 
+:javascript
+  $('.tooltip').tooltip({
+      position: {
+        my: "center+10 bottom",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "arrow" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
