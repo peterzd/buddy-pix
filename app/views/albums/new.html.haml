@@ -9,25 +9,16 @@
     = render "form", action_text: "Create card", url_path: cards_path
 
 :coffee
-  validate_name()
-
   $("input[type='submit']").on "click", (e)->
     value = $("#album_name").val()
-    if value
-      $.ajax(
-        type: "post",
-        url: "/cards/validate_name",
-        data: { name: value },
-        dataType: "json",
-        success: (data)->
-          if !data.status
-            e.preventDefault()
-            alert "name been token"
-          else
-            $(e.target.form).submit()
-      )
-    else
+    if !value
       e.preventDefault()
       alert "should add a name"
+    else
+      if $("#album_private_true").is(":checked")
+        $(e.target.form).submit()
+      else
+        validate_name(e, value)
+        e.preventDefault()
     e.preventDefault()
 
