@@ -102,4 +102,17 @@ describe Album do
     end
   end
 
+  describe "validates name unique" do
+    it "validates the name unique for public albums" do
+      public_album
+      ->{create :album, name: "public album", private: false, creator: peter}.must_raise ActiveRecord::RecordInvalid
+    end
+
+    it "does not validate the name unique for private albums" do
+      public_album
+      new_private = create :album, name: "public album", private: true, creator: peter
+      Album.last.must_equal new_private
+    end
+  end
+
 end
