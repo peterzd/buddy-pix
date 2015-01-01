@@ -1,6 +1,14 @@
 %section.clearfix.inner_body
   .pc.cm
-    #m-container.fl.w100.mt20
+    - empty_class = @cards.empty? ? "" : "mt20"
+    #m-container.fl.w100{ class: empty_class }
+      - if @cards.empty?
+        .p10.feed_box.fl.w100.ac.mt20.msg_box
+          %h4 You don't any following cards
+          %br
+          = link_to "Search Cards", search_path, class: "btn inline"
+          &nbsp;&nbsp;
+          = link_to "Create Cards", new_card_path, class: "btn inline"
       = render partial: "card_detail", collection: @cards, as: :card
     %nav#page-nav
       = link_to "", following_cards_batch_cards_path(page: 1)

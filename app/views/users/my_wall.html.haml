@@ -2,8 +2,15 @@
   .pc.cm
     = render 'profile_pics'
     #m-container.fl.w100
-      -# photo's list
-      = render partial: "albums/photo", collection: @photos, locals: { from: "my_wall" }
+      - if @photos.empty?
+        .p10.feed_box.fl.w100.ac.mt20.msg_box
+          %h4 Hmmm....you don't seem to have any interests.  We know you're not boring so get started now by following a card or creating one yourself below
+          %br
+          = link_to "Search Cards", search_path, class: "btn inline"
+          &nbsp;&nbsp;
+          = link_to "Create Cards", new_card_path, class: "btn inline"
+      - else
+        = render partial: "albums/photo", collection: @photos, locals: { from: "my_wall" }
 
     %nav#page-nav
       = link_to "", my_wall_next_batch_path(page: 1)
@@ -28,7 +35,7 @@
       });
 
   });
-
+    
   load_more($("#m-container"));
 
 :coffee
