@@ -36,22 +36,6 @@
 
   });
     
-  $('.tooltip').tooltip({
-      position: {
-        my: "center+10 bottom",
-        at: "center top",
-        using: function( position, feedback ) {
-          $( this ).css( position );
-          $( "<div>" )
-            .addClass( "arrow" )
-            .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
-            .appendTo( this );
-        }
-      }
-    });
-  
-
   load_more($("#m-container"));
 
 :coffee

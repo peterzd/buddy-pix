@@ -1,27 +1,32 @@
 %section.clearfix.inner_body
   .pc.cm
     = render 'users/profile_pics'
-    #m-container.fl.w100.mt10
-      -# cards list
-      - @albums.each do |album|
-        .p10.feed_box.fl.w50{ id: dom_id(album) }
-          %figure.post_img.img_fill.clearfix
-            = link_to image_tag(album.cover_image_url :medium), card_path(album)
-            %span.tag
-              - private_text = album.private? ? "private" : "public"
-              = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
-            .post_shadow
-              %h3.fl= album.name
-              %p.fr.count.bs
-                %i.fa.fa-group
-                  = sanitize "#{album.followers.count} &nbsp;|&nbsp;"
-                %i.fa.fa-picture-o
-                  = album.photos.count
-          .f_bottom.clearfix.event_link
-            = album.decorate.hidden_link
-            = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
-            = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
-        / feed box
+    - empty_class = @albums.empty? ? "" : "mt10"
+    #m-container.fl.w100{ class: empty_class }
+      - if @albums.empty?
+        .p10.feed_box.fl.w100.ac.mt20.msg_box
+          %h4 You don't have any card yet!
+          %br
+          = link_to "Create Cards", new_card_path, class: "btn inline"
+      - else
+        - @albums.each do |album|
+          .p10.feed_box.fl.w50{ id: dom_id(album) }
+            %figure.post_img.img_fill.clearfix
+              = link_to image_tag(album.cover_image_url :medium), card_path(album)
+              %span.tag
+                - private_text = album.private? ? "private" : "public"
+                = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
+              .post_shadow
+                %h3.fl= album.name
+                %p.fr.count.bs
+                  %i.fa.fa-group
+                    = sanitize "#{album.followers.count} &nbsp;|&nbsp;"
+                  %i.fa.fa-picture-o
+                    = album.photos.count
+            .f_bottom.clearfix.event_link
+              = album.decorate.hidden_link
+              = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
+              = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
 
 :javascript
   jQuery(function($) {
