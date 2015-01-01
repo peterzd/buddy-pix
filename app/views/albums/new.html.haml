@@ -12,28 +12,22 @@
   validate_name()
 
   $("input[type='submit']").on "click", (e)->
-    cover_image_value = $("#album_cover_image_picture").val()
-    if !cover_image_value
-      alert "should add cover image for card"
-      e.preventDefault()
+    value = $("#album_name").val()
+    if value
+      $.ajax(
+        type: "post",
+        url: "/cards/validate_name",
+        data: { name: value },
+        dataType: "json",
+        success: (data)->
+          if !data.status
+            e.preventDefault()
+            alert "name been token"
+          else
+            $(e.target.form).submit()
+      )
     else
-      value = $("#album_name").val()
-      if value
-        $.ajax(
-          type: "post",
-          url: "/cards/validate_name",
-          data: { name: value },
-          dataType: "json",
-          success: (data)->
-            if !data.status
-              e.preventDefault()
-              alert "name been token"
-            else
-              console.log "can submit now"
-              $(e.target.form).submit()
-        )
-      else
-        e.preventDefault()
-        alert "should add a name"
+      e.preventDefault()
+      alert "should add a name"
     e.preventDefault()
 
