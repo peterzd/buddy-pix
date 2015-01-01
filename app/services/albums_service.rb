@@ -6,7 +6,7 @@ class AlbumsService
 
   def save_album(album_params)
     if @album.save
-      process_image(album_params)
+      process_image(album_params) if album_params[:cover_image]
       true
     else
       false
