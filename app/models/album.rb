@@ -20,7 +20,7 @@ class Album < ActiveRecord::Base
   has_many :related_invitations, class_name: "Invitation", foreign_key: :card_id, dependent: :destroy
   has_many :related_notifications, class_name: "Notification", as: :object, dependent: :destroy
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, unless: Proc.new { |album| album.private? }
 
   after_initialize :set_default_value
   after_save :creator_follow
