@@ -14,6 +14,16 @@ class SearchController < ApplicationController
     end
   end
 
+  def search_cards
+    type = params[:type]
+    query = params[:query]
+    @cards = search_for_cards(query)
+  end
+
+  def search_photos
+
+  end
+
   private
   def search_params
     params[:search]

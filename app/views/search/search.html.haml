@@ -1,9 +1,9 @@
 - user = current_user || User.new
 %section.clearfix.inner_body
   %section.clearfix.search_form
-    = form_tag search_path, method: :get, class: "search_row cm pc p10" do
+    = form_tag search_path, method: :get, class: "search_row cm pc p10", id: "search-form" do
       .fl.select
-        = select_tag "search[type]", options_for_select([["Card View", "card"], ["Image View", "photo"]])
+        = select_tag "search[type]", options_for_select([["Card View", "cards"], ["Image View", "photos"]])
       .fl.input
         = text_field_tag "search[query]", "", placeholder: "Search ..."
       .btn_box.fr
@@ -70,4 +70,5 @@
 
 :coffee
   toggle_like()
-
+  
+  ajax_search()
