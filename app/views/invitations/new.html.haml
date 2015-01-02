@@ -23,7 +23,7 @@
                 %figure.fl.round.img_fill
                   = image_tag user.profile_cover_url(:medium)
                 .check
-                  = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}", data: { label: "#{user.user_name}", labelposition: "left", invited: "#{user.joined_albums.include? @card}"}
+                  = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}", data: { label: "#{user.user_name}", labelposition: "left", invited: "#{user.decorate.invited_for(@card)}"}
           .p20.ac
             = submit_tag "Invite Friends"
     #email.cover_box.tab.p10.hide
