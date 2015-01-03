@@ -1,16 +1,51 @@
 class SearchController < ApplicationController
+  NUMBER_FACTOR = 6
+
   def search
-    if search_params.blank?
-      @cards = Album.order(updated_at: :desc).where(private: [nil, false])
+    @cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(NUMBER_FACTOR).offset(0)
+  end
+
+  def search_batch
+    page = params[:page].to_i - 1
+    @cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(NUMBER_FACTOR).offset(page * NUMBER_FACTOR)
+    if @cards.empty?
+      render nothing: true, status: 404
     else
-      type = search_params[:type]
-      query = search_params[:query]
-      case type
-      when "card"
-        @cards = search_for_cards(query)
-      when "photo"
-        @photos = search_for_photos(query)
-      end
+      render partial: "albums/card_detail", collection: @cards, as: :card
+    end
+  end
+
+  def search_cards
+    query = params[:query]
+    @cards = search_for_cards(query, 1)
+  end
+
+  def search_cards_batch
+    query = params[:query]
+    page = params[:page].to_i
+    @cards = search_for_cards(query, page)
+
+    if end_of_search?(:cards, query, page) or query.blank?
+      render nothing: true, status: 404
+    else
+      render partial: "albums/card_detail", collection: @cards, as: :card
+    end
+  end
+
+  def search_photos
+    query = params[:query]
+    @photos = search_for_photos(query, 1)
+  end
+
+  def search_photos_batch
+    query = params[:query]
+    page = params[:page].to_i
+    @photos = search_for_photos(query, page)
+
+    if end_of_search?(:photos, query, page) or query.blank?
+      render nothing: true, status: 404
+    else
+      render partial: "albums/photo", collection: @photos, as: :photo, locals: { from: "search" }
     end
   end
 
@@ -19,9 +54,15 @@ class SearchController < ApplicationController
     params[:search]
   end
 
-  def search_for_cards(query)
+  def end_of_search?(type, query, page)
+    this_time = send("search_for_#{type.to_s}", query, page )
+    next_time = send("search_for_#{type.to_s}", query, page + 1 )
+    this_time.empty? and next_time.empty?
+  end
+
+  def search_for_cards(query, page)
     return Album.order(updated_at: :desc).where(private: [nil, false]) if query.blank?
-    result = Album.search query
+    result = Album.search(query).page(page).per(NUMBER_FACTOR).records
     result.results.inject([]) do |records, r|
       card = Album.where(id: r.id).first
       if card and card.visible_to_world?
@@ -32,9 +73,9 @@ class SearchController < ApplicationController
     end
   end
 
-  def search_for_photos(query)
+  def search_for_photos(query, page)
     return Photo.all_visible_items if query.blank?
-    result = Photo.search query
+    result = Photo.search(query).page(page).per(NUMBER_FACTOR).records
     result.results.inject([]) do |records, r|
       photo = Photo.where(id: r.id).first
       if photo and photo.visible_to_world?
