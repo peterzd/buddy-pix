@@ -1,27 +1,17 @@
 class SearchController < ApplicationController
+
   def search
-    if search_params.blank?
-      @cards = Album.order(updated_at: :desc).where(private: [nil, false])
-    else
-      type = search_params[:type]
-      query = search_params[:query]
-      case type
-      when "card"
-        @cards = search_for_cards(query)
-      when "photo"
-        @photos = search_for_photos(query)
-      end
-    end
+    @cards = Album.order(updated_at: :desc).where(private: [nil, false])
   end
 
   def search_cards
-    type = params[:type]
     query = params[:query]
     @cards = search_for_cards(query)
   end
 
   def search_photos
-
+    query = params[:query]
+    @photos = search_for_photos(query)
   end
 
   private

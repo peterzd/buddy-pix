@@ -11,7 +11,7 @@
           = "#{time_ago_in_words photo.updated_at} ago"
     %aside.fr.p10.h3.ar
       %h3
-        - if from == "my_wall"
+        - if from == "my_wall" or from == "search"
           = link_to album.name, card_path(album)
         - else
           = photo.title
@@ -29,8 +29,9 @@
     %aside.fr.p10
       - if from == "my_wall"
         = "#{album.followers.count} Followers"
-      - else
+      - elsif from == "card"
         = photo.decorate.remove_link
+
     .fl.w100.like_box.bs.hide
       = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:happy] }), class: 'like_icon happy', title: 'happy', remote: true
       = link_to "", like_card_photo_path(photo.album, photo, { mood: Like::MOOD[:like] }), class: 'like_icon like', title: 'like', remote: true
