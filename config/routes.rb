@@ -90,7 +90,9 @@ Rails.application.routes.draw do
   get "search", to: "search#search", as: :search
   get "search_batch", to: "search#search_batch", as: :search_batch
   get "search_cards", to: "search#search_cards", as: :search_cards
+  get "search_cards_batch", to: "search#search_cards_batch", as: :search_cards_batch
   get "search_photos", to: "search#search_photos", as: :search_photos
+  get "search_photos_batch", to: "search#search_photos_batch", as: :search_photos_batch
 
   resources :images do
     member do
