@@ -25,7 +25,7 @@ class SearchController < ApplicationController
     page = params[:page].to_i
     @cards = search_for_cards(query, page)
 
-    if @cards.empty?
+    if end_of_search?(:cards, query, page) or query.blank?
       render nothing: true, status: 404
     else
       render partial: "albums/card_detail", collection: @cards, as: :card
@@ -42,9 +42,7 @@ class SearchController < ApplicationController
     page = params[:page].to_i
     @photos = search_for_photos(query, page)
 
-    # the logic here is not right, should check if there're more to query
-    # if not, then return 404
-    if @photos.empty?
+    if end_of_search?(:photos, query, page) or query.blank?
       render nothing: true, status: 404
     else
       render partial: "albums/photo", collection: @photos, as: :photo, locals: { from: "search" }
@@ -54,6 +52,12 @@ class SearchController < ApplicationController
   private
   def search_params
     params[:search]
+  end
+
+  def end_of_search?(type, query, page)
+    this_time = send("search_for_#{type.to_s}", query, page )
+    next_time = send("search_for_#{type.to_s}", query, page + 1 )
+    this_time.empty? and next_time.empty?
   end
 
   def search_for_cards(query, page)
