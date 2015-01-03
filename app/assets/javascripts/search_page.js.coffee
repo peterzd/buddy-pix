@@ -21,6 +21,8 @@
     container.infinitescroll('destroy')
     container.data('infinitescroll', null)
 
+    container.masonry()
+
     $("#page-nav a").attr "href", link
     load_more($("#m-container"))
 
