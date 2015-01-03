@@ -1,7 +1,18 @@
 class SearchController < ApplicationController
+  NUMBER_FACTOR = 1
 
   def search
-    @cards = Album.order(updated_at: :desc).where(private: [nil, false])
+    @cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(NUMBER_FACTOR).offset(0)
+  end
+
+  def search_batch
+    page = params[:page].to_i - 1
+    @cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(NUMBER_FACTOR).offset(page * NUMBER_FACTOR)
+    if @cards.empty?
+      render nothing: true, status: 404
+    else
+      render partial: "albums/card_detail", collection: @cards, as: :card
+    end
   end
 
   def search_cards

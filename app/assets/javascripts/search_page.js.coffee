@@ -6,7 +6,7 @@
 
     query_url = "/search_#{query_type}"
     $.ajax(
-      type: "post",
+      type: "get",
       url: query_url,
       data: { type: query_type, query: query_string },
       dataType: "script",

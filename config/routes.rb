@@ -88,8 +88,9 @@ Rails.application.routes.draw do
   end
 
   get "search", to: "search#search", as: :search
-  post "search_cards", to: "search#search_cards", as: :search_cards
-  post "search_photos", to: "search#search_photos", as: :search_photos
+  get "search_batch", to: "search#search_batch", as: :search_batch
+  get "search_cards", to: "search#search_cards", as: :search_cards
+  get "search_photos", to: "search#search_photos", as: :search_photos
 
   resources :images do
     member do
