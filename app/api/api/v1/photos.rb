@@ -46,7 +46,7 @@ module API
         end
         post "search_posts" do
           authenticate!
-          posts = Photo.search(params[:search_params]).page(params[:page].to_i).per(8).records
+          posts = Photo.search(params[:search_params]).page(params[:page].to_i).per(10).records
           present :status, "true"
           present :cards, posts, with: API::Entities::Photo
         end
