@@ -25,6 +25,17 @@ module API
           present :cards, cards, with: API::Entities::Card
         end
 
+        desc "return 10 unfollowed cards by the user"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post "unfollowed_cards" do
+          authenticate!
+          cards = AlbumsQuery.unfollowed_cards_by(current_user).take(10)
+          present :status, "true"
+          present :cards, cards, with: API::Entities::Card
+        end
+
         desc "search for cards"
         params do
           requires :access_token, type: String, desc: "the token of the user"
