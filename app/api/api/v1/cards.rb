@@ -33,7 +33,7 @@ module API
         end
         post "search_cards" do
           authenticate!
-          cards = Album.search(params[:search_params]).page(params[:page].to_i).per(8).records
+          cards = Album.search(params[:search_params]).page(params[:page].to_i).per(10).records
           present :status, "true"
           present :cards, cards, with: API::Entities::Card
         end
