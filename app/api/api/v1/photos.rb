@@ -12,21 +12,25 @@ module API
           requires :access_token, type: String, desc: "the token of the user"
           requires :title, type: String, desc: "title of the post"
           requires :card_id, type: String, desc: "the card the post should belongs to"
-          requires :picture, type: String, desc: "uploaded image"
+          requires :pictures, type: Array, desc: "uploaded image"
           optional :description, type: String, desc: "description of the post"
           optional :tagged_friend_ids, type: Array do
             requires :id, type: String, desc: "the id of the user"
           end
         end
-        post :upload_image do
+        post :upload_images do
           authenticate!
-          image = Image.create image_data: params[:picture]
+          images = []
+          params[:pictures].each do |pic|
+            images << Image.create(image_data: pic)
+          end
+
           card = Album.find params[:card_id].to_i
           photo = card.photos.build title: params[:title],
                                     description: params[:description],
                                     creator: current_user
 
-          if PhotosService.new(photo).save_photo_api(image, params[:tagged_friend_ids])
+          if PhotosService.new(photo).save_photo_api(images, params[:tagged_friend_ids])
             present :status, "true"
           else
             present :status, "false"

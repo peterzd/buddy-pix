@@ -15,14 +15,14 @@ class PhotosService
     end
   end
 
-  def save_photo_api(image, tagged_ids)
+  def save_photo_api(images, tagged_ids)
     if @photo.save
       if tagged_ids
         tagged_ids.each do |tagged_hash|
           @photo.tag_user tagged_hash[:id].to_i
         end
       end
-      @photo.images << image
+      @photo.images = images
       send_notifications
       true
     else
