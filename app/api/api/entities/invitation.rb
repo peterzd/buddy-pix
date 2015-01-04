@@ -1,11 +1,16 @@
 module API
   module Entities
     class Invitation < Grape::Entity
+      format_with(:api_datetime) { |dt| dt.strftime("%Y-%m-%d %H:%M") }
       expose :id
       expose :sender_name
       expose :sender_profile_cover
       expose :card
-      expose :created_at, :updated_at
+
+      with_options(format_with: :api_datetime) do
+        expose :created_at
+        expose :updated_at
+      end
 
       private
       def sender_profile_cover
