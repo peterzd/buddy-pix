@@ -1,6 +1,7 @@
 module API
   module Entities
     class User < Grape::Entity
+      format_with(:api_datetime) { |dt| dt.strftime("%Y-%m-%d %H:%M") }
       expose :id, :email, :user_name, :first_name, :last_name, :phone_number
       expose :profile_cover, :cover_photo, using: API::Entities::Image
       expose :profile_cover_url
@@ -13,6 +14,11 @@ module API
       expose :total_likes_count, if: { type: :detail }
       expose :total_comments_count, if: { type: :detail }
       expose :followers_count, if: { type: :detail }
+
+      with_options(format_with: :api_datetime) do
+        expose :created_at
+        expose :updated_at
+      end
 
       private
       def created_cards_count

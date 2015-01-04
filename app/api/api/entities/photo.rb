@@ -1,7 +1,8 @@
 module API
   module Entities
     class Photo < Grape::Entity
-      expose :id, :title, :description, :created_at, :updated_at
+      format_with(:api_datetime) { |dt| dt.strftime("%Y-%m-%d %H:%M") }
+      expose :id, :title, :description
       expose :image_url
       expose :image_height, unless: { type: :need_height }
       expose :images, using: API::Entities::Image
@@ -15,6 +16,11 @@ module API
       expose :album, as: :card
       expose :images_count
         
+      with_options(format_with: :api_datetime) do
+        expose :created_at
+        expose :updated_at
+      end
+
       private
       def images_count
         object.images.count
