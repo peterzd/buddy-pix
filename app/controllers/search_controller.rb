@@ -25,7 +25,7 @@ class SearchController < ApplicationController
     page = params[:page].to_i
     @cards = search_for_cards(query, page)
 
-    if end_of_search?(:cards, query, page) or query.blank?
+    if end_of_search?(:cards, query, page)
       render nothing: true, status: 404
     else
       render partial: "albums/card_detail", collection: @cards, as: :card
@@ -42,7 +42,7 @@ class SearchController < ApplicationController
     page = params[:page].to_i
     @photos = search_for_photos(query, page)
 
-    if end_of_search?(:photos, query, page) or query.blank?
+    if end_of_search?(:photos, query, page)
       render nothing: true, status: 404
     else
       render partial: "albums/photo", collection: @photos, as: :photo, locals: { from: "search" }
@@ -61,7 +61,9 @@ class SearchController < ApplicationController
   end
 
   def search_for_cards(query, page)
-    return Album.order(updated_at: :desc).where(private: [nil, false]) if query.blank?
+    if query.blank?
+      return Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(NUMBER_FACTOR).offset((page -1 ) * NUMBER_FACTOR)
+    end
     result = Album.search(query).page(page).per(NUMBER_FACTOR).records
     result.results.inject([]) do |records, r|
       card = Album.where(id: r.id).first
@@ -74,7 +76,9 @@ class SearchController < ApplicationController
   end
 
   def search_for_photos(query, page)
-    return Photo.all_visible_items if query.blank?
+    if query.blank?
+      return Photo.includes(:album).where("albums.private = ? or albums.private is ?", "f", nil).where("albums.hidden = ? or albums.hidden is ?", "f", nil).references("album").order(updated_at: :desc).limit(NUMBER_FACTOR).offset((page - 1) * NUMBER_FACTOR)
+    end
     result = Photo.search(query).page(page).per(NUMBER_FACTOR).records
     result.results.inject([]) do |records, r|
       photo = Photo.where(id: r.id).first
