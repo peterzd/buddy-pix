@@ -37,6 +37,16 @@ module API
           end
         end
 
+        desc "return 10 unfollowed posts by the user"
+        params do
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post "unfollowed_posts" do
+          authenticate!
+          posts = PhotosQuery.unfollowed_photos_by(current_user).take(10)
+          present :status, "true"
+          present :posts, posts, with: API::Entities::Photo
+        end
 
         desc "search for posts"
         params do
@@ -48,7 +58,7 @@ module API
           authenticate!
           posts = Photo.search(params[:search_params]).page(params[:page].to_i).per(10).records
           present :status, "true"
-          present :cards, posts, with: API::Entities::Photo
+          present :posts, posts, with: API::Entities::Photo
         end
 
         desc "returns a post"

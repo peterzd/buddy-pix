@@ -10,5 +10,12 @@ class PhotosQuery
       Photo.where(album: user.joined_albums).order(updated_at: :desc).limit(NUMBER_FACTOR).offset(offset)
     end
 
+    def unfollowed_photos_by(user)
+      cards = AlbumsQuery.unfollowed_cards_by(user)
+      cards.inject([]) do |all_photos, c|
+        all_photos.concat c.photos
+      end
+    end
+
   end
 end
