@@ -3,7 +3,10 @@ module API
     class Notification < Grape::Entity
       format_with(:api_datetime) { |dt| dt.strftime("%Y-%m-%d %H:%M") }
       expose :id
+      expose :maker, using: API::Entities::User
       expose :action
+      # expose :item
+      # expose :item_type
       expose :is_read
       expose :message
       expose :created_at, :updated_at
