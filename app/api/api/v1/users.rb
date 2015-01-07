@@ -33,6 +33,8 @@ module API
         desc "signs up a user via REST api"
         params do
           requires :email, type: String, desc: "user's email"
+          requires :first_name, type: String, desc: "user's email"
+          requires :last_name, type: String, desc: "user's email"
           requires :password, type: String, desc: "user's password"
           requires :password_confirmation, type: String, desc: "user's password confirmation"
           requires :picture, type: String, desc: "profile image, base64 format"
@@ -41,7 +43,9 @@ module API
           error!("password are not same") unless same_password?
           user = User.new(
             email: params[:email],
-            password: params[:password]
+            password: params[:password],
+            first_name: params[:first_name],
+            last_name: params[:last_name]
           )
 
           if user.save
