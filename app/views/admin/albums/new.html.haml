@@ -1,7 +1,13 @@
+- if flash.any?
+  - type =  flash.keys.first
+  .alert.alert-dismissible{:role => "alert", class: "alert-#{type.to_s}"}
+    %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+      %span{"aria-hidden" => "true"} ×
+    = flash[type.to_sym]
 = simple_form_for [:admin, @album], defaults: { label_html: { class: "col-sm-2" } }, html: { class: "form-horizontal" }, wrapper: :bootstrap_horizontal do |f| 
   = f.input :name
-  = f.input :last_name
   = f.input :caption
   = f.input :private, as: :radio_buttons
   = f.input :cover_image, as: :file
-  = f.button :submit
+  = f.submit "submit"
+  = f.submit "add more"
