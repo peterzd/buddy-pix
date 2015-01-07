@@ -15,6 +15,10 @@ class Admin::AlbumsController < Admin::ApplicationController
     @album = Album.new
     respond_with @album
   end
+  
+  def new_list_cards
+    @album = Album.new
+  end
 
   def hide_card
     @album.update hidden: true
@@ -31,19 +35,29 @@ class Admin::AlbumsController < Admin::ApplicationController
   # to call: AlbumAction.create_action(album_params) { |obj| authorize obj }
   def create
     @album = Album.new album_params.except(:cover_image).merge(creator: current_user)
-    @album.save
+    if @album.save
+      if album_params[:cover_image]
+        image = Image.create picture: album_params[:cover_image]
+        @album.set_cover_image image
+      end
 
-    if album_params[:cover_image]
-      image = Image.create picture: album_params[:cover_image]
-      @album.set_cover_image image
+      case params[:commit]
+      when "submit"
+        redirect_to admin_albums_path
+      when "add more"
+        flash[:success] = "created one card!"
+        redirect_to new_admin_album_path
+      end
+    else
+      flash[:danger] = @album.errors.messages
+      render :new
     end
 
-    redirect_to admin_albums_path
   end
 
   private
   def album_params
-    params.require(:album).permit(:id, :name, :last_name, :caption, :cover_image)
+    params.require(:album).permit(:id, :name, :private, :caption, :cover_image)
   end
 
   def set_album
