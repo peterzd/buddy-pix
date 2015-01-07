@@ -20,7 +20,14 @@ module API
       def message
         case object.action
         when "comment_photo"
-          return "#{object.maker.user_name} comments on #{object.object.title}."
+          photo = object.object
+          return_str = ""
+          if photo
+            return_str = "#{object.maker.user_name} comments on #{object.object.title}."
+          else
+            return_str = "image has been removed by #{object.maker.user_name}"
+          end
+          return return_str
         when "joins_card"
           return "#{object.maker.user_name} has joined #{object.object.name}."
         when "accept_invitation"
@@ -30,14 +37,34 @@ module API
         when "post_photo"
           photo = object.object
           card = photo.album if photo
-          return "#{object.maker.user_name} posts in your #{card.name}"
+
+          return_str = ""
+          if photo
+            return_str = "#{object.maker.user_name} posts in your #{card.name}"
+          else
+            return_str = "image has been removed by #{object.maker.user_name}"
+          end
+          return return_str
+
         when "like_photo"
           photo = object.object
           card = photo.album if photo
-          return "#{object.maker.user_name} likes your post #{photo.title}"
+          return_str = ""
+          if photo
+            return_str = "#{object.maker.user_name} likes your post #{photo.title}"
+          else
+            return_str = "image has been removed by #{object.maker.user_name}"
+          end
+          return return_str
         when "tagged"
           photo = object.object
-          return "You have been tagged in a post #{photo.title}"
+          return_str = ""
+          if photo
+            return_str = "You have been tagged in a post #{photo.title}"
+          else
+            return_str = "image has been removed by #{object.maker.user_name}"
+          end
+          return return_str
         end
       end
 
