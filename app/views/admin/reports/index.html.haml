@@ -1,6 +1,8 @@
 %h3 this is Admin reports detail page
 = form_tag query_range_admin_reports_path do
+  = label_tag "start date"
   = date_field_tag "start_date", 1.week.ago.to_date
+  = label_tag "end date"
   = date_field_tag "end_date", Date.today
   = submit_tag "Submit"
 
