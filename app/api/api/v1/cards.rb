@@ -97,6 +97,28 @@ module API
         end
 
         route_param :id do
+          desc "follow a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "follow" do
+            authenticate!
+            card = Album.find params[:id]
+            current_user.joins_album card
+            present :status, "true"
+          end
+
+          desc "unfollow a card"
+          params do
+            requires :access_token, type: String, desc: "user's access_token"
+          end
+          post "unfollow" do
+            authenticate!
+            card = Album.find params[:id]
+            current_user.unfollow_album card
+            present :status, "true"
+          end
+
           desc "hide a card"
           params do
             requires :access_token, type: String, desc: "user's access_token"
