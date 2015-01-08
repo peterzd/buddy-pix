@@ -238,7 +238,32 @@ class User < ActiveRecord::Base
   def alerts_count
     my_pending_invitations.count + unread_notifications.count
   end
-  
+
+  # for reports
+  def created_cards_per_day(date)
+    created_albums.where(created_at: date.beginning_of_day..date.end_of_day)
+  end
+
+  def created_private_cards_per_day(date)
+    created_cards_per_day(date).where(private: true)
+  end
+
+  def created_public_cards_per_day(date)
+    created_cards_per_day(date).where(private: [nil, false])
+  end
+
+  def created_posts_per_day(date)
+    uploaded_photos.where(created_at: date.beginning_of_day..date.end_of_day)
+  end
+
+  def created_comments_per_day(date)
+    comments.where(created_at: date.beginning_of_day..date.end_of_day)
+  end
+
+  def created_likes_per_day(date)
+    likes.where(created_at: date.beginning_of_day..date.end_of_day)
+  end
+
   private
   def generate_authentication_token
     loop do
