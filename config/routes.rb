@@ -16,6 +16,11 @@ Rails.application.routes.draw do
       resources :comments
     end
     resources :static_pages
+    resources :reports do
+      collection do
+        post :query_range
+      end
+    end
   end
 
   resources :supports, :blogs
