@@ -1,0 +1,55 @@
+%h3 Detail Photo page for #{@user.user_name}
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left User Detail
+    .pull-right
+  %table.table.table-striped
+    %tr
+      %td ID
+      %td= @user.id
+    %tr
+      %td Email
+      %td= @user.email
+    %tr
+      %td First Name
+      %td= @user.first_name
+    %tr
+      %td Last Name
+      %td= @user.last_name
+
+= form_tag admin_user_path(@user), method: :get do
+  = label_tag "start date"
+  = date_field_tag "start_date", @start_date
+  = label_tag "end date"
+  = date_field_tag "end_date", @end_date
+  = submit_tag "Submit"
+
+- (@start_date .. @end_date).each do |date|
+  .panel.panel-default
+    .panel-heading.clearfix
+      .pull-left Reposts for #{date}
+    %table.table.table-striped
+      %tr
+        %td Cards created
+        - @user.created_cards_per_day(date).each do |card|
+          %td= link_to card.name, admin_album_path(card)
+      %tr
+        %td Private Card Created
+        - @user.created_private_cards_per_day(date).each do |card|
+          %td= link_to card.name, admin_album_path(card)
+      %tr
+        %td Public cards created
+        - @user.created_public_cards_per_day(date).each do |card|
+          %td= link_to card.name, admin_album_path(card)
+      %tr
+        %td Posts created
+        - @user.created_posts_per_day(date).each do |photo|
+          %td= link_to photo.title, admin_photo_path(photo)
+      %tr
+        %td Comments
+        - @user.created_comments_per_day(date).each do |comment|
+          %td= comment.content
+      %tr
+        %td Likes
+        %td= @user.created_likes_per_day(date).count

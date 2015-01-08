@@ -29,5 +29,6 @@
           = "#{user.last_sign_in_date.strftime("%Y-%m-%d")}(#{time_ago_in_words user.last_sign_in_date} ago)"
 
         %th
+          = link_to "show", admin_user_path(user, start_date: 1.week.ago.to_date, end_date: Date.today)
           = link_to "destroy", admin_user_path(user), method: :delete, data: { confirm: "sure to destroy this card?" }
 
