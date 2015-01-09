@@ -90,6 +90,27 @@ class Album < ActiveRecord::Base
     end
   end
 
+  # for Admin reports
+  def followers_per_day(date)
+    self.user_relations.where(created_at: date.beginning_of_day..date.end_of_day).map &:user
+  end
+
+  def posts_per_day(date)
+    photos.where(created_at: date.beginning_of_day..date.end_of_day)
+  end
+
+  def comments_per_day(date)
+    photos.inject([]) do |comments, photo|
+      comments.concat photo.comments.where(created_at: date.beginning_of_day..date.end_of_day)
+    end
+  end
+
+  def likers_per_day(date)
+    photos.inject([]) do |total, photo|
+      total.concat photo.likes.where(created_at: date.beginning_of_day..date.end_of_day).map &:liker
+    end
+  end
+
   private
   def set_default_value
     self.hidden ||= false

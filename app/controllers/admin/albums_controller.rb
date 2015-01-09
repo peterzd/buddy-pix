@@ -1,6 +1,6 @@
 class Admin::AlbumsController < Admin::ApplicationController
   respond_to :html
-  before_action :set_album, only: [:destroy, :hide_card, :view_card]
+  before_action :set_album, only: [:show, :destroy, :hide_card, :view_card]
 
   def index
     @cards = Album.all
@@ -14,6 +14,11 @@ class Admin::AlbumsController < Admin::ApplicationController
   def new
     @album = Album.new
     respond_with @album
+  end
+
+  def show
+    @start_date = params[:start_date].to_date
+    @end_date = params[:end_date].to_date
   end
   
   def new_list_cards

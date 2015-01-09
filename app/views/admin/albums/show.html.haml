@@ -1,0 +1,51 @@
+%h3 Detail Card page for #{@album.name}
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left Card Detail
+    .pull-right
+  %table.table.table-striped
+    %tr
+      %td ID
+      %td= @album.id
+    %tr
+      %td Name
+      %td= @album.name
+    %tr
+      %td Creator
+      %td= @album.creator.user_name
+    %tr
+      %td Public/Private
+      %td= @album.private? ? "Private" : "Public"
+    %tr
+      %td Created time
+      %td= @album.created_at
+
+= form_tag admin_album_path(@album), method: :get do
+  = label_tag "start date"
+  = date_field_tag "start_date", @start_date
+  = label_tag "end date"
+  = date_field_tag "end_date", @end_date
+  = submit_tag "Submit"
+
+- (@start_date .. @end_date).each do |date|
+  .panel.panel-default
+    .panel-heading.clearfix
+      .pull-left Reposts for #{date}
+    %table.table.table-striped
+      %tr
+        %td Followed Users
+        - @album.followers_per_day(date).each do |user|
+          %td #{user.user_name}
+      %tr
+        %td Posts in Card
+        - @album.posts_per_day(date).each do |post|
+          %td #{post.title}
+      %tr
+        %td Comments in Card
+        - @album.comments_per_day(date).each do |comment|
+          %td #{comment.content}
+      %tr
+        %td Likers in card
+        - @album.likers_per_day(date).each do |user|
+          %td #{user.user_name}
