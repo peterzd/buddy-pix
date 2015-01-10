@@ -75,6 +75,20 @@ module API
           end
         end
 
+        desc "forgot password"
+        params do
+          requires :email, type: String, desc: "user's email"
+        end
+        post :forgot_password do
+          email = params[:email]
+          user = User.find_by email: email
+          error!({message: "email does not exist", status: "false"}) if user.nil?
+          User.send_reset_password_instructions email: email
+
+          present :status, "true"
+        end
+
+
         desc "my wall, my feed post"
         params do
           requires :access_token, type: String, desc: "the token of the user"
