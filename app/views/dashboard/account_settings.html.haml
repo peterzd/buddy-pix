@@ -1,11 +1,11 @@
 %section.clearfix.inner_body
   .pc.cm
     #msg
-      -# = sanitize ApplicationDecorator.flash_messages
-      - messages = flash[:hash].to_hash
-      - if messages.to_hash.any?
-        - messages['success'].each_pair do |key, value|
-          = content_tag(:div, content_tag(:i, "", class: "fa fa-times") + value, class: "msg success")
+      - messages = flash[:hash] || Hash.new
+      - if messages.any?
+        - messages.each_pair do |key, value|
+          - value.each_pair do |type, msg|
+            = content_tag(:div, content_tag(:i, "", class: "fa fa-times") + msg, class: "msg #{type}")
 
 
     = form_for @user, html: { class: "mt20" }, multipart: true, url: update_account_settings_user_path(@user) do |f|

@@ -39,7 +39,6 @@ class UsersController < ApplicationController
 
   def update_account_settings
     @messages = Hash.new
-    @messages[:success] = Hash.new
     if params[:commit] == "Delete Account"
       user = current_user
       sign_out_and_redirect current_user
@@ -53,17 +52,17 @@ class UsersController < ApplicationController
       user.phone_number = user_params[:phone_number]
       if user.changed_attributes.any?
         user.save
-        @messages[:success].merge!({ profile: "profile updated" })
+        @messages[:profile] = { success: "profile updated"  }
       end
 
       if user_params[:profile_cover]
         UsersService.new(user).update_profile_cover(user_params, :profile_cover)
-        @messages[:success].merge!({ profile_cover: "profile cover updated " })
+        @messages[:profile_cover] = { success: "profile cover updated " }
       end
 
       if user_params[:cover_photo]
         UsersService.new(user).update_cover_photo(user_params, :cover_photo)
-        @messages[:success].merge!({ cover_photo: "cover photo updated " })
+        @messages[:cover_photo] = { success: "cover photo updated " }
       end
 
       current_pwd = params[:current_password]
@@ -72,9 +71,9 @@ class UsersController < ApplicationController
 
       if current_pwd.present? && new_pwd.present? && confirm_pwd.present?
         if process_password(current_pwd, new_pwd, confirm_pwd)
-          @messages[:success].merge!({ password: "password updated" })
+          @messages[:password] = { success: "password updated" }
         else
-          flash[:danger] = "can not update password"
+          @messages[:password] = { danger: "can not update password" }
         end
       end
 
