@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     if current_user.admin?
       admin_path
     else
-      root_path
+      my_wall_path
     end
   end
 
