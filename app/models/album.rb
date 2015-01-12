@@ -52,6 +52,10 @@ class Album < ActiveRecord::Base
     end
   end
 
+  def to_param
+    permalink
+  end
+
   def set_cover_image(image)
     update cover_image_id: image.id
   end
@@ -109,6 +113,11 @@ class Album < ActiveRecord::Base
     photos.inject([]) do |total, photo|
       total.concat photo.likes.where(created_at: date.beginning_of_day..date.end_of_day).map &:liker
     end
+  end
+
+  protected
+  def permalink
+    "#{id}-#{name.parameterize}"
   end
 
   private
