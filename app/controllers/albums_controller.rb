@@ -1,14 +1,12 @@
 class AlbumsController < ApplicationController
   protect_from_forgery except: [ :hide_card, :view_card ]
   respond_to :html, :json, :js
-  before_action :set_album, except: [:index, :hidden_cards, :following_cards, :following_cards_batch, :new, :create, :validate_name]
+  before_action :set_album, except: [:index, :hidden_cards, :cards_created, :following_cards_batch, :new, :create, :validate_name]
 
-  # Peter at 11.3: can the two methods extract the same code into another method?
   def index
     authorize :album, :index?
-    @albums = policy_scope(current_user.created_albums)
+    @cards = AlbumsQuery.user_following_cards(current_user)
     @user = current_user
-    respond_with @albums
   end
 
   def hidden_cards
@@ -17,8 +15,8 @@ class AlbumsController < ApplicationController
     @cards = current_user.hidden_cards
   end
 
-  def following_cards
-    @cards = AlbumsQuery.user_following_cards(current_user)
+  def cards_created
+    @albums = policy_scope(current_user.created_albums)
   end
 
   def following_cards_batch
