@@ -198,6 +198,8 @@ button.active,input[type="submit"].active,input[type="button"].active, .btn:hove
 .btn{display:block; line-height:40px; text-decoration:none;}
 .inline{display:inline-block; vertical-align:middle;}
 
+a.btn.active{background-color:#333; color:#fff;}
+
 /*form and links
 header .btn,header button,header input[type="submit"],header input[type="button"]{border-radius:0px; -moz-border-radius:0px; -o-border-radius:0px; -webkit-border-radius:0px; } 
 */
