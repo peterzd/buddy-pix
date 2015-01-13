@@ -44,9 +44,29 @@ module API
         end
         post "search_cards" do
           authenticate!
-          cards = Album.search(params[:search_params]).page(params[:page].to_i).per(10).records
-          present :status, "true"
-          present :cards, cards, with: API::Entities::Card
+          number_factor = 10
+
+          query = params[:search_params]
+          page = params[:page].to_i
+          cards = Array.new
+
+          if query.blank?
+            cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(number_factor).offset(page * number_factor)
+            present :status, "true"
+            present :cards, cards, with: API::Entities::Card
+          else
+            result = Album.search(query).page(page).per(number_factor).records # should use ES's filter to get the paginated records
+            cards = result.results.inject([]) do |records, r|
+              card = Album.where(id: r.id).first
+              if card and card.visible_to_world?
+                records << card
+              else
+                records
+              end
+            end
+            present :status, "true"
+            present :cards, cards, with: API::Entities::Card
+          end
         end
 
         desc "returns my hidden cards"
