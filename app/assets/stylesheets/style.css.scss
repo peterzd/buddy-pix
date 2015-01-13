@@ -198,6 +198,8 @@ button.active,input[type="submit"].active,input[type="button"].active, .btn:hove
 .btn{display:block; line-height:40px; text-decoration:none;}
 .inline{display:inline-block; vertical-align:middle;}
 
+a.btn.active{background-color:#333; color:#fff;}
+
 /*form and links
 header .btn,header button,header input[type="submit"],header input[type="button"]{border-radius:0px; -moz-border-radius:0px; -o-border-radius:0px; -webkit-border-radius:0px; } 
 */
@@ -261,8 +263,9 @@ header .logo{margin-top:7px;}
 .drop_nav .pe-7s-angle-down{font-size:30px; vertical-align:middle;}
 
 .drop_nav .drop_nav_links{background-color:#fff; line-height:1; position:absolute; top:60px; right:0px; width:210px; -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.2); box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.2);}
+
 .drop_nav .drop_nav_links li a{padding:15px; display:block; border-bottom:1px solid #e7e7e7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.drop_nav .drop_nav_links li a:hover{background-color:#93b509; color:#fff;}
+.drop_nav .drop_nav_links li a.active,.drop_nav .drop_nav_links li a:hover{background-color:#93b509; color:#fff;}
 
 
 /*slide images*/
