@@ -8,6 +8,7 @@ class Global
     @optionBtn()
     @remove_msg()
     @fancy_box()
+    @active_link()
 
   dropdownNav: ->
     $('.expand_nav_point').on "click", ->
@@ -99,6 +100,10 @@ class Global
   optionBtn: ->
     $(".option_drop span").on "click", ->
       $(this).parent().find("ul").slideToggle()
+
+  active_link: ->
+    current_path = window.location.pathname
+    $("nav a[href~=\"#{current_path}\"]").addClass "active"
 
 $(document).on "page:load ready", ->
   new Global()
