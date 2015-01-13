@@ -56,7 +56,28 @@ module API
         end
         post "search_posts" do
           authenticate!
-          posts = Photo.search(params[:search_params]).page(params[:page].to_i).per(10).records
+
+          number_factor = 10
+
+          query = params[:search_params]
+          page = params[:page].to_i
+
+          posts = Array.new
+
+          if query.blank?
+            posts = Photo.includes(:album).where("albums.private = ? or albums.private is ?", "f", nil).where("albums.hidden = ? or albums.hidden is ?", "f", nil).references("album").order(updated_at: :desc).limit(number_factor).offset((page - 1) * number_factor)
+          else
+            result = Photo.search(query).page(page).per(number_factor).records
+            posts = result.results.inject([]) do |records, r|
+              photo = Photo.where(id: r.id).first
+              if photo and photo.visible_to_world?
+                records << photo
+              else
+                records
+              end
+            end
+          end
+
           present :status, "true"
           present :posts, posts, with: API::Entities::Photo
         end

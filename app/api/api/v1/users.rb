@@ -40,7 +40,8 @@ module API
           requires :picture, type: String, desc: "profile image, base64 format"
         end
         post :sign_up do
-          error!("password are not same") unless same_password?
+          error!({ status: "false", message: "password are not same" }) unless same_password?
+          error!({ status: "false", message: "This Email ID has already been taken, please use another email id for signup" }) if User.find_by(email: params[:email])
           user = User.new(
             email: params[:email],
             password: params[:password],
@@ -55,7 +56,7 @@ module API
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
-            error!({ status: "false", messages: "#{user.errors.full_messages}"})
+            error!({ status: "false", message: "#{user.errors.full_messages}"})
           end
         end
 
