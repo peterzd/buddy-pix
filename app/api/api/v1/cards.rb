@@ -52,8 +52,6 @@ module API
 
           if query.blank?
             cards = Album.order(updated_at: :desc).where(private: [nil, false], hidden: [nil, false]).limit(number_factor).offset(page * number_factor)
-            present :status, "true"
-            present :cards, cards, with: API::Entities::Card
           else
             result = Album.search(query).page(page).per(number_factor).records # should use ES's filter to get the paginated records
             cards = result.results.inject([]) do |records, r|
@@ -64,9 +62,10 @@ module API
                 records
               end
             end
-            present :status, "true"
-            present :cards, cards, with: API::Entities::Card
           end
+
+          present :status, "true"
+          present :cards, cards, with: API::Entities::Card
         end
 
         desc "returns my hidden cards"
