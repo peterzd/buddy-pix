@@ -25,7 +25,7 @@ describe AlbumsController do
         album.update creator: peter
         hidden_card =  create :album, caption: "this is hidden album", name: "hidden album", private: false, hidden: true, creator: peter
         get :index
-        assigns[:albums].wont_include hidden_card
+        assigns[:cards].wont_include hidden_card
       end
     end
   end
