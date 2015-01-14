@@ -67,12 +67,13 @@ module API
         end
         post :sign_in do
           user = User.find_by email: params[:email]
-          error!("record not found") unless user
+          error!({ statue: "false", message: "user not exist" }) unless user
+          error!({ statue: "false", message: "Please confirm your account in your email first" }) if user.confirmed_at.nil?
           if user.valid_password?(params[:password])
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
-            error!({message: "email or password is not correct!", status: "false"})
+            error!({message: "email or password error", status: "false"})
           end
         end
 
