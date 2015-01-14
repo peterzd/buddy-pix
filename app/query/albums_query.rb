@@ -7,7 +7,7 @@ class AlbumsQuery
     end
 
     def unfollowed_cards_by(user)
-      Album.includes(:user_relations).where("users_albums.user_id <> ?", user.id).references(:user_relations)
+      Album.where.not(id: user.joined_albums).where.not(private: true)
     end
   end
 end
