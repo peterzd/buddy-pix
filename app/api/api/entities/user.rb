@@ -21,6 +21,24 @@ module API
       end
 
       private
+      def profile_cover_url
+        host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
+        if object.profile_cover.nil?
+          object.profile_cover_url
+        else
+          "#{host}#{object.profile_cover_url :medium}"
+        end
+      end
+
+      def cover_photo_url
+        host = Rails.env == "development" ? "http://localhost:3000" : "http://www.buddypix.net"
+        if object.cover_photo.nil?
+          ""
+        else
+          "#{host}#{object.cover_photo_url :medium}"
+        end
+      end
+
       def created_cards_count
         object.created_albums.count
       end
