@@ -4,13 +4,14 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
     %h1
-      Hi
+      Hi,
     %p
-      #{@content}
+      One of your friends has invited you to try out BuddyPix, a new topic-based recommendation site.  Click on the link below to sign-up.
+      -# #{@content}
       %br
       = link_to "#{@link_url}", @link_url
     %p
       Regards
     %p
-      #{@user.user_name}
+      Brian Kim, Founder of BuddyPix
 
