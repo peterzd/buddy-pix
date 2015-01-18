@@ -1,0 +1,20 @@
+%h3 Admin Static Pages
+
+.panel.panel-default
+  .panel-heading.clearfix
+    .pull-left All Blogs list
+    .pull-right
+      = link_to "New Blog", new_admin_blog_path
+  %table.table.table-striped
+    %tr
+      %th Title
+      %th Created time
+      %th Actions
+    - @blogs.each do |blog|
+      %tr
+        %td= blog.title
+        %th= blog.created_at.to_date
+        %th
+          = link_to "edit", edit_admin_blog_path(blog)
+          = link_to "destroy", admin_blog_path(blog), method: :delete, data: { confirm: "sure to remove this blog?" }
+

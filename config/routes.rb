@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :blogs
+
     resources :users
     resources :photos do
       resources :comments
