@@ -553,17 +553,18 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 
 /*=================upload image thumbnails==============*/
 .uploadimg_thumb{
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -o-box-sizing: border-box;box-sizing: border-box;
-    border: 5px solid #E7E7E7;
-    float: left;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-    width: 20%;
-    height: 70px;
+  border: 5px solid #E7E7E7;
+  float: left;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  width: 20%;
+  height: 70px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
 }
 .uploadimg_thumb .btn{
     height: 30px;
