@@ -1,8 +1,12 @@
 .p10.fl.w100
   %figure.profile_pic.round.img_fill
     = image_tag @user.profile_cover_url(:medium)
-  %figure.profile_cover.img_fill.fl.w100
-    = image_tag (ImageDecorator.cover_photo_img(@user))
+  - class_str = @user.cover_photo_url(:medium).nil? ? "no_img" : ""
+  %figure.profile_cover.img_fill.fl.w100{ class: class_str }
+    - if @user.cover_photo_url(:medium).nil?
+      = link_to content_tag(:i, "", class: "fa fa-camera") + "&nbsp;&nbsp;Add Cover Photo".html_safe , dashboard_account_settings_path, class: "btn cover_btn"
+    - else
+      = image_tag (ImageDecorator.cover_photo_img(@user))
     %hgroup.head_row.bs
       %h2= @user.user_name
     .info_row
