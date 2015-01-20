@@ -10,7 +10,7 @@
 
     = form_for @user, html: { class: "mt20" }, multipart: true, url: update_account_settings_user_path(@user) do |f|
       %h4.ph10 Account Settings
-      %aside.fl.w50
+      %aside.fl.w50.mt10
         .ph10
           = f.text_field :first_name, placeholder: "First Name"
         .p10.mt10
@@ -27,12 +27,8 @@
           = password_field_tag "new_password", nil, placeholder: "New Password"
         .p10
           = password_field_tag "confirm_password", nil, placeholder: "Confirm Password"
-        .p10.fl
-          = f.submit "Save Changes"
-        .p10.fl.white_btn
-          = f.submit "Delete Account", id: "delete-account-button"
-      %aside.fl.w50.p10.ac
-        %h4.ph10.mt10.al
+      %aside.fl.w50.ph10.ac
+        %h4.al
           %small Cover Photo
         %figure.uplaod.cover_img
           = image_tag (ImageDecorator.cover_photo_img(@user)), class: "img_fill_parent"
@@ -48,6 +44,11 @@
           = f.fields_for :profile_cover do |photo|
             = photo.file_field "picture"
           Browse Images
+      .fl.w50.mb20.mt10.cr
+        .p10.fl
+          = f.submit "Save Changes"
+        .p10.fl.white_btn
+          = f.submit "Delete Account", id: "delete-account-button"
 
 :coffee
   $("#user_cover_photo_picture").on "change", ->
