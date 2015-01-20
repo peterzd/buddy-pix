@@ -435,13 +435,14 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .up_img_list .img .fa-times:hover{background-color:#333; color:#fff;}
 
 .cmt_row{padding:10px 0; border-bottom: 1px solid #fff;}
-.cmt_row figure{width:80px; height:80px; float:left; background-color:#000; }
-.cmt_row aside{margin-left:100px;}
+.cmt_row figure{width:60px; height:60px; float:left; background-color:#000; }
+.cmt_row aside{margin-left: 75px;}
 .cmt_row aside img{display:block; clear:both; margin:10px 0; max-width:50%;}
 .cmt_row aside p strong{ font-size:15px; }
 .cmt_row aside p{margin-bottom:10px;}
 .cmt_row h4{ margin-bottom:0; font-size:18px}
 .cmt_row.txt_area{border-bottom:0 none;}
+#comment-form textarea{height:80px}
 
 .follow_row_box{line-height:65px;}
 .follow_row_box ul li{ width:65px; height:65px; float:left; margin-right:10px;}
