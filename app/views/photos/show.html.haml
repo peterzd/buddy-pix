@@ -84,9 +84,12 @@
             = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
             .mt10
               .btn.browse_btn.inline.fl.dark
-                = file_field_tag "comment[image][picture]"
+                = file_field_tag "comment[image][picture]", id: "imgInp"
                 %i.fa.fa-image
               %span.inline.p10 Attach Image
+            .upload_pic.hide.ac.mt10
+              %i.remove_img.fa.fa-times
+              %img#target{:alt => "your image", :src => ""}
             .cr
               = submit_tag "Send Comment", class: "mt20"
 
@@ -117,9 +120,12 @@
         = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
         .mt10
           .btn.browse_btn.inline.fl.dark
-            = file_field_tag "comment[image][picture]"
+            = file_field_tag "comment[image][picture]", id: "imgInp2"
             %i.fa.fa-image
           %span.inline.p10 Attach Image
+        .upload_pic2.hide.ac.mt10
+          %i.remove_img2.fa.fa-times
+          %img#target2{:alt => "your image", :src => ""}
         .cr
           = submit_tag "Send Comment", class: "mt20"
 
@@ -142,6 +148,44 @@
           $(this).parents('.f_bottom').find('.like_box').fadeToggle(0);
           return false;
         }
+      });
+
+
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#target').attr('src', e.target.result)
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("input[type='file']#imgInp").change(function(){
+          readURL(this);
+          $('.upload_pic').removeClass('hide');
+      });
+
+
+      $('.remove_img').on('click',function(){
+         $('.upload_pic').addClass('hide');
+      });
+      function readURL2(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#target2').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("input[type='file']#imgInp2").change(function(){
+          readURL2(this);
+          $('.upload_pic2').removeClass('hide');
+      });
+
+
+      $('.remove_img2').on('click',function(){
+         $('.upload_pic2').addClass('hide');
       });
   });
 

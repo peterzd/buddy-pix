@@ -556,6 +556,12 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 
 .cover_btn{ width:200px; position:absolute; left:50%; top:50%; margin:-20px 0px 0px -100px;}
 .no_img{background-color:#000;}
+
+
+.upload_pic2,.upload_pic{width:200px; height:200px; overflow:hidden; position:relative;}
+.upload_pic2 img,.upload_pic img{height:100%; display:inline !important; max-width:none !important; margin:0px !important;}
+.upload_pic2 .remove_img2,.upload_pic .remove_img{position:absolute; z-index: 10; top:0px; right:0px; cursor:pointer; width:24px; height:24px; background-color:#fff; line-height:24px; text-align:center;}
+.upload_pic2 .remove_img2:hover,.upload_pic .remove_img:hover{background-color:#333; color:#fff;}
 /*=================upload image thumbnails==============*/
 .uploadimg_thumb{
   border: 5px solid #E7E7E7;
