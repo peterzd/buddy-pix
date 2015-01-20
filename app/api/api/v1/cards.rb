@@ -145,7 +145,7 @@ module API
           post "hide" do
             authenticate!
             card = Album.find params[:id]
-            error!({status: "false", message: "unauthorized to do"}) unless AlbumPolicy.new(current_user, card).hide_card?
+            error!({status: "false", message: "Permission Denied\nOnly card creator can hide cards."}) unless AlbumPolicy.new(current_user, card).hide_card?
             card.update hidden: true
             present :status, "true"
           end
