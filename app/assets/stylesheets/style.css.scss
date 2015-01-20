@@ -469,6 +469,7 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 .contact_search_list li .prettycheckbox a{position:absolute; width:36px; height:36px; background:image-url('check_box.png') no-repeat 0px 0px; display:block; top:0px; right:0px;}
 .contact_search_list li .prettycheckbox a.checked{background-position:-36px 0px;}
 .contact_search_list li label:hover{color:#93b509;}
+.contact_search_list{height: 600px; overflow: auto;}
 
 .cover_box.tab{min-height:0;}
 .cover_box.tab input[type='text'],.cover_box.tab textarea{background-color:#f3f3f3;}
