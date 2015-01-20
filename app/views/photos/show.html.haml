@@ -168,6 +168,7 @@
 
       $('.remove_img').on('click',function(){
          $('.upload_pic').addClass('hide');
+         $("input[type='file']#imgInp").val('')
       });
       function readURL2(input) {
           if (input.files && input.files[0]) {
@@ -186,6 +187,7 @@
 
       $('.remove_img2').on('click',function(){
          $('.upload_pic2').addClass('hide');
+         $("input[type='file']#imgInp2").val('')
       });
   });
 
