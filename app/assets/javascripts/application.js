@@ -16,7 +16,6 @@
 //= require turbolinks
 //= require_directory ../../../vendor/assets/javascripts/img_liquid
 //= require_directory ../../../vendor/assets/javascripts/mscrollar
-//= require angular.min
 //= require chosen.jquery
 //= require css3-mediaqueries
 //= require html5
