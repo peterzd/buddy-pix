@@ -27,7 +27,7 @@
         %aside.p20.fr.invite_btn
           = @album.decorate.invite_btn_links
         %aside.p20.para
-          = @album.caption
+          = sanitize @album.caption
 
     .upload_btn.ac.bs.fl.w100
       = link_to image_tag("upload_img_btn.png", alt: "upload Image"), new_card_photo_path(@album), class: "fl w100"
