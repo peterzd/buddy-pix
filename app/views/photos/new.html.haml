@@ -8,7 +8,12 @@
         .p10
           = f.text_field :title, placeholder: "Image Title"
         .p10.mt10
-          = f.text_area :description, placeholder: "Description(optional)"
+          #toolbar{:style => "display: none;"}
+            %a{"data-wysihtml5-command" => "bold", :title => "CTRL+B"}
+              %i.fa.fa-bold
+            %a{"data-wysihtml5-command" => "italic", :title => "CTRL+I"}
+              %i.fa.fa-italic
+          = f.text_area :description, placeholder: "Description(optional)", id: "textarea", class: "editor"
       %aside.fl.w50.ac
         #fileupload.fl.w100
           .row.fileupload-buttonbar
@@ -171,3 +176,36 @@
   $("body").on "click", "#fileupload .remove", (e)->
     $(e.target).parent("div").remove()
   file_upload()
+
+:javascript
+  var wysihtml5ParserRules = {
+    tags: {
+      strong: {},
+      b:      {},
+      i:      {},
+      em:     {},
+      br:     {},
+      p:      {},
+      div:    {},
+      span:   {},
+      ul:     {},
+      ol:     {},
+      li:     {},
+      a:      {
+        set_attributes: {
+          target: "_blank",
+          rel:    "nofollow"
+        },
+        check_attributes: {
+          href:   "url" // important to avoid XSS
+        }
+      }
+    }
+  };
+  var editor = new wysihtml5.Editor("textarea", {
+    toolbar:        "toolbar",
+    parserRules:    wysihtml5ParserRules,
+    useLineBreaks:  false,
+    stylesheets:    "assets/js/editor/stylesheet.css"
+  });
+
