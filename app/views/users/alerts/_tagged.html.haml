@@ -8,10 +8,12 @@
   %aside
     - if photo
       %p
-        = "You have been tagged in a post"
+        = "You have been tagged in "
         = link_to photo.title, card_photo_path(card, photo)
-        = "#{card.decorate.private_text} Category."
-        = "#{time_ago_in_words notification.created_at} ago"
+        = " by "
+        = maker.user_name
+        -# = "#{card.decorate.private_text} Category."
+        -# = "#{time_ago_in_words notification.created_at} ago"
     - else
       %p
         = "image has been removed by #{maker.user_name}"
