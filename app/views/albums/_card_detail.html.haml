@@ -15,7 +15,7 @@
       %p= card.decorate.private_text
   %figure.post_img.img_fill.clearfix
     = link_to image_tag(card.cover_image_url(:medium)), card_path(card)
-    %h2= card.caption
+    %h2= strip_tags card.caption
   .f_bottom.clearfix
     %aside.fl.p10.mt5.card_count
       %span

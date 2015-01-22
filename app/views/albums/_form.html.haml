@@ -4,7 +4,12 @@
     .ph10
       = f.text_field :name, placeholder: "Card Name"
     .p10
-      = f.text_area :caption, placeholder: "Description(optional)"
+      #toolbar{:style => "display: none;"}
+        %a{"data-wysihtml5-command" => "bold", :title => "CTRL+B"}
+          %i.fa.fa-bold
+        %a{"data-wysihtml5-command" => "italic", :title => "CTRL+I"}
+          %i.fa.fa-italic
+      = f.text_area :caption, placeholder: "Description(optional)", id: "textarea", class: "editor"
   %aside.fl.w50.ac.ph10
     %h4.al
       %small Cover Photo
@@ -27,4 +32,36 @@
 :coffee
   $("#album_cover_image_picture").on "change", ->
     preview_image(this, $(".cover_img img"))
+
+:javascript
+  var wysihtml5ParserRules = {
+    tags: {
+      strong: {},
+      b:      {},
+      i:      {},
+      em:     {},
+      br:     {},
+      p:      {},
+      div:    {},
+      span:   {},
+      ul:     {},
+      ol:     {},
+      li:     {},
+      a:      {
+        set_attributes: {
+          target: "_blank",
+          rel:    "nofollow"
+        },
+        check_attributes: {
+          href:   "url" // important to avoid XSS
+        }
+      }
+    }
+  };
+  var editor = new wysihtml5.Editor("textarea", {
+    toolbar:        "toolbar",
+    parserRules:    wysihtml5ParserRules,
+    useLineBreaks:  false,
+  stylesheets:    "assets/js/editor/stylesheet.css"
+  });
 

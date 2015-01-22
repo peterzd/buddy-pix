@@ -239,6 +239,19 @@ label{display:block; font-size:18px;}
 
 .log_box{margin-top:40px;}
 
+
+/* ==========================================================================
+        Text editor CSS
+   ========================================================================== */
+
+#toolbar{background-color:#f7f7f7;}
+#toolbar a{display:inline-block; font-size:16px; padding:10px 15px; border-left:1px solid #e7e7e7;}
+#toolbar a:first-child{ border-left:0 none;}
+#toolbar a:hover,#toolbar a.wysihtml5-command-active{ background-color:#93B509; color:#fff;}
+
+p b{font-weight:bold;}
+p i{font-style:italic;}
+
 /* ==========================================================================
         Page styling Styling
    ========================================================================== */
