@@ -37,8 +37,8 @@
         ele = $("#photo_image_ids")
         resp = data.result
         if resp.result == "ok"
-          ele.val(ele.val() + ",#{data.result.id}")
           image = resp.data
+          ele.val(ele.val() + ",#{image.id}")
           $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{image.thumb_url}><a data-method='delete' href=/images/#{image.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
         else if resp.result == "false"
           file_name = data.files[0].name
