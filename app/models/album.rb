@@ -25,6 +25,8 @@ class Album < ActiveRecord::Base
   after_initialize :set_default_value
   after_save :creator_follow
 
+  default_scope { order updated_at: :desc }
+
 
   class << self
     def total_private_cards_per_day(date)
