@@ -111,7 +111,7 @@ describe Album do
     it "does not validate the name unique for private albums" do
       public_album
       new_private = create :album, name: "public album", private: true, creator: peter
-      Album.last.must_equal new_private
+      new_private.must_be :persisted?
     end
   end
 
