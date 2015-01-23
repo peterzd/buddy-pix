@@ -1,5 +1,6 @@
 %section.clearfix.inner_body
   .pc.cm
+    #msg
     = form_for @photo, url: card_photos_path(@card), html: { class: "mt20" } do |f|
       = hidden_field_tag "photo[tagged_users]"
       = hidden_field_tag "photo[image_ids]"
