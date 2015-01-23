@@ -22,6 +22,7 @@
       url: "/images/photo_upload",
       autoUpload: true,
       add: (e, data)->
+        $("#msg").empty()
         uploaded_files = $(".uploadimg_thumb").length
         original_files = data.originalFiles.length
         if (uploaded_files + original_files) > 10
@@ -34,11 +35,18 @@
         #   $('#fileupload').append(data.context)
       done: (e, data)->
         ele = $("#photo_image_ids")
-        ele.val(ele.val() + ",#{data.result.id}")
-        $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{data.result.thumb_url}><a data-method='delete' href=/images/#{data.result.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
-
-
-
+        resp = data.result
+        if resp.result == "ok"
+          image = resp.data
+          ele.val(ele.val() + ",#{image.id}")
+          $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{image.thumb_url}><a data-method='delete' href=/images/#{image.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
+        else if resp.result == "false"
+          file_name = data.files[0].name
+          $("#msg").append "<div class='msg danger'><i class='fa fa-times'></i>image #{file_name} can not save</div>"
+          $(".msg .fa-times").on 'click', ->
+            $(this).parents('.msg').remove()
+          $('.invite_row .link_btns a.close').on 'click', ->
+            $(this).parents('.invite_row').addClass 'decline'
     
     # Enable iframe cross-domain access via redirect option:
     $("#fileupload").fileupload "option", "redirect", window.location.href.replace(/\/[^\/]*$/, "/cors/result.html?%s")
