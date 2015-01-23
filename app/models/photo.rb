@@ -21,6 +21,8 @@ class Photo < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
   has_many :tagged_users, through: :taggings, source: :user
 
+  default_scope { order updated_at: :desc }
+
   class << self
     def all_visible_items
       includes(:album).where("albums.private" => [false, nil]).references(:albums)
