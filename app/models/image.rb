@@ -11,6 +11,12 @@ class Image < ActiveRecord::Base
   after_post_process :get_ratio
   # validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
 
+  before_save do
+    if self.ratio.nil?
+      false
+    end
+  end
+
   def to_json
     host = if Rails.env == "development"
              "http://localhost:3000/"

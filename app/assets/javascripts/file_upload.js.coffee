@@ -35,7 +35,12 @@
       done: (e, data)->
         ele = $("#photo_image_ids")
         ele.val(ele.val() + ",#{data.result.id}")
-        $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{data.result.thumb_url}><a data-method='delete' href=/images/#{data.result.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
+        resp = data.result
+        if resp.result == "ok"
+          image = resp.data
+          $("#fileupload").append("<div class='uploadimg_thumb'><img src=#{image.thumb_url}><a data-method='delete' href=/images/#{image.id} class='btn btn-warning remove' data-remote=true><i class='fa fa-times'></i></a></div>")
+        else if resp.result == "false"
+          alert "can not save the image"
 
 
 

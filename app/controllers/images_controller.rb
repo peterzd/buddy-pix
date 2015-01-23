@@ -6,9 +6,13 @@ class ImagesController < ApplicationController
   end
 
   def photo_upload
-    @image = Image.create picture: params[:image][:picture]
+    @image = Image.new picture: params[:image][:picture]
     respond_to do |format|
-      format.json { render json: @image.to_json, content_type: "text/html" }
+      if @image.save
+        format.json { render json: { data: @image.to_json, result: "ok"}.to_json, content_type: "text/html" }
+      else
+        format.json { render json: { result: "false" }.to_json, content_type: "text/html" }
+      end
     end
   end
 
