@@ -1,17 +1,18 @@
 !!!
-/[if lt IE 7 ] <html class="ie ie6" lang="en">
-/[if IE 7 ] <html class="ie ie7" lang="en">
-/[if IE 8 ] <html class="ie ie8" lang="en">
-/ [if (gte IE 9)|!(IE)]><!
+/[if IE 8] <html lang="en" class="ie8">
+/[if IE 9] <html lang="en" class="ie9">
+/[if IE 10] <html lang="en" class="ie10">
+/ [if !IE]><!
 %html{:lang => "en"}
   / <![endif]
+  / BEGIN HEAD
   %head
     %meta{:charset => "utf-8"}/
-    %meta{:content => "", :name => "keywords"}/
+    %title BuddyPix-admin
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %meta{:content => "", :name => "description"}/
-    / Mobile Specific Metas
-    %meta{:content => "width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1, user-scalable=0", :name => "viewport"}/
-    %title BuddyPix
+    %meta{:content => "", :name => "author"}/
+    = favicon_link_tag 'favicon.ico'
     -# main css
     = stylesheet_link_tag "admin", media: "all"
     = csrf_meta_tag
@@ -46,3 +47,8 @@
     .container.clearfix
       = yield
 
+:javascript
+  jQuery(document).ready(function() {
+    // initiate layout and plugins
+    App.init();
+  });
