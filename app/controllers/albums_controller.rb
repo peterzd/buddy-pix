@@ -31,10 +31,14 @@ class AlbumsController < ApplicationController
   end
 
   def show
-    authorize @album
-    @album.update hit_count: @album.hit_count + 1
-    @photos = PhotosQuery.album_batch(@album)
-    respond_with(@album)
+    if user_signed_in?
+      authorize @album
+      @album.update hit_count: @album.hit_count + 1
+      @photos = PhotosQuery.album_batch(@album)
+      respond_with(@album)
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def next_batch_photos
