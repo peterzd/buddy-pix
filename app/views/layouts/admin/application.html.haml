@@ -73,13 +73,9 @@
               %i.icon-home
               Dashboard
           %li
-            %a{:href => "users.html"}
-              %i.icon-user
-              Users
+            = link_to content_tag(:i, "", class: "icon-user") + " Users", admin_users_path
           %li
-            %a{:href => "cards.html"}
-              %i.icon-folder-close
-              Cards
+            = link_to content_tag(:i, "", class: "icon-folder-close") + " Cards", admin_albums_path
           %li
             %a{:href => "photos.html"}
               %i.icon-picture
