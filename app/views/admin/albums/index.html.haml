@@ -1,31 +1,58 @@
-%h3 Admin Cards index page
-
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left All cards list
-    .pull-right
-      = link_to "New Cards", new_admin_album_path
-  %table.table.table-striped
-    %tr
-      %th Card ID
-      %th Card Name
-      %th Creator
-      %th Crated_at
-      %th Public/Private
-      %th Hidden
-      %th Actions
-    - @cards.each do |card|
-      %tr
-        %td= card.id
-        %td= card.name
-        %td= card.creator.user_name
-        %td= card.created_at
-        %td= card.private? ? "Private" : "Public"
-        %td= card.hidden?
-
-        %th
-          = link_to "show", admin_album_path(card, start_date: 1.week.ago.to_date, end_date: Date.today)
-          = link_to "destroy", admin_album_path(card), method: :delete, data: { confirm: "sure to destroy this card?" }
-          - action = card.hidden? ? "view" : "hide"
-          = link_to "#{action} card", send("#{action}_card_admin_album_path", card)
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Cards
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              All Cards list
+            %span.tools
+              = link_to content_tag(:i, "", class: "icon-plus") + " New Cards &nbsp;&nbsp;".html_safe, new_admin_album_path
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Card ID
+                  %th Card Name
+                  %th Creator
+                  %th Crated_at
+                  %th Card Type
+                  %th Visiblity
+                  %th Actions
+              %tbody
+                - @cards.each do |card|
+                  %tr.odd.gradeX
+                    %td= card.id
+                    %td= card.name
+                    %td= card.creator.user_name
+                    %td= card.created_at.to_date
+                    %td= card.private? ? "Private" : "Public"
+                    %td.center
+                      - visible_class = card.hidden? ? "inverse" : "success"
+                      - visible_text = card.hidden? ?  "Hidden" : "Visible"
+                      %span.label{ class: "label-#{visible_class}" } #{visible_text}
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-zoom-in") + "&nbsp;".html_safe, admin_album_path(card, start_date: 1.week.ago.to_date, end_date: Date.today), class: "icon huge"
+                      - action = card.hidden? ? "view" : "hide"
+                      = link_to content_tag(:i, "", class: "icon-eye-close") + "&nbsp;".html_safe, send("#{action}_card_admin_album_path", card), class: "icon huge"
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_album_path(card), method: :delete, data: { confirm: "sure to destroy this card?" }, class: "icon huge"
 
