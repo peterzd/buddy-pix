@@ -1,34 +1,51 @@
-%h3 Admin Users index page
-
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left All users list
-    .pull-right
-      = link_to "New user", "#"
-  %table.table.table-striped
-    %tr
-      %th User ID
-      %th Email
-      %th Username
-      %th First name
-      %th Last name
-      %th Phone No.
-      %th Create At
-      %th Last sign in
-      %th Actions
-    - @users.each do |user|
-      %tr
-        %td= user.id
-        %td= user.email
-        %td= user.username
-        %td= user.first_name
-        %td= user.last_name
-        %td= user.phone_number
-        %td= user.created_at.strftime("%Y-%m-%d")
-        %td
-          = "#{user.last_sign_in_date.strftime("%Y-%m-%d")}(#{time_ago_in_words user.last_sign_in_date} ago)"
-
-        %th
-          = link_to "show", admin_user_path(user, start_date: 1.week.ago.to_date, end_date: Date.today)
-          = link_to "destroy", admin_user_path(user), method: :delete, data: { confirm: "sure to destroy this card?" }
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Users
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              All users list
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th User ID
+                  %th Email
+                  %th First name
+                  %th Last name
+                  %th Created Date
+                  %th Last Login
+                  %th Actions
+              %tbody
+                - @users.each do |user|
+                  %tr.odd.gradeX
+                    %td= user.id
+                    %td= user.email
+                    %td= user.first_name
+                    %td= user.last_name
+                    %td= user.created_at.to_date
+                    %td= user.last_sign_in_at.nil? ? "" : user.last_sign_in_at.to_date
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-zoom-in"), admin_user_path(user, start_date: 1.week.ago.to_date, end_date: Date.today), class: "icon huge"
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_user_path(user), method: :delete, data: { confirm: "sure to destroy this card?" }, class: "icon huge"
 

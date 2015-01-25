@@ -11454,7 +11454,7 @@
 		"sRowEmpty": "dataTables_empty",
 		
 		/* Features */
-		"sWrapper": "dataTables_wrapper",
+		"sWrapper": "dataTables_wrapper form-inline",
 		"sFilter": "dataTables_filter",
 		"sInfo": "dataTables_info",
 		"sPaging": "dataTables_paginate paging_", /* Note that the type is postfixed */
