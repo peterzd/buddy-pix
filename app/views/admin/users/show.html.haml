@@ -1,55 +1,132 @@
-%h3 Detail Photo page for #{@user.user_name}
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %ul.breadcrumb
+        %li
+          %i.icon-user
+          %a{:href => "users.html"} Users
+          %span.divider /
+        %li User Details
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              = @user.email
+            %span.tools
+              %b Name: #{@user.user_name}
+              \&nbsp;&nbsp;
+          .widget-body
+            .clearfix
 
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left User Detail
-    .pull-right
-  %table.table.table-striped
-    %tr
-      %td ID
-      %td= @user.id
-    %tr
-      %td Email
-      %td= @user.email
-    %tr
-      %td First Name
-      %td= @user.first_name
-    %tr
-      %td Last Name
-      %td= @user.last_name
+              = form_tag admin_user_path(@user), method: :get do
+                .control-group.pull-left.mr10
+                  .controls
+                    .input-append.date.date-picker{"data-date" => "#{@start_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                      %label.control-label.inline.mt5.mr10 Starts Date:
+                      -# = date_field_tag "start_date", @start_date, class: "input-small date-picker", html: { size: "16" }
+                      %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@start_date}", name: "start_date", id: "start_date"}
+                      %span.add-on
+                        %i.icon-calendar
+                .control-group.pull-left.mr10
+                  .controls
+                    .input-append.date.date-picker{"data-date" => "#{@end_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                      %label.control-label.inline.mt5.mr10 End Date:
+                      %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@end_date}", name: "end_date", id: "end_date"}
+                      %span.add-on
+                        %i.icon-calendar
+                %div
+                  = submit_tag "Submit", class: "btn"
+                  -# %button.btn{:type => "button"} Submit
 
-= form_tag admin_user_path(@user), method: :get do
-  = label_tag "start date"
-  = date_field_tag "start_date", @start_date
-  = label_tag "end date"
-  = date_field_tag "end_date", @end_date
-  = submit_tag "Submit"
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Report Date
+                  %th Cards created
+                  %th Private Card Created
+                  %th Public cards created
+                  %th Posts created
+                  %th Comments
+                  %th Likes
+              %tbody
+                - (@start_date .. @end_date).each do |date|
+                  %tr.odd.gradeX
+                    %td #{date}
+                    %td= @user.created_cards_per_day(date).count
+                    %td= @user.created_private_cards_per_day(date).count
+                    %td= @user.created_public_cards_per_day(date).count
+                    %td= @user.created_posts_per_day(date).count
+                    %td= @user.created_comments_per_day(date).count
+                    %td= @user.created_likes_per_day(date).count
+-# %h3 Detail Photo page for #{@user.user_name}
 
-- (@start_date .. @end_date).each do |date|
-  .panel.panel-default
-    .panel-heading.clearfix
-      .pull-left Reposts for #{date}
-    %table.table.table-striped
-      %tr
-        %td Cards created
-        - @user.created_cards_per_day(date).each do |card|
-          %td= link_to card.name, admin_album_path(card)
-      %tr
-        %td Private Card Created
-        - @user.created_private_cards_per_day(date).each do |card|
-          %td= link_to card.name, admin_album_path(card)
-      %tr
-        %td Public cards created
-        - @user.created_public_cards_per_day(date).each do |card|
-          %td= link_to card.name, admin_album_path(card)
-      %tr
-        %td Posts created
-        - @user.created_posts_per_day(date).each do |photo|
-          %td= link_to photo.title, admin_photo_path(photo)
-      %tr
-        %td Comments
-        - @user.created_comments_per_day(date).each do |comment|
-          %td= comment.content
-      %tr
-        %td Likes
-        %td= @user.created_likes_per_day(date).count
+-# .panel.panel-default
+-#   .panel-heading.clearfix
+-#     .pull-left User Detail
+-#     .pull-right
+-#   %table.table.table-striped
+-#     %tr
+-#       %td ID
+-#       %td= @user.id
+-#     %tr
+-#       %td Email
+-#       %td= @user.email
+-#     %tr
+-#       %td First Name
+-#       %td= @user.first_name
+-#     %tr
+-#       %td Last Name
+-#       %td= @user.last_name
+
+-# = form_tag admin_user_path(@user), method: :get do
+-#   = label_tag "start date"
+-#   = date_field_tag "start_date", @start_date
+-#   = label_tag "end date"
+-#   = date_field_tag "end_date", @end_date
+-#   = submit_tag "Submit"
+
+-# - (@start_date .. @end_date).each do |date|
+-#   .panel.panel-default
+-#     .panel-heading.clearfix
+-#       .pull-left Reposts for #{date}
+-#     %table.table.table-striped
+-#       %tr
+-#         %td Cards created
+-#         - @user.created_cards_per_day(date).each do |card|
+-#           %td= link_to card.name, admin_album_path(card)
+-#       %tr
+-#         %td Private Card Created
+-#         - @user.created_private_cards_per_day(date).each do |card|
+-#           %td= link_to card.name, admin_album_path(card)
+-#       %tr
+-#         %td Public cards created
+-#         - @user.created_public_cards_per_day(date).each do |card|
+-#           %td= link_to card.name, admin_album_path(card)
+-#       %tr
+-#         %td Posts created
+-#         - @user.created_posts_per_day(date).each do |photo|
+-#           %td= link_to photo.title, admin_photo_path(photo)
+-#       %tr
+-#         %td Comments
+-#         - @user.created_comments_per_day(date).each do |comment|
+-#           %td= comment.content
+-#       %tr
+-#         %td Likes
+-#         %td= @user.created_likes_per_day(date).count
