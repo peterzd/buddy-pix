@@ -1,51 +1,96 @@
-%h3 Detail Card page for #{@album.name}
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %ul.breadcrumb
+        %li
+          %i.icon-user
+          = link_to "Cards", admin_albums_path
+          %span.divider /
+        %li Card Details
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              #{@album.name} - #{@album.private? ? "Private" : "Public"}
+            %span.tools
+              %b Creator: #{@album.creator.user_name}
+              \&nbsp;&nbsp;
+          .widget-body
+            .clearfix
+              = form_tag admin_album_path(@album), method: :get do
+                .control-group.pull-left.mr10
+                  .controls
+                    .control-group.pull-left.mr10
+                      .controls
+                        .input-append.date.date-picker{"data-date" => "#{@start_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                          %label.control-label.inline.mt5.mr10 Starts Date:
+                          %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@start_date}", name: "start_date", id: "start_date"}
+                          %span.add-on
+                            %i.icon-calendar
+                    .control-group.pull-left.mr10
+                      .controls
+                        .input-append.date.date-picker{"data-date" => "#{@end_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                          %label.control-label.inline.mt5.mr10 End Date:
+                          %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@end_date}", name: "end_date", id: "end_date"}
+                          %span.add-on
+                            %i.icon-calendar
+                %div
+                  = submit_tag "Submit", class: "btn"
 
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left Card Detail
-    .pull-right
-  %table.table.table-striped
-    %tr
-      %td ID
-      %td= @album.id
-    %tr
-      %td Name
-      %td= @album.name
-    %tr
-      %td Creator
-      %td= @album.creator.user_name
-    %tr
-      %td Public/Private
-      %td= @album.private? ? "Private" : "Public"
-    %tr
-      %td Created time
-      %td= @album.created_at
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Report Date
+                  %th Followed Users
+                  %th Posts in Card
+                  %th Comments in Card
+                  %th Likers in card
+              %tbody
+                - (@start_date .. @end_date).each do |date|
+                  %tr.odd.gradeX
+                    %td #{date}
+                    %td= @album.followers_per_day(date).count
+                    %td= @album.posts_per_day(date).count
+                    %td= @album.comments_per_day(date).count
+                    %td= @album.likers_per_day(date).count
+        / END EXAMPLE TABLE PORTLET
+    .row-fluid
+      .span12
+        / BEGIN GALLERY MANAGER PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Cover Image
+            %span.tools
+              %a{:href => "upload_img.html"}
+                %i.icon-edit
+                Edit Cover Images &nbsp;&nbsp;
+          .widget-body
+            / BEGIN GALLERY MANAGER LISTING
+            .row-fluid
+              .span2
+                .thumbnail
+                  .item
+                    %a.fancybox-button{"data-rel" => "fancybox-button", :href => "#{@album.cover_image_url(:thumb)}", :title => "Photo"}
+                    .zoom
+                      = image_tag @album.cover_image_url(:thumb), alt: "Photo"
+                      .zoom-icon
 
-= form_tag admin_album_path(@album), method: :get do
-  = label_tag "start date"
-  = date_field_tag "start_date", @start_date
-  = label_tag "end date"
-  = date_field_tag "end_date", @end_date
-  = submit_tag "Submit"
-
-- (@start_date .. @end_date).each do |date|
-  .panel.panel-default
-    .panel-heading.clearfix
-      .pull-left Reposts for #{date}
-    %table.table.table-striped
-      %tr
-        %td Followed Users
-        - @album.followers_per_day(date).each do |user|
-          %td #{user.user_name}
-      %tr
-        %td Posts in Card
-        - @album.posts_per_day(date).each do |post|
-          %td #{post.title}
-      %tr
-        %td Comments in Card
-        - @album.comments_per_day(date).each do |comment|
-          %td #{comment.content}
-      %tr
-        %td Likers in card
-        - @album.likers_per_day(date).each do |user|
-          %td #{user.user_name}
