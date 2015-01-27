@@ -1874,8 +1874,7 @@ var App = function () {
 
         $('.table_listed').dataTable({
             "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-            // "sPaginationType": "bootstrap",
-            "sPaginationType": "full_numbers",
+            "sPaginationType": "bootstrap",
             "oLanguage": {
                 "sLengthMenu": "_MENU_ records per page",
                 "oPaginate" : {
@@ -2092,13 +2091,13 @@ var App = function () {
             handleScrollers();  // handles slim scrolling contents
             handleUniform();  // handles uniform elements
             handleTables();  // handles data tables
-            // handleCharts();  // handles plot charts
+            handleCharts();  // handles plot charts
             handleWidgetTools();   // handles portlet action bar functionality(refresh, configure, toggle, remove)
 //            handlePulsate();  // handles pulsate functionality on page elements
             handlePeity(); // handles pierty bar and line charts
             handleGritterNotifications();  // handles gritter notifications
             handleTooltip();   // handles bootstrap tooltips
-            // handlePopover();   // handles bootstrap popovers
+            handlePopover();   // handles bootstrap popovers
             handleToggleButtons();  // handles form toogle buttons
 //            handleWysihtml5();   //handles WYSIWYG Editor 
             handleDateTimePickers();  //handles form timepickers
