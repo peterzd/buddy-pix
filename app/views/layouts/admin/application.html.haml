@@ -77,9 +77,7 @@
           %li
             = link_to content_tag(:i, "", class: "icon-folder-close") + " Cards", admin_albums_path
           %li
-            %a{:href => "photos.html"}
-              %i.icon-picture
-              Posts
+            = link_to content_tag(:i, "", class: "icon-picture") + " Posts", admin_photos_path
           %li.has-sub
             %a{:href => "javascript:;"}
               %i.icon-pencil
