@@ -1,4 +1,5 @@
 //= require admin/jquery-1.8.2.min
+//= require jquery_ujs
 //= require admin/bootstrap.min
 //= require admin/jquery.blockui
 //= require admin/jquery.dataTables
