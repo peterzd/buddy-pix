@@ -40,6 +40,11 @@ class Admin::AlbumsController < Admin::ApplicationController
   # to call: AlbumAction.create_action(album_params) { |obj| authorize obj }
   def create
     @album = Album.new album_params.except(:cover_image).merge(creator: current_user)
+    if params[:commit] == "Cancel"
+      redirect_to admin_albums_path
+      return
+    end
+
     if @album.save
       if album_params[:cover_image]
         image = Image.create picture: album_params[:cover_image]
@@ -47,15 +52,15 @@ class Admin::AlbumsController < Admin::ApplicationController
       end
 
       case params[:commit]
-      when "submit"
+      when "Create Card"
         redirect_to admin_albums_path
-      when "add more"
+      when "Add More"
         flash[:success] = "created one card!"
         redirect_to new_admin_album_path
       end
     else
-      flash[:danger] = @album.errors.messages
-      render :new
+      flash[:danger] = @album.errors.full_messages
+      render action: :new
     end
 
   end
