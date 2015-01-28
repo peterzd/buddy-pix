@@ -105,7 +105,7 @@
               %li
                 = link_to "Inactive Users Report", inactive_users_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
               %li
-                %a{:href => "user_post_report.html"} User Post Report
+                = link_to "User Post Report", posts_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
           %li
             %a{:href => "blog.html"}
               %i.icon-comment
