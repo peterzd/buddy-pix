@@ -99,7 +99,7 @@
               %span.arrow
             %ul.sub
               %li
-                %a{:href => "summary_report.html"} Summary Report
+                = link_to "Summary Report", admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
               %li
                 %a{:href => "card_report.html"} Card Report
               %li
