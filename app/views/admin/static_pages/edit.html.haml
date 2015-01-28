@@ -1,11 +1,37 @@
-%h3 Admin Edit #{@page.name} Static Pages
-
-= form_for @page, url: admin_static_page_path(@page) do |f|
-  .field
-    = f.label :content
-    = f.text_area :content, class: "ckeditor"
-  .actions
-    = f.submit 'Save'
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        #{@page.name.titleize}
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-edit>
+              Edit
+          .widget-body.form
+            / BEGIN FORM
+            = form_for @page, url: admin_static_page_path(@page), class: "form-horizontal" do |f|
+              .form-actions
+                = f.text_area :content, class: "ckeditor"
+              .actions
+                = f.submit 'Save', class: "btn btn-primary"
 
 :coffee
   $('.ckeditor').ckeditor({ })

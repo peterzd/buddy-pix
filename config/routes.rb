@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     resources :static_pages
     resources :reports do
       collection do
-        post :query_range
+        get :cards_report
+        get :posts_report
+        get :inactive_users_report
       end
     end
   end

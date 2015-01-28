@@ -35,6 +35,10 @@ class Photo < ActiveRecord::Base
       end
       posts
     end
+
+    def total_posts_range(start_day, end_day)
+      where(created_at: start_day.beginning_of_day..end_day.end_of_day)
+    end
   end
 
   def first_image

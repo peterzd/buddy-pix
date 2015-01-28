@@ -1,48 +1,145 @@
 !!!
-/[if lt IE 7 ] <html class="ie ie6" lang="en">
-/[if IE 7 ] <html class="ie ie7" lang="en">
-/[if IE 8 ] <html class="ie ie8" lang="en">
-/ [if (gte IE 9)|!(IE)]><!
+/[if IE 8] <html lang="en" class="ie8">
+/[if IE 9] <html lang="en" class="ie9">
+/[if IE 10] <html lang="en" class="ie10">
+/ [if !IE]><!
 %html{:lang => "en"}
   / <![endif]
+  / BEGIN HEAD
   %head
     %meta{:charset => "utf-8"}/
-    %meta{:content => "", :name => "keywords"}/
+    %title BuddyPix-admin
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %meta{:content => "", :name => "description"}/
-    / Mobile Specific Metas
-    %meta{:content => "width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1, user-scalable=0", :name => "viewport"}/
-    %title BuddyPix
+    %meta{:content => "", :name => "author"}/
+    = favicon_link_tag 'favicon.ico'
     -# main css
     = stylesheet_link_tag "admin", media: "all"
     = csrf_meta_tag
-    = javascript_include_tag "admin"
+    = javascript_include_tag "admin/admin"
     /[if lt IE 9] <script src="assets/js/html5.js"></script><script src="assets/js/css3-mediaqueries.js"></script>
 
-  %body
-    %header.clearfix
-      %nav.navbar.navbar-default{ role: "navigation" }
+  %body.fixed-top
+    #header.navbar.navbar-inverse.navbar-fixed-top
+      / BEGIN TOP NAVIGATION BAR
+      .navbar-inner
         .container-fluid
-          .navbar-header
-            = link_to image_tag("buddypix_logo.png", alt: "Logo"), "#"
-          .links
-            %ul.nav.navbar-nav
-              %li
-                = link_to "Dashboard", admin_path
-              %li
-                = link_to "Users", admin_users_path
-              %li
-                = link_to "Cards", admin_albums_path
-              %li
-                = link_to "Photos", admin_photos_path
-              %li
-                = link_to "Blogs", admin_blogs_path
-              %li
-                = link_to "Static Pages", admin_static_pages_path
-              %li
-                = link_to "Reports", admin_reports_path
-            %ul.nav.navbar-nav.navbar-right
-              %li
-                = link_to "Log out", destroy_user_session_path, method: :delete
-    .container.clearfix
-      = yield
+          / BEGIN LOGO
+          %a.brand{:href => "index.html"}
+            = image_tag "logo.png", alt: "Conquer"
+          / END LOGO
+          / BEGIN RESPONSIVE MENU TOGGLER
+          %a#main_menu_trigger.btn.btn-navbar.collapsed{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+            %span.arrow
+          / END RESPONSIVE MENU TOGGLER
+          .top-nav
+            / BEGIN TOP NAVIGATION MENU
+            %ul#top_menu.nav.pull-right
+              / BEGIN USER LOGIN DROPDOWN
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  %i.icon-user
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => "#"}
+                      %i.icon-user
+                      Mark King
+                  %li.divider
+                  %li
+                    %a{:href => "login.html"}
+                      %i.icon-key
+                      Log Out
+              / END USER LOGIN DROPDOWN
+            / END TOP NAVIGATION MENU
+      / END TOP NAVIGATION BAR
+    / END HEADER
 
+    #container.row-fluid
+      / BEGIN SIDEBAR
+      #sidebar.nav-collapse.collapse
+        / BEGIN RESPONSIVE QUICK SEARCH FORM
+        .navbar-inverse
+          %form.navbar-search.visible-phone
+            %input.search-query{:placeholder => "Search", :type => "text"}/
+        / END RESPONSIVE QUICK SEARCH FORM
+        / BEGIN SIDEBAR MENU
+        %ul
+          %li.active
+            %a{:href => "dashboard.html"}
+              %i.icon-home
+              Dashboard
+          %li
+            = link_to content_tag(:i, "", class: "icon-user") + " Users", admin_users_path
+          %li
+            = link_to content_tag(:i, "", class: "icon-folder-close") + " Cards", admin_albums_path
+          %li
+            = link_to content_tag(:i, "", class: "icon-picture") + " Posts", admin_photos_path
+          %li.has-sub
+            %a{:href => "javascript:;"}
+              %i.icon-pencil
+              Static Pages
+              %span.arrow
+            %ul.sub
+              %li
+                %a{:href => "promotion-edit.html"} Promotion
+              %li
+                = link_to "About us", edit_admin_static_page_path(StaticPages.find_by name: "about_us")
+              %li
+                = link_to "Terms", edit_admin_static_page_path(StaticPages.find_by name: "terms")
+              %li
+                = link_to "Privacy", edit_admin_static_page_path(StaticPages.find_by name: "privacy")
+          %li.has-sub
+            %a{:href => "javascript:;"}
+              %i.icon-bar-chart
+              Reports
+              %span.arrow
+            %ul.sub
+              %li
+                = link_to "Summary Report", admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
+              %li
+                = link_to "Card Report", cards_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
+              %li
+                = link_to "Inactive Users Report", inactive_users_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
+              %li
+                = link_to "User Post Report", posts_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
+          %li
+            %a{:href => "blog.html"}
+              %i.icon-comment
+              Blog
+      / END SIDEBAR
+
+      / BEGIN PAGE
+      #body
+        = yield
+    -# %header.clearfix
+    -#   %nav.navbar.navbar-default{ role: "navigation" }
+    -#     .container-fluid
+    -#       .navbar-header
+    -#         = link_to image_tag("buddypix_logo.png", alt: "Logo"), "#"
+    -#       .links
+    -#         %ul.nav.navbar-nav
+    -#           %li
+    -#             = link_to "Dashboard", admin_path
+    -#           %li
+    -#             = link_to "Users", admin_users_path
+    -#           %li
+    -#             = link_to "Cards", admin_albums_path
+    -#           %li
+    -#             = link_to "Photos", admin_photos_path
+    -#           %li
+    -#             = link_to "Blogs", admin_blogs_path
+    -#           %li
+    -#             = link_to "Static Pages", admin_static_pages_path
+    -#           %li
+    -#             = link_to "Reports", admin_reports_path
+    -#         %ul.nav.navbar-nav.navbar-right
+    -#           %li
+    -#             = link_to "Log out", destroy_user_session_path, method: :delete
+
+:coffee
+  $(document).on "page:load ready", ->
+    App.init()

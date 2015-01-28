@@ -1,0 +1,69 @@
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Reports
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder>
+              User Post Report
+          .widget-body
+            .clearfix
+              = form_tag posts_report_admin_reports_path, method: :get do
+                .control-group.pull-left.mr10
+                  .controls
+                    .control-group.pull-left.mr10
+                      .controls
+                        .input-append.date.date-picker{"data-date" => "#{@start_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                          %label.control-label.inline.mt5.mr10 Starts Date:
+                          %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@start_date}", name: "start_date", id: "start_date"}
+                          %span.add-on
+                            %i.icon-calendar
+                    .control-group.pull-left.mr10
+                      .controls
+                        .input-append.date.date-picker{"data-date" => "#{@end_date}", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                          %label.control-label.inline.mt5.mr10 End Date:
+                          %input.input-small.date-picker{:size => "16", :type => "text", :value => "#{@end_date}", name: "end_date", id: "end_date"}
+                          %span.add-on
+                            %i.icon-calendar
+                %div
+                  = submit_tag "Submit", class: "btn"
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Post ID
+                  %th Card
+                  %th Cards Type
+                  %th User Name
+                  %th User Email
+                  %th Total Comments
+                  %th Total Likes
+              %tbody
+                - Photo.total_posts_range(@start_date, @end_date).each do |post|
+                  %tr.odd.gradeX
+                    %td= post.id
+                    %td= post.album.name
+                    %td= post.album.private? ? "Private" : "Public"
+                    %td= post.creator.user_name
+                    %td= post.creator.email
+                    %td= post.comments.count
+                    %td= post.likes.count
+

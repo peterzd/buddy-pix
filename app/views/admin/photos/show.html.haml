@@ -1,45 +1,75 @@
-%h3 Detail Photo page for #{@photo.title}
-
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left Photo Detail
-    .pull-right
-  %table.table.table-striped
-    %tr
-      %td ID
-      %td= @photo.id
-    %tr
-      %td Title
-      %td= @photo.title
-    %tr
-      %td Description
-      %td= @photo.description
-    %tr
-      %td Creator
-      %td= @photo.creator.user_name
-    %tr
-      %td Belongs to Album
-      %td= "#{@photo.album.name} (#{@photo.album.decorate.private_text})"
-    %tr
-      %td Likes count
-      %td= @photo.likes.count
-
-.panel.panel-success
-  .panel-heading.clearfix
-    .pull-left Comments on this photo
-  %table.table.table-striped
-    %tr
-      %th Comment ID
-      %th Commenter's name
-      %th Content of the comment
-      %th Commented time
-      %th Action
-    - @photo.comments.each do |comment|
-      %tr
-        %td= comment.id
-        %td= comment.commenter.user_name
-        %td= comment.content
-        %td= comment.created_at
-        %td
-          = link_to "destroy", admin_photo_comment_path(@photo, comment), method: :delete, data: { confirm: "sure to destroy this comment?" }
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %ul.breadcrumb
+        %li
+          %i.icon-picture
+          = link_to "Posts", admin_photos_path
+          %span.divider /
+        %li Post Details
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              #{@photo.title}
+            %span.tools
+              %b Belongs to Album: #{@photo.album.name}
+              \&nbsp;&nbsp;
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Comment ID
+                  %th Commenter's name
+                  %th Content of the comment
+                  %th Commented time
+                  %th Action
+              %tbody
+                - @photo.comments.each do |comment|
+                  %tr.odd.gradeX
+                    %td= comment.id
+                    %td= comment.commenter.user_name
+                    %td= comment.content
+                    %td= comment.created_at.utc
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_photo_comment_path(@photo, comment), method: :delete, data: { confirm: "sure to destroy this comment?" }, class: "icon huge"
+        / END EXAMPLE TABLE PORTLET
+  / END PAGE CONTENT
+  / BEGIN:BODY
+  .row-fluid
+    .span12
+      / BEGIN GALLERY MANAGER PORTLET
+      .widget
+        .widget-title
+          %h4
+            %i.icon-reorder>
+            Image
+        .widget-body
+          / BEGIN GALLERY MANAGER LISTING
+          .row-fluid
+            - @photo.images.each do |image|
+              .span2
+                .thumbnail
+                  .item
+                    %a.fancybox-button{"data-rel" => "fancybox-button", :href => "#{image.picture.url(:thumb)}", :title => "Photo"}
+                    .zoom
+                      = image_tag image.picture.url(:thumb), alt: "Photo"
+                      .zoom-icon
 

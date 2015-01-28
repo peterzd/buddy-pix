@@ -39,4 +39,4 @@
 //= require owl.carousel.min
 //= require jquery.validate.min
 //= require wysihtml5-0.4.0pre.min
-//= require_tree .
+//= require_directory .

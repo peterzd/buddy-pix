@@ -4,10 +4,68 @@
     %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
       %span{"aria-hidden" => "true"} ×
     = flash[type.to_sym]
-= simple_form_for [:admin, @album], defaults: { label_html: { class: "col-sm-2" } }, html: { class: "form-horizontal" }, wrapper: :bootstrap_horizontal do |f| 
-  = f.input :name
-  = f.input :caption
-  = f.input :private, as: :radio_buttons
-  = f.input :cover_image, as: :file
-  = f.submit "submit"
-  = f.submit "add more"
+
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %ul.breadcrumb
+        %li
+          %i.icon-user
+          %a{:href => "users.html"} Cards
+          %span.divider /
+        %li New Card
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-pencil
+              Create A New Card
+            %span.tools
+              %a{:href => "new_cards.html"}
+                %i.icon-plus
+                Add More &nbsp;&nbsp;
+          .widget-body.form
+            / BEGIN FORM
+            = form_for [:admin, @album], html: { class: "form-horizontal" } do |f|
+              %div
+                .control-group
+                  = f.label :name, "Card Name", class: "control-label"
+                  .controls
+                    = f.text_field :name, id: "input1", class: "span6"
+                .control-group
+                  = f.label :caption, "Description", class: "control-label"
+                  .controls
+                    = f.text_area :caption, id: "editor_1", class: "span12 wysihtml5", rows: 6
+                .control-group
+                  = f.label :cover_image, "Cover Photo", class: "control-label"
+                  .controls
+                    = f.file_field :cover_image
+                .control-group
+                  = f.label :private, "Card Type", class: "control-label"
+                  .controls
+                    .text-toggle-button
+                      = f.check_box :private, class: "toggle"
+              .form-actions
+                = f.submit "Create Card", class: "btn btn-primary"
+                = f.submit "Add More", class: "btn"
+                = f.submit "Cancel", class: "btn"
+
+:coffee
+  $('#editor_1').wysihtml5()
+

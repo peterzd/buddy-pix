@@ -14,6 +14,8 @@ module BuddyPix
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
     config.action_mailer.default_url_options = { host: 'buddypix.net' }
     config.autoload_paths += %W(#{config.root}/lib)
+    
+    config.assets.precompile += %w( admin/admin.js )
 
     config.assets.precompile += %w[admin.css admin.js]
     config.generators do |g|

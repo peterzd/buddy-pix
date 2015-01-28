@@ -1,30 +1,61 @@
-%h3 Admin Photos index page
-
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left All Photos list
-    .pull-right
-      -# = link_to "New Card", new_admin_album_path
-  %table.table.table-striped
-    %tr
-      %th Photo ID
-      %th Photo Title
-      %th Photo description
-      %th Creator
-      %th Album
-      %th Crated_at
-      %th Public/Private
-      %th Actions
-    - @photos.each do |photo|
-      %tr
-        %td= link_to photo.id, admin_photo_path(photo)
-        %td= link_to photo.title, admin_photo_path(photo)
-        %td= photo.description
-        %td= photo.creator.user_name
-        %td= photo.album.name
-        %td= photo.created_at
-        %td= photo.album.private? ? "Private" : "Public"
-
-        %th
-          = link_to "destroy", admin_photo_path(photo), method: :delete, data: { confirm: "sure to destroy this photo?" }
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Posts
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-picture
+              All Posts
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Posts ID
+                  %th Title
+                  %th description
+                  %th Image
+                  %th Creator
+                  %th Created_at
+                  %th Album
+                  %th Card Type
+                  %th Actions
+              %tbody
+                - @photos.each do |photo|
+                  %tr.odd.gradeX
+                    %td= photo.id
+                    %td= photo.title
+                    %td= photo.description
+                    %td
+                      .thumbnail.table_thumb
+                        .item
+                          %a.fancybox-button{"data-rel" => "fancybox-button", :href => "#{photo.picture_url(:thumb)}", :title => "Photo"}
+                          .zoom
+                            %img{:alt => "Photo", :src => "#{photo.picture_url(:thumb)}"}
+                            .zoom-icon
+                    %td= photo.creator.user_name
+                    %td= photo.created_at.utc
+                    %td= photo.album.name
+                    %td= photo.album.private? ? "Private" : "Public"
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-zoom-in"), admin_photo_path(photo), class: "icon huge"
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_photo_path(photo), method: :delete, data: { confirm: "sure to destroy this photo?" }, class: "icon huge"
 

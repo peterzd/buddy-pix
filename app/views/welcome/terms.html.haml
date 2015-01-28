@@ -3,5 +3,5 @@
     %hgroup.ac
       %h2 Terms
     %article.mt20.cover_box.p20
-      = sanitize @page.content
+      = @page.content.html_safe
 
