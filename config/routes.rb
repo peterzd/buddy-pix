@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :reports do
       collection do
         get :cards_report
+        get :inactive_users_report
       end
     end
   end

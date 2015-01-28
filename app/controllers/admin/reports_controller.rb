@@ -8,6 +8,10 @@ class Admin::ReportsController < Admin::ApplicationController
   def cards_report
   end
 
+  def inactive_users_report
+    @inactive_users = User.inactive_users
+  end
+
   private
   def get_date
     @start_date = params[:start_date].to_date

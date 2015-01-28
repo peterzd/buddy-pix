@@ -103,7 +103,7 @@
               %li
                 = link_to "Card Report", cards_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
               %li
-                %a{:href => "user_report.html"} Inactive Users Report
+                = link_to "Inactive Users Report", inactive_users_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
               %li
                 %a{:href => "user_post_report.html"} User Post Report
           %li
