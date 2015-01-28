@@ -78,22 +78,18 @@ class Album < ActiveRecord::Base
     end
   end
 
-  def total_likes_range(start_day, end_day)
-    photos.inject(0) do |sum, photo|
-      sum += photo.likes.where(created_at: start_day.beginning_of_day..end_day.end_of_day).count
-    end
-  end
-
-  def total_comments_range(start_day, end_day)
-    photos.inject(0) do |sum, photo|
-      sum += photo.comments.where(created_at: start_day.beginning_of_day..end_day.end_of_day).count
+  ["likes", "comments"].each do |obj|
+    define_method "total_#{obj}_range" do |start_day, end_day|
+      photos.inject(0) do |sum, photo|
+        subject = photo.send obj.to_sym
+        sum += subject.where(created_at: start_day.beginning_of_day..end_day.end_of_day).count
+      end
     end
   end
 
   def total_posts_range(start_day, end_day)
     photos.where(created_at: start_day.beginning_of_day..end_day.end_of_day)
   end
-
 
   def recent_photos(count)
     photos.order(updated_at: :desc).limit(count)
