@@ -12,7 +12,7 @@ class Admin::StaticPagesController < Admin::ApplicationController
   def update
     @page = StaticPages.find params[:id]
     @page.update content: params[:static_pages][:content]
-    redirect_to admin_static_pages_path
+    redirect_to edit_admin_static_page_path @page
   end
 
 end

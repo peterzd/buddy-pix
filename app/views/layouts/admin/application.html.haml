@@ -87,11 +87,11 @@
               %li
                 %a{:href => "promotion-edit.html"} Promotion
               %li
-                %a{:href => "about-edit.html"} About Us
+                = link_to "About us", edit_admin_static_page_path(StaticPages.find_by name: "about_us")
               %li
-                %a{:href => "terms-edit.html"} Terms
+                = link_to "Terms", edit_admin_static_page_path(StaticPages.find_by name: "terms")
               %li
-                %a{:href => "privacy-edit.html"} Privacy
+                = link_to "Privacy", edit_admin_static_page_path(StaticPages.find_by name: "privacy")
           %li.has-sub
             %a{:href => "javascript:;"}
               %i.icon-bar-chart
