@@ -69,9 +69,7 @@
         / BEGIN SIDEBAR MENU
         %ul
           %li.active
-            %a{:href => "dashboard.html"}
-              %i.icon-home
-              Dashboard
+            = link_to content_tag(:i, "", class: "icon-home") + " Dashboard", admin_path
           %li
             = link_to content_tag(:i, "", class: "icon-user") + " Users", admin_users_path
           %li
