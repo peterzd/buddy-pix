@@ -1,20 +1,50 @@
-%h3 Admin Static Pages
-
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left All Blogs list
-    .pull-right
-      = link_to "New Blog", new_admin_blog_path
-  %table.table.table-striped
-    %tr
-      %th Title
-      %th Created time
-      %th Actions
-    - @blogs.each do |blog|
-      %tr
-        %td= blog.title
-        %th= blog.created_at.to_date
-        %th
-          = link_to "edit", edit_admin_blog_path(blog)
-          = link_to "destroy", admin_blog_path(blog), method: :delete, data: { confirm: "sure to remove this blog?" }
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Write Blogs
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-pencil
+              Write Blogs
+            %span.tools
+              = link_to content_tag(:i, "", class: "icon-plus") + " Add Blog ", new_admin_blog_path
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th #
+                  %th Title
+                  %th Creator
+                  %th Created_at
+                  %th Actions
+              %tbody
+                - @blogs.each do |blog|
+                  %tr.odd.gradeX
+                    %td= blog.id
+                    %td= strip_tags blog.content
+                    %td= Admin
+                    %td= blog.created_at.utc
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-zoom-in"), edit_admin_blog_path(blog), class: "icon huge"
+                      \&nbsp;
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_blog_path(blog), method: :delete, data: { confirm: "sure to remove this blog?" }, class: "icon huge"
 

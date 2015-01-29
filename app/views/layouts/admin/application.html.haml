@@ -107,9 +107,7 @@
               %li
                 = link_to "User Post Report", posts_report_admin_reports_path(start_date: 1.week.ago.to_date, end_date: Date.today)
           %li
-            %a{:href => "blog.html"}
-              %i.icon-comment
-              Blog
+            = link_to content_tag(:i, "", class: "icon-comment") + " Blog ", admin_blogs_path
       / END SIDEBAR
 
       / BEGIN PAGE
