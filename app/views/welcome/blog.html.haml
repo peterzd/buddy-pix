@@ -19,4 +19,4 @@
               = blog.title
           .fl.w100.figure_img
             = sanitize blog.content
-            %a.continue_link{:href => "#"} Continue Reading ...
+            = link_to "Continue Reading ...", blog_path(blog), class: "continue_link"

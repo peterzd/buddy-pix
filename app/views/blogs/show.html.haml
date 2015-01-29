@@ -1,9 +1,152 @@
-%p#notice= notice
+%section.clearfix.inner_body
+  .pc.cm.mt20
+    %hgroup.ac
+      %h2 Blog
+    %article.mt20.cover_box.clearfix
+      .p20.blog_post.fl.w100
+        / blog post
+        %aside.fr.social_share.mt20
+          Share With:&nbsp;&nbsp;
+          %a.fb{:href => "#"}
+            %i.fa.fa-facebook
+          %a.tt{:href => "#"}
+            %i.fa.fa-twitter
+          %a.mail{:href => "#"}
+            %i.fa.fa-envelope
+        %aside.head_side
+          %h1
+            %small= @blog.created_at.strftime("%m.%d.%Y")
+            #{@blog.title}
+        .fl.w100.figure_img
+          = sanitize @blog.content
+      / blog post
+      .fl.w100.p20.blog_cmt
+        %h4 #{@blog.comments.count} Comment
+        - @blog.comments.each do |comment|
+          .cmt_row.bs.clearfix
+            %figure.img_fill.round
+              = image_tag comment.commenter.profile_cover_url(:thumb)
+            %aside
+              %h4.fl= comment.commenter.user_name
+              %p.fr
+                %strong= "#{time_ago_in_words(comment.created_at)} ago"
+              %p.fl.w100= comment.content
+              = image_tag comment.picture_url(:medium)
+              = link_to content_tag(:i, "", class: "fa fa-reply") + "Reply", "#reply", class: "fl fancybox", data: { commenter: comment.commenter.user_name, "comment-id" => comment.id } if user_signed_in?
+          - if comment.replies.count > 0
+            - comment.replies.each do |reply|
+              .cmt_row.bs.clearfix.reply_box
+                %figure.img_fill.round
+                  = image_tag reply.commenter.profile_cover_url(:thumb)
+                %aside
+                  %h4.fl= reply.commenter.user_name
+                  %p.fr
+                    %strong= "#{time_ago_in_words reply.created_at} ago"
+                  %p.fl.w100
+                    = reply.content
 
-%p
-  %b Content:
-  = @blog.content
+        - if user_signed_in?
+          .cmt_row.bs.clearfix.mt10.txt_area
+            %figure.img_fill.round
+              = image_tag current_user.profile_cover_url(:thumb)
+            %aside
+              = form_tag create_comment_blog_path(@blog), multipart: true, id: "comment-form" do
+                = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
+                .mt10
+                  .btn.browse_btn.inline.fl.dark
+                    = file_field_tag "comment[image][picture]", id: "imgInp"
+                    %i.fa.fa-image
+                  %span.inline.p10 Attach Image
+                .upload_pic.hide.ac.mt10
+                  %i.remove_img.fa.fa-times
+                  %img#target{:alt => "your image", :src => ""}
+                .cr
+                  = submit_tag "Send Comment", class: "mt20"
 
-= link_to 'Edit', edit_blog_path(@blog)
-\|
-= link_to 'Back', blogs_path
+- if user_signed_in?
+  #reply.light_box.hide
+    %p
+      %strong Reply To Joseph
+    .cmt_row.bs.clearfix.txt_area
+      %figure.round.img_fill
+        = image_tag current_user.profile_cover_url(:thumb)
+      %aside
+        = form_tag "#", multipart: true, id: "reply-form" do
+          = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
+          .mt10
+            .btn.browse_btn.inline.fl.dark
+              = file_field_tag "comment[image][picture]", id: "imgInp2"
+              %i.fa.fa-image
+            %span.inline.p10 Attach Image
+          .upload_pic2.hide.ac.mt10
+            %i.remove_img2.fa.fa-times
+            %img#target2{:alt => "your image", :src => ""}
+          .cr
+            = submit_tag "Send Comment", class: "mt20"
+
+
+/ replybox pop up
+:javascript
+  jQuery(function($) {
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#target').attr('src', e.target.result)
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("input[type='file']#imgInp").change(function(){
+          readURL(this);
+          $('.upload_pic').removeClass('hide');
+      });
+
+
+      $('.remove_img').on('click',function(){
+         $('.upload_pic').addClass('hide');
+         $("input[type='file']#imgInp").val('')
+      });
+      function readURL2(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#target2').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("input[type='file']#imgInp2").change(function(){
+          readURL2(this);
+          $('.upload_pic2').removeClass('hide');
+      });
+
+
+      $('.remove_img2').on('click',function(){
+         $('.upload_pic2').addClass('hide');
+         $("input[type='file']#imgInp2").val('')
+      });
+  });
+
+:coffee
+  $('.fancybox').on 'click', ->
+    commenter = $(this).data("commenter")
+    comment_id = $(this).data("comment-id")
+    $("#reply p strong").html "Reply To " + commenter
+    $('#reply form').attr "action", "/blogs/#{@blog.id}/comments/" + comment_id + "/reply"
+
+  toggle_like()
+
+  $("#comment-form").validate
+    rules:
+      "comment[content]": "required"
+    messages:
+      "comment[content]":
+        required: "Please type something"
+      
+  $("#reply-form").validate
+    rules:
+      "comment[content]": "required"
+    messages:
+      "comment[content]":
+        required: "Please type something"
