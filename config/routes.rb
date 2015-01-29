@@ -11,7 +11,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :blogs
+    resources :blogs do
+      delete "delete_comment/:id" => "blogs#delete_comment", as: :delete_comment
+    end
 
     resources :users
     resources :photos do
