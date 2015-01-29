@@ -1,47 +1,189 @@
-%h3 Inacitve Users for 14 days(more than)
-.panel.panel-default
-  .panel-heading.clearfix
-    .pull-left Inacitve Users
-  %table.table.table-striped
-    %tr
-      %th User ID
-      %th User Name
-      %th Crated_at
-      %th Last sign in
-    - @inactive_users.each do |user|
-      %tr
-        %td= user.id
-        %td= user.user_name
-        %td= user.created_at
-        %td= user.last_sign_in_at.nil? ? "" : user.last_sign_in_at.to_date
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Dashboard
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span6
+        / END BASIC CHART PORTLET
+        / BEGIN INTERACTIVE CHART PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Total Registered Users
+            %span.tools
+              %a.icon-refresh{:href => "javascript:;"}
+          .widget-body
+            .clearfix
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 Starts Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 End Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              %div
+                %button.btn{:type => "button"} Submit
+            #chart_1.chart
+      .span6
+        / END BASIC CHART PORTLET
+        / BEGIN INTERACTIVE CHART PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Daily Active Users
+            %span.tools
+              %a.icon-refresh{:href => "javascript:;"}
+          .widget-body
+            .clearfix
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 Starts Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 End Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              %div
+                %button.btn{:type => "button"} Submit
+            #chart_2.chart
+    .row-fluid
+      .span6
+        / END BASIC CHART PORTLET
+        / BEGIN INTERACTIVE CHART PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Total Cards and Posts
+            %span.tools
+              %a.icon-refresh{:href => "javascript:;"}
+          .widget-body
+            .clearfix
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 Starts Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 End Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              %div
+                %button.btn{:type => "button"} Submit
+            #chart_3.chart
+      .span6
+        / END BASIC CHART PORTLET
+        / BEGIN INTERACTIVE CHART PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Total Likes and Comments
+            %span.tools
+              %a.icon-refresh{:href => "javascript:;"}
+          .widget-body
+            .clearfix
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 Starts Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              .control-group.pull-left.mr10
+                .controls
+                  .input-append.date.date-picker{"data-date" => "12-02-2012", "data-date-format" => "dd-mm-yyyy", "data-date-viewmode" => "years"}
+                    %label.control-label.inline.mt5.mr10 End Date:
+                    %input.input-small.date-picker{:size => "16", :type => "text", :value => "12-02-2012"}/
+                    %span.add-on
+                      %i.icon-calendar
+              %div
+                %button.btn{:type => "button"} Submit
+            #chart_4.chart
 
-%h3 Reports for recent 7 days
+:coffee
+  App.setMainPage(true)
 
-- 7.times do |i|
-  - date = Date.today - i
-  -# - users = User.registered_per_day(date)
-  .panel.panel-default
-    .panel-heading.clearfix
-      .pull-left Reposts for #{date}
-    %table.table.table-striped
-      %tr
-        %td User registered
-        %td= User.registered_per_day(date).map &:user_name
-      %tr
-        %td Private Card Created
-        %td= Album.total_private_cards_per_day(date).count
-      %tr
-        %td Public cards created
-        %td= Album.total_public_cards_per_day(date).count
-      %tr
-        %td Total cards
-        %td= Album.total_cards_per_day(date).count
-      %tr
-        %td Total Posts
-        %td= Photo.total_posts_per_day(date).count
-      %tr
-        %td Total Comments
-        %td= Comment.total_comments_per_day(date).count
-      %tr
-        %td Total Likes
-        %td= Like.total_likes_per_day(date).count
+
+
+-# %h3 Inacitve Users for 14 days(more than)
+-# .panel.panel-default
+-#   .panel-heading.clearfix
+-#     .pull-left Inacitve Users
+-#   %table.table.table-striped
+-#     %tr
+-#       %th User ID
+-#       %th User Name
+-#       %th Crated_at
+-#       %th Last sign in
+-#     - @inactive_users.each do |user|
+-#       %tr
+-#         %td= user.id
+-#         %td= user.user_name
+-#         %td= user.created_at
+-#         %td= user.last_sign_in_at.nil? ? "" : user.last_sign_in_at.to_date
+
+-# %h3 Reports for recent 7 days
+
+-# - 7.times do |i|
+-#   - date = Date.today - i
+-#   -# - users = User.registered_per_day(date)
+-#   .panel.panel-default
+-#     .panel-heading.clearfix
+-#       .pull-left Reposts for #{date}
+-#     %table.table.table-striped
+-#       %tr
+-#         %td User registered
+-#         %td= User.registered_per_day(date).map &:user_name
+-#       %tr
+-#         %td Private Card Created
+-#         %td= Album.total_private_cards_per_day(date).count
+-#       %tr
+-#         %td Public cards created
+-#         %td= Album.total_public_cards_per_day(date).count
+-#       %tr
+-#         %td Total cards
+-#         %td= Album.total_cards_per_day(date).count
+-#       %tr
+-#         %td Total Posts
+-#         %td= Photo.total_posts_per_day(date).count
+-#       %tr
+-#         %td Total Comments
+-#         %td= Comment.total_comments_per_day(date).count
+-#       %tr
+-#         %td Total Likes
+-#         %td= Like.total_likes_per_day(date).count
