@@ -297,7 +297,7 @@ a,a:focus, a:hover, a:active {
   margin-top: 7px;
   margin-left: 215px; 
   min-height: 600px;    
-  background: #f7f7f7 url("../img/body-bg.png"); 
+  background: #f7f7f7 image-url("body-bg.png"); 
   border-bottom: 2px solid #ddd;
 }
 
@@ -873,7 +873,7 @@ ul.item-list.todo li .actions {
 
 /* custom label and badges */
 .label {  
-  -webkit-border-radius: 2px 
+  -webkit-border-radius: 2px;
   -moz-border-radius: 2px !important;
   border-radius: 2px !important;
 }
@@ -1276,7 +1276,7 @@ ul.item-list.todo li .actions {
 }
 
 .zoom .zoom-icon {
-  background-image:url("../img/overlay-icon.png");
+  background-image: image-url("overlay-icon.png");
   background-color: #222;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -1300,7 +1300,7 @@ ul.item-list.todo li .actions {
 
 #login {
 
-  background-image:url("../img/body-bg.png"); 
+  background-image: image-url("body-bg.png"); 
   width: 247px;
   margin: 0 auto; 
   padding: 20px;
