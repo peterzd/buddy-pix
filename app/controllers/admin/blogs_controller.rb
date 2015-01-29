@@ -10,6 +10,24 @@ class Admin::BlogsController < Admin::ApplicationController
     @blog = Blog.new
   end
 
+  def edit
+    @blog = Blog.find params[:id]
+  end
+
+  def update
+    @blog = Blog.find params[:id]
+    authorize @blog
+    @blog.update blog_params
+    redirect_to admin_blogs_path
+  end
+
+  def delete_comment
+    @blog = Blog.find params[:blog_id]
+    comment = Comment.find params[:id]
+    comment.destroy
+    redirect_to edit_admin_blog_path(@blog)
+  end
+
   def create
     @blog = Blog.new(blog_params)
     authorize @blog

@@ -11,7 +11,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :blogs
+    resources :blogs do
+      delete "delete_comment/:id" => "blogs#delete_comment", as: :delete_comment
+    end
 
     resources :users
     resources :photos do
@@ -27,7 +29,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :supports, :blogs
+  resources :supports
+  resources :blogs do
+    member do
+      post "create_comment" => "blogs#create_comment", as: :create_comment
+      post "comments/:comment_id/reply" => "blogs#reply", as: :reply_comment
+    end
+  end
 
   devise_for :users, controllers: { sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations", confirmations: "users/confirmations" }
   get :my_wall, to: "users#my_wall"

@@ -1,0 +1,58 @@
+#widget-config.modal.hide
+  .modal-header
+    %button.close{"data-dismiss" => "modal", :type => "button"} ×
+    %h3 Widget Settings
+  .modal-body
+    %p Here will be a configuration form
+/ END SAMPLE PORTLET CONFIGURATION MODAL FORM
+/ BEGIN PAGE CONTAINER
+.container-fluid
+  / BEGIN PAGE HEADER
+  .row-fluid
+    .span12
+      / BEGIN PAGE TITLE &amp; BREADCRUMB
+      %h3.page-title
+        Blog Edit
+      / END PAGE TITLE &amp; BREADCRUMB
+  / END PAGE HEADER
+  / BEGIN PAGE CONTENT
+  #page.dashboard
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-edit>
+              Edit
+          .widget-body.form
+            / BEGIN FORM
+            = render "form"
+        / END EXAMPLE TABLE PORTLET
+    .row-fluid
+      .span12
+        / BEGIN EXAMPLE TABLE PORTLET
+        .widget
+          .widget-title
+            %h4
+              %i.icon-reorder
+              Comment On Blog
+          .widget-body
+            %table.table.table-striped.table-bordered.table_listed
+              %thead
+                %tr
+                  %th Comment ID
+                  %th Commenter's name
+                  %th Content of the comment
+                  %th Commented time
+                  %th Action
+              %tbody
+                - @blog.comments.each do |comment|
+                  %tr.odd.gradeX
+                    %td= comment.id
+                    %td= comment.commenter.user_name
+                    %td= comment.content
+                    %td= comment.created_at.utc
+                    %td.center
+                      = link_to content_tag(:i, "", class: "icon-remove"), admin_blog_delete_comment_path(@blog, comment), method: :delete, data: { confirm: "sure to destroy this comment?" }, class: "icon huge"
+
