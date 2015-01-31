@@ -37,6 +37,7 @@
                   %th Created_at
                   %th Album
                   %th Card Type
+                  %th Visiblity
                   %th Actions
               %tbody
                 - @photos.each do |photo|
@@ -56,6 +57,12 @@
                     %td= photo.album.name
                     %td= photo.album.private? ? "Private" : "Public"
                     %td.center
+                      - visible_class = photo.hidden? ? "inverse" : "success"
+                      - visible_text = photo.hidden? ?  "Hidden" : "Visible"
+                      %span.label{ class: "label-#{visible_class}" } #{visible_text}
+                    %td.center
                       = link_to content_tag(:i, "", class: "icon-zoom-in"), admin_photo_path(photo), class: "icon huge"
+                      - action = photo.hidden? ? "view" : "hide"
+                      = link_to content_tag(:i, "", class: "icon-eye-close") + "&nbsp;".html_safe, send("#{action}_photo_admin_photo_path", photo), class: "icon huge"
                       = link_to content_tag(:i, "", class: "icon-remove"), admin_photo_path(photo), method: :delete, data: { confirm: "sure to destroy this photo?" }, class: "icon huge"
 

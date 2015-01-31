@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
     resources :users
     resources :photos do
+      member do
+        get :hide_photo
+        get :view_photo
+      end
       resources :comments
     end
     resources :static_pages
@@ -27,7 +31,7 @@ Rails.application.routes.draw do
         get :inactive_users_report
       end
     end
-  end
+  end # end of admin panel
 
   resources :supports
   resources :blogs do
