@@ -54,6 +54,8 @@ class PhotosService
 
   # uploaded multiple images
   def process_images(object_params)
+    uploaded_images = object_params[:image_ids]
+    return if uploaded_images.empty?
     ids = object_params[:image_ids][1..-1].split(",").map &:to_i
     ids.each do |id|
       @photo.images << Image.find(id)

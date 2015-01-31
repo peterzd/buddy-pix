@@ -21,7 +21,8 @@ class Photo < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
   has_many :tagged_users, through: :taggings, source: :user
 
-  default_scope { order updated_at: :desc }
+  default_scope { where(hidden: false).order(updated_at: :desc) }
+  before_save :check_hidden
 
   class << self
     def all_visible_items
@@ -95,6 +96,11 @@ class Photo < ActiveRecord::Base
     update_last_updater user
     album.touch
     send_notification(maker: user, action: Notification::ACTION[action], object: self, receiver: creator) unless user == creator
+  end
+
+  def check_hidden
+    self.hidden ||= false
+    true
   end
 
 end
