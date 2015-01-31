@@ -3,11 +3,21 @@ class Admin::PhotosController < Admin::ApplicationController
   before_action :set_photo, except: [:index]
 
   def index
-    @photos = Photo.all
+    @photos = Photo.unscoped.all
   end
 
   def destroy
     @photo.destroy
+    redirect_to admin_photos_path
+  end
+
+  def hide_photo
+    @photo.update hidden: true
+    redirect_to admin_photos_path
+  end
+
+  def view_photo
+    @photo.update hidden: false
     redirect_to admin_photos_path
   end
 
