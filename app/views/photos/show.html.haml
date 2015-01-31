@@ -24,7 +24,7 @@
         .p10
           %p
             %strong= @photo.title
-          %p= @photo.description
+          %p= sanitize @photo.description
         %hr.mb0
         %aside.fl
           - liked = current_user.liked_photos.include? @photo
