@@ -26,7 +26,7 @@ class Admin::PhotosController < Admin::ApplicationController
 
   private
   def set_photo
-    @photo = Photo.find params[:id]
+    @photo = Photo.unscoped.find params[:id]
   end
 end
 
