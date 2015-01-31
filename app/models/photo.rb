@@ -100,6 +100,7 @@ class Photo < ActiveRecord::Base
 
   def check_hidden
     self.hidden ||= false
+    true
   end
 
 end

@@ -19,7 +19,7 @@
 
   %figure.post_img.img_fill.clearfix
     = link_to image_tag(photo.picture_url(:medium), alt: 'post img'), card_photo_path(album, photo)
-    %h2= photo.description
+    %h2= strip_tags photo.description
   .f_bottom.clearfix.fl.w100
     %aside.fl.mt5
       - liked = current_user.liked_photos.include? photo
