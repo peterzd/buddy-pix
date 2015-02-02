@@ -6,6 +6,7 @@
 //= require admin/jquery.dataTables
 //= require admin/DT_bootstrap
 //= require admin/jquery.uniform.min
+//= require admin/jquery.flot
 //= require admin/chosen.jquery.min
 //= require admin/jquery.uniform.min
 //= require admin/wysihtml5-0.3.0

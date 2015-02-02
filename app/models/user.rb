@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
       all_user
     end
 
+    def active_users_per_day(date)
+      where(current_sign_in_at: date.beginning_of_day..date.end_of_day)
+    end
+
     def inactive_users
       users = []
       order(:id).all.each do |user|

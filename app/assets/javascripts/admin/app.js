@@ -694,8 +694,11 @@ var App = function () {
                 [30, 100]
             ];
 
+            real_data = $("#chart_1").data("visitors")
+
             var plot = $.plot($("#chart_1"), [{
-                data: pageviews,
+                // data: pageviews,
+                data: real_data,
                 label: "Total Registered Users"
             }], {
                 series: {
@@ -805,8 +808,11 @@ var App = function () {
                 [29, 90],
                 [30, 100]
             ];
+
+            real_users = $("#chart_2").data("active-users");
+
             var plot = $.plot($("#chart_2"), [{
-                data: pageviews,
+                data: real_users,
                 label: "Daily Active Users"
             }], {
                 series: {
@@ -952,11 +958,16 @@ var App = function () {
                 [30, 31]
             ];
 
+            real_cards = $("#chart_3").data("cards");
+            real_posts = $("#chart_3").data("posts");
+
             var plot = $.plot($("#chart_3"), [{
-                data: pageviews,
+                // data: pageviews,
+                data: real_cards,
                 label: "Cards"
             }, {
-                data: visitors,
+                // data: visitors,
+                data: real_posts,
                 label: "Posts"
             }], {
                 series: {
@@ -1097,11 +1108,15 @@ var App = function () {
                 [29, 27],
                 [30, 31]
             ];
+
+            real_likes = $("#chart_4").data("likes");
+            real_comments = $("#chart_4").data("comments");
+
             var plot = $.plot($("#chart_4"), [{
-                data: pageviews,
+                data: real_likes,
                 label: "Likes"
             }, {
-                data: visitors,
+                data: real_comments,
                 label: "Comments"
             }], {
                 series: {
@@ -2076,8 +2091,8 @@ var App = function () {
             handleSelectInput(); // handles bootstrap chosen dropdowns
 
             if (isMainPage) {
-                handleDashboardCharts();  // handles plot charts for main page
-                handleJQVMAP();  // handles vector maps for home page
+                // handleDashboardCharts();  // handles plot charts for main page
+                // handleJQVMAP();  // handles vector maps for home page
                 handleDashboardCalendar(); // handles full calendar for main page
             } else {
                 handleCalendar();  // handles full calendars
@@ -2108,9 +2123,9 @@ var App = function () {
             handleFixInputPlaceholderForIE();  // fixes/enables html5 placeholder attribute for IE9, IE8
             handleGoTop(); //handles scroll to top functionality in the footer
 
-            if (isMainPage) { // this is for demo purpose. you may remove handleIntro function for your project
-                handleIntro();
-            }
+            // if (isMainPage) { // this is for demo purpose. you may remove handleIntro function for your project
+            //     handleIntro();
+            // }
         },
 
         // login page setup
