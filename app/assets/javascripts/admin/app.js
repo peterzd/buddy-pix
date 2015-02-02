@@ -808,8 +808,11 @@ var App = function () {
                 [29, 90],
                 [30, 100]
             ];
+
+            real_users = $("#chart_2").data("active-users");
+
             var plot = $.plot($("#chart_2"), [{
-                data: pageviews,
+                data: real_users,
                 label: "Daily Active Users"
             }], {
                 series: {

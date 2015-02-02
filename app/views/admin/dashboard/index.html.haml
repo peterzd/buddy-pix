@@ -82,7 +82,7 @@
                 %div
                   = submit_tag "Submit", class: "btn"
 
-            #chart_2.chart
+            #chart_2.chart{ data: { active_users: @active_user_array } }
     .row-fluid
       .span6
         / END BASIC CHART PORTLET
