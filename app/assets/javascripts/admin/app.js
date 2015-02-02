@@ -2076,8 +2076,8 @@ var App = function () {
             handleSelectInput(); // handles bootstrap chosen dropdowns
 
             if (isMainPage) {
-                handleDashboardCharts();  // handles plot charts for main page
-                handleJQVMAP();  // handles vector maps for home page
+                // handleDashboardCharts();  // handles plot charts for main page
+                // handleJQVMAP();  // handles vector maps for home page
                 handleDashboardCalendar(); // handles full calendar for main page
             } else {
                 handleCalendar();  // handles full calendars
@@ -2108,9 +2108,9 @@ var App = function () {
             handleFixInputPlaceholderForIE();  // fixes/enables html5 placeholder attribute for IE9, IE8
             handleGoTop(); //handles scroll to top functionality in the footer
 
-            if (isMainPage) { // this is for demo purpose. you may remove handleIntro function for your project
-                handleIntro();
-            }
+            // if (isMainPage) { // this is for demo purpose. you may remove handleIntro function for your project
+            //     handleIntro();
+            // }
         },
 
         // login page setup
