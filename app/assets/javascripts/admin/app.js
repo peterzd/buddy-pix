@@ -694,8 +694,11 @@ var App = function () {
                 [30, 100]
             ];
 
+            real_data = $("#chart_1").data("visitors")
+
             var plot = $.plot($("#chart_1"), [{
-                data: pageviews,
+                // data: pageviews,
+                data: real_data,
                 label: "Total Registered Users"
             }], {
                 series: {
@@ -952,11 +955,16 @@ var App = function () {
                 [30, 31]
             ];
 
+            real_cards = $("#chart_3").data("cards");
+            real_posts = $("#chart_3").data("posts");
+
             var plot = $.plot($("#chart_3"), [{
-                data: pageviews,
+                // data: pageviews,
+                data: real_cards,
                 label: "Cards"
             }, {
-                data: visitors,
+                // data: visitors,
+                data: real_posts,
                 label: "Posts"
             }], {
                 series: {
@@ -1097,11 +1105,15 @@ var App = function () {
                 [29, 27],
                 [30, 31]
             ];
+
+            real_likes = $("#chart_4").data("likes");
+            real_comments = $("#chart_4").data("comments");
+
             var plot = $.plot($("#chart_4"), [{
-                data: pageviews,
+                data: real_likes,
                 label: "Likes"
             }, {
-                data: visitors,
+                data: real_comments,
                 label: "Comments"
             }], {
                 series: {
