@@ -2126,7 +2126,9 @@ var App = function () {
             handleScrollers();  // handles slim scrolling contents
             handleUniform();  // handles uniform elements
             handleTables();  // handles data tables
-            handleCharts();  // handles plot charts
+            if (isMainPage) {
+              handleCharts();  // handles plot charts
+            }
             handleWidgetTools();   // handles portlet action bar functionality(refresh, configure, toggle, remove)
 //            handlePulsate();  // handles pulsate functionality on page elements
             handlePeity(); // handles pierty bar and line charts
