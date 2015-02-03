@@ -40,7 +40,7 @@
                 - @blogs.each do |blog|
                   %tr.odd.gradeX
                     %td= blog.id
-                    %td= strip_tags blog.content
+                    %td= strip_tags blog.title
                     %td= Admin
                     %td= blog.created_at.utc
                     %td.center

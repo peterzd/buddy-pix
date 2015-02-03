@@ -1742,3 +1742,8 @@ ul.item-list.todo li .actions {
 .inline{display:inline-block; vertical-align:middle;}
 
 
+/* flot style */
+.xAxis .tickLabel{    -ms-transform: rotate(-90deg); 
+    -webkit-transform: rotate(-90deg); 
+    transform: rotate(-90deg);
+}
