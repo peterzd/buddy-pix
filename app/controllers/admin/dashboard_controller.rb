@@ -9,12 +9,12 @@ class Admin::DashboardController < Admin::ApplicationController
     @active_user_array, @likes_array, @comments_array = [], [], []
 
     (@start_date..@end_date).each_with_index do |date, i|
-      @registered_user_array << [i+1, User.registered_per_day(date).count]
-      @posts_array << [i+1, Photo.total_posts_per_day(date).count]
-      @cards_array << [i+1, Album.total_cards_per_day(date).count]
-      @likes_array << [i+1, Like.total_likes_per_day(date).count]
-      @comments_array << [i+1, Comment.total_comments_per_day(date).count]
-      @active_user_array << [i+1, User.active_users_per_day(date).count]
+      @registered_user_array << [date.to_time.to_i * 1000, User.registered_per_day(date).count]
+      @posts_array <<           [date.to_time.to_i * 1000, Photo.total_posts_per_day(date).count]
+      @cards_array <<           [date.to_time.to_i * 1000, Album.total_cards_per_day(date).count]
+      @likes_array <<           [date.to_time.to_i * 1000, Like.total_likes_per_day(date).count]
+      @comments_array <<        [date.to_time.to_i * 1000, Comment.total_comments_per_day(date).count]
+      @active_user_array <<     [date.to_time.to_i * 1000, User.active_users_per_day(date).count]
     end
   end
 end

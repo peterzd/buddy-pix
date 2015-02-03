@@ -727,9 +727,14 @@ var App = function () {
                 },
                 colors: ["#000", "#37b7f3", "#52e136"],
                 xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0
+                  mode: "time",
+                  timeformat: "%m/%d/%y",
+                  minTickSize: [1, "day"]
                 },
+                // xaxis: {
+                //     ticks: 11,
+                //     tickDecimals: 0
+                // },
                 yaxis: {
                     ticks: 11,
                     tickDecimals: 0
@@ -841,9 +846,14 @@ var App = function () {
                 },
                 colors: ["#d12610", "#37b7f3", "#52e136"],
                 xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0
+                  mode: "time",
+                  timeformat: "%m/%d/%y",
+                  minTickSize: [1, "day"]
                 },
+                // xaxis: {
+                //     ticks: 11,
+                //     tickDecimals: 0
+                // },
                 yaxis: {
                     ticks: 11,
                     tickDecimals: 0
@@ -996,9 +1006,14 @@ var App = function () {
                 },
                 colors: ["#d12610", "#37b7f3", "#52e136"],
                 xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0
+                  mode: "time",
+                  timeformat: "%m/%d/%y",
+                  minTickSize: [1, "day"]
                 },
+                // xaxis: {
+                //     ticks: 11,
+                //     tickDecimals: 0
+                // },
                 yaxis: {
                     ticks: 11,
                     tickDecimals: 0
@@ -1145,9 +1160,14 @@ var App = function () {
                 },
                 colors: ["#d12610", "#37b7f3", "#52e136"],
                 xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0
+                  mode: "time",
+                  timeformat: "%m/%d/%y",
+                  minTickSize: [1, "day"]
                 },
+                // xaxis: {
+                //     ticks: 11,
+                //     tickDecimals: 0
+                // },
                 yaxis: {
                     ticks: 11,
                     tickDecimals: 0
