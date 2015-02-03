@@ -16,7 +16,7 @@
           %aside.head_side
             %h1
               %small= blog.created_at.strftime("%m.%d.%Y")
-              = blog.title
+              = link_to blog.title, blog_path(blog)
           .fl.w100.figure_img
             = sanitize blog.content
             = link_to "Continue Reading ...", blog_path(blog), class: "continue_link"
