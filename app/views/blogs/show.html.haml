@@ -52,14 +52,14 @@
             %aside
               = form_tag create_comment_blog_path(@blog), multipart: true, id: "comment-form" do
                 = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
-                .mt10
-                  .btn.browse_btn.inline.fl.dark
-                    = file_field_tag "comment[image][picture]", id: "imgInp"
-                    %i.fa.fa-image
-                  %span.inline.p10 Attach Image
-                .upload_pic.hide.ac.mt10
-                  %i.remove_img.fa.fa-times
-                  %img#target{:alt => "your image", :src => ""}
+                -# .mt10
+                -#   .btn.browse_btn.inline.fl.dark
+                -#     = file_field_tag "comment[image][picture]", id: "imgInp"
+                -#     %i.fa.fa-image
+                -#   %span.inline.p10 Attach Image
+                -# .upload_pic.hide.ac.mt10
+                -#   %i.remove_img.fa.fa-times
+                -#   %img#target{:alt => "your image", :src => ""}
                 .cr
                   = submit_tag "Send Comment", class: "mt20"
 
@@ -73,14 +73,14 @@
       %aside
         = form_tag "#", multipart: true, id: "reply-form" do
           = text_area_tag "comment[content]", nil, placeholder: "Write your comments"
-          .mt10
-            .btn.browse_btn.inline.fl.dark
-              = file_field_tag "comment[image][picture]", id: "imgInp2"
-              %i.fa.fa-image
-            %span.inline.p10 Attach Image
-          .upload_pic2.hide.ac.mt10
-            %i.remove_img2.fa.fa-times
-            %img#target2{:alt => "your image", :src => ""}
+          -# .mt10
+          -#   .btn.browse_btn.inline.fl.dark
+          -#     = file_field_tag "comment[image][picture]", id: "imgInp2"
+          -#     %i.fa.fa-image
+          -#   %span.inline.p10 Attach Image
+          -# .upload_pic2.hide.ac.mt10
+          -#   %i.remove_img2.fa.fa-times
+          -#   %img#target2{:alt => "your image", :src => ""}
           .cr
             = submit_tag "Send Comment", class: "mt20"
 
