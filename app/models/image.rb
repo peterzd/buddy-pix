@@ -6,7 +6,7 @@ class Image < ActiveRecord::Base
   has_one :covered_user, class_name: "User", foreign_key: :cover_image_id
   has_one :covered_album, class_name: "Album", foreign_key: :cover_image_id
 
-  has_attached_file :picture, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :picture, :styles => { :large => "1000x1000>", :medium => "300x300>", :thumb => "100x100>" }
   do_not_validate_attachment_file_type :picture
   after_post_process :get_ratio
   # validates_attachment_content_type :picture, :content_type => /\Aimage\/.*\Z/
