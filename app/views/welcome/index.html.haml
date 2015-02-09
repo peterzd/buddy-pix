@@ -6,10 +6,26 @@
       %span.inline
         = image_tag "app_icon.png", class: "app_icon"
       = link_to(image_tag("app_store_icon.png", class: "app_store_icon mr10"), "#", class: "inline")
-      = link_to "Sign Up", new_user_registration_path, class: "btn inline"
     %aside.fl.w50.img_side.ac.figure_img
       = image_tag "iphone_app_on_hand.png", alt: "app demo"
 %section.clearfix
+  .how_it_work
+    .pc.cm.clearfix.ac
+      %aside.fl.w33.ph20.bs
+        %figure
+          = image_tag "how_it_works_1.png", alt: "Search or Create"
+        %h4 Search or Create
+        %p Search for a Card on a topic you’re interested in. If you don’t see one, then you can create one yourself!  It only takes a minute.
+      %aside.fl.w33.ph20.bs
+        %figure
+          = image_tag "how_it_works_2.png", alt: "experiences Sharing"
+        %h4 experiences Sharing
+        %p Share your experiences within that Card.  All it takes is a quick photo and description.
+      %aside.fl.w33.ph20.bs
+        %figure
+          = image_tag "how_it_works_3.png", alt: "community of hobbyists"
+        %h4 community of hobbyists
+        %p Watch people around the world with similar interests join and add to your card.  Now you’ve built an entire community of hobbyists!
   .pc.cm
     .table_row
       -# table row
@@ -53,14 +69,4 @@
         %article.tab_cell.p10
           %h2 Become a Power Blogger
           %p BuddyPix promotes your content based on how users comment and like it.  We want to help you build your brand and allow you to promote your content through our app.  We’ll even interview you on our blog!
-    .table_row
-      -# table row
-      %figure.fr.w50
-        .tab_cell.p10.figure_img
-          = image_tag "slide_4.png", alt: "slide 4"
-      %aside.fl.w50
-        %article.tab_cell.p10
-          %h2 Massa urna vestibulum erat erat nec odio
-          %p Fusce nisl turpis, consequat sed leo vitae, lacinia cursus ex. In enim metus, convallis ut risus ac, ultricies placerat leo. Suspendisse at lectus sit amet leo dictum euismod et quis nunc.
-    -# table row
 
