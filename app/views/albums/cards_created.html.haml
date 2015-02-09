@@ -11,7 +11,7 @@
         - @albums.each do |album|
           .p10.feed_box.fl.w50{ id: dom_id(album) }
             %figure.post_img.img_fill.clearfix
-              = link_to image_tag(album.cover_image_url :medium), card_path(album)
+              = link_to image_tag(album.cover_image_url :large), card_path(album)
               %span.tag
                 - private_text = album.private? ? "private" : "public"
                 = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"

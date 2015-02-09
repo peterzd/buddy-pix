@@ -4,7 +4,7 @@
   .top_row.clearfix
     %aside.fl.p10.user_info
       %figure.img_fill.round.fl
-        = image_tag uploader.profile_cover_url(:medium)
+        = image_tag uploader.profile_cover_url(:large)
       .info_side
         %h3= uploader.user_name
         %p
@@ -18,7 +18,7 @@
       %p= album.decorate.private_text
 
   %figure.post_img.img_fill.clearfix
-    = link_to image_tag(photo.picture_url(:medium), alt: 'post img'), card_photo_path(album, photo)
+    = link_to image_tag(photo.picture_url(:large), alt: 'post img'), card_photo_path(album, photo)
     %h2= sanitize strip_tags photo.description
   .f_bottom.clearfix.fl.w100
     %aside.fl.mt5

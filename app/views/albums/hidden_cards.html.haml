@@ -15,7 +15,7 @@
             .top_row.clearfix
               %aside.fl.p10.user_info
                 %figure.img_fill.round.fl
-                  = image_tag creator.profile_cover_url(:medium)
+                  = image_tag creator.profile_cover_url(:large)
                 .info_side
                   %h3= creator.user_name
                   %p= "#{time_ago_in_words card.updated_at} ago"
@@ -24,7 +24,7 @@
                   = link_to card.name, card_path(card)
                 %p= card.decorate.private_text
             %figure.post_img.img_fill.clearfix
-              = image_tag card.cover_image_url(:medium), alt: "post img"
+              = image_tag card.cover_image_url(:large), alt: "post img"
               %span.tag
                 - private_text = card.decorate.private_text.downcase
                 = image_tag "#{private_text}_tag.png", alt: "#{private_text} tag"
