@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def picture_url(format=:medium)
+  def picture_url(format=:large)
     return "" if image.nil?
     image.picture.url format
   end

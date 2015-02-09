@@ -15,7 +15,7 @@
       %small Cover Photo
     -# %figure.uplaod.cover_img{ class: @album.persisted? ? "img_fill" : "" }
     %figure.uplaod.cover_img
-      = image_tag @album.cover_image_url(:medium), class: "img_fill_parent"
+      = image_tag @album.cover_image_url(:large), class: "img_fill_parent"
     .btn.browse_btn.inline.mt20
       = f.fields_for :cover_image do |cover|
         = cover.file_field "picture"

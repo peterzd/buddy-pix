@@ -26,7 +26,7 @@ module API
         if object.profile_cover.nil?
           object.profile_cover_url
         else
-          "#{host}#{object.profile_cover_url :medium}"
+          "#{host}#{object.profile_cover_url :large}"
         end
       end
 
@@ -35,7 +35,7 @@ module API
         if object.cover_photo.nil?
           ""
         else
-          "#{host}#{object.cover_photo_url :medium}"
+          "#{host}#{object.cover_photo_url :large}"
         end
       end
 

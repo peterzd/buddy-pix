@@ -21,7 +21,7 @@
                 %span.name{ style: "display: none" }
                   = user.user_name
                 %figure.fl.round.img_fill
-                  = image_tag user.profile_cover_url(:medium)
+                  = image_tag user.profile_cover_url(:large)
                 .check
                   = check_box_tag "user_ids[]", user.id, false, class: "check-test", id: "user_ids_#{user.id}", data: { label: "#{user.user_name}", labelposition: "left", invited: "#{user.decorate.invited_for(@card)}"}
           .p20.ac

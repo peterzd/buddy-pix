@@ -39,7 +39,7 @@
         %h4.ph10.mt10.al
           %small Profile Photo
         %figure.uplaod.round.profile_photo.cm
-          = image_tag @user.profile_cover_url(:medium), class: "img_fill_parent round"
+          = image_tag @user.profile_cover_url(:large), class: "img_fill_parent round"
         .btn.browse_btn.inline.mt20
           = f.fields_for :profile_cover do |photo|
             = photo.file_field "picture"

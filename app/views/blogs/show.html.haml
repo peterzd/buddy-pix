@@ -31,7 +31,7 @@
               %p.fr
                 %strong= "#{time_ago_in_words(comment.created_at)} ago"
               %p.fl.w100= comment.content
-              = image_tag comment.picture_url(:medium)
+              = image_tag comment.picture_url(:large)
               = link_to content_tag(:i, "", class: "fa fa-reply") + "Reply", "#reply", class: "fl fancybox", data: { commenter: comment.commenter.user_name, "comment-id" => comment.id } if user_signed_in?
           - if comment.replies.count > 0
             - comment.replies.each do |reply|

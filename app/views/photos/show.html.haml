@@ -6,7 +6,7 @@
       .top_row.clearfix
         %aside.fl.p10.user_info
           %figure.img_fill.round
-            = image_tag creator.profile_cover_url(:medium)
+            = image_tag creator.profile_cover_url(:large)
           .info_side
             %h3=  creator.user_name
             %p= @photo.created_at.strftime("%I:%M %p,%d %b %Y")
@@ -47,7 +47,7 @@
         - remaining_like = @photo.likes.count - 4
         - @photo.recent_likes(4).each do |like|
           %li.img_fill
-            = image_tag like.liker.profile_cover_url(:medium)
+            = image_tag like.liker.profile_cover_url(:large)
             %span{ class: "#{like.mood}" }
               = like.mood
         + #{remaining_like > 0 ? remaining_like : 0}
@@ -62,7 +62,7 @@
             %p.fr
               %strong= "#{time_ago_in_words(comment.created_at)} ago"
             %p.fl.w100= comment.content
-            = image_tag comment.picture_url(:medium)
+            = image_tag comment.picture_url(:large)
             = link_to content_tag(:i, "", class: "fa fa-reply") + "Reply", "#reply", class: "fl fancybox", data: { commenter: comment.commenter.user_name, "comment-id" => comment.id }
         - if comment.replies.count > 0
           - comment.replies.each do |reply|
@@ -103,7 +103,7 @@
         - liker = like.liker
         %li
           %figure.round.fl.mr10.img_fill
-            = image_tag liker.profile_cover_url(:medium)
+            = image_tag liker.profile_cover_url(:large)
           %span= liker.user_name
           %i{ class: "#{like.mood}" } #{like.mood}
 
