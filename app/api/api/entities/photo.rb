@@ -32,7 +32,11 @@ module API
       end
 
       def image_height
-        (750 / object.first_image.ratio).to_i
+        if object.first_image
+          (750 / object.first_image.ratio).to_i
+        else
+          0
+        end
       end
 
       def followers_count
