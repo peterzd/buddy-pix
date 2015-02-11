@@ -17,6 +17,16 @@
             %h1
               %small= blog.created_at.strftime("%m.%d.%Y")
               = link_to blog.title, blog_path(blog)
-          .fl.w100.figure_img
+          .fl.w100.figure_img.content
             = sanitize blog.content
             = link_to "Continue Reading ...", blog_path(blog), class: "continue_link"
+
+
+:coffee
+  for content in $(".blog_post .content")
+    ps = $(content).children "p"
+    p_length = ps.length
+    if p_length > 1
+      for i in [1..p_length]
+        $(ps[i]).empty()
+
