@@ -5,7 +5,10 @@
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "register_user", class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
       %article.p10
         %h4 Sign up
-        %p Sign up below with your email, Facebook, or Google+.  It's free to get started.
+        %p
+          Sign up below with your email, Facebook, or Google+.
+          %br
+          It's free to get started.
       .ph10
         = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
       .ph10
@@ -25,6 +28,15 @@
           = link_to content_tag(:i, "", class: "fa fa-facebook") + "Facebook Sign Up", user_omniauth_authorize_path(:facebook), class: "fb"
         .box_link.p10.ac.fl.w50.mt10
           = link_to content_tag(:i, "", class: "fa fa-google") + "Google Sign Up", user_omniauth_authorize_path(:google_oauth2), class: "g"
+
+      %p.ac
+        By signing up,
+        %br
+        I agree to BuddyPix's
+        = link_to "Terms of Service", welcome_terms_path, style: "color:#93b509"
+        and
+        = link_to "Privacy Policy", welcome_privacy_path, style: "color:#93b509"
+
       %p.mt10.fl.w100.ac
         %strong
           if you Already have an account?
