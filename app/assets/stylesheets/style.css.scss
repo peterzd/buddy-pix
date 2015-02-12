@@ -565,10 +565,19 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 
 
 /*================= index page ==============*/
-.how_it_work{background-color:#f4f4f4; padding:50px 0;}
-.how_it_work figure{padding:15px 0;}
-.how_it_work h4{ text-transform:uppercase; font-size:19px;}
+.how_it_work{background-color:#f4f4f4; padding:50px 0;}
+.how_it_work figure{padding:15px 0;}
+.how_it_work h4{ text-transform:uppercase; font-size:19px;}
+.how_it_work h1{ font-size:27px; line-height:1; text-transform:uppercase;}
 .how_it_work p{ font-size:17px;}
+@media only screen and (max-width:767px){
+.how_it_work .w33{width:100%; margin-bottom:20px;}
+}
+@media only screen and (max-width:479px){
+.tab_seen{ text-align:center; width:100%;}
+.tab_seen a{ background-color:#93b509; font-family:"roboto_condensedbold"; font-size:15px; height:40px; line-height:40px; padding:0 20px; color:#fff; border-radius:4px; -moz-border-radius:4px; -o-border-radius:4px; -webkit-border-radius:4px;}
+.tab_seen a.login{ background-color:#333;}
+}
 
 /*=================Progress bar==============*/
 .progress.active{background-color:#d2d2d2; border:5px solid #fff; overflow:hidden; -webkit-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.2); box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.2); border-radius:30px; -moz-border-radius:30px; -o-border-radius:30px; -webkit-border-radius:30px; margin:10px;}
