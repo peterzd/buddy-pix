@@ -85,6 +85,15 @@ class User < ActiveRecord::Base
       end
     end
 
+    def total_registered_till_day(date)
+      all_user = []
+      User.all.each do |u|
+        all_user << u if u.created_at.to_date <= date
+      end
+      all_user
+
+    end
+
     def registered_per_day(date)
       all_user = []
       User.all.each do |u|

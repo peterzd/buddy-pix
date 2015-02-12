@@ -5,7 +5,7 @@
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: "register_user", class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
       %article.p10
         %h4 Sign up
-        %p Nulla hendrerit maximus tellus a pharetra. Nunc vehicula, justo a eleifend ultrices, justo turpis hendrerit eros, eu fermentum libero diam non tortor.
+        %p Sign up below with your email, Facebook, or Google+.  It's free to get started.
       .ph10
         = hidden_field_tag "invitation_token", @invitation_token if @invitation_token
       .ph10
