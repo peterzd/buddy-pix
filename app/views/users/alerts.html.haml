@@ -6,6 +6,7 @@
         - messages.each_pair do |key, value|
           - value.each_pair do |type, msg|
             = content_tag(:div, content_tag(:i, "", class: "fa fa-times") + msg, class: "msg #{type}")
+        - flash.clear
 
     %h4 My Invitation
     .invite_row_list
