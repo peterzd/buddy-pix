@@ -384,7 +384,7 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);}
 
 .uplaod{background-color:#dbdbdb;}
 .uplaod.cover_img{height:190px;overflow: hidden; width: 100%;}
-.uplaod.profile_photo{height:144px; width:144px;}
+.uplaod.profile_photo{height:144px; width:144px;overflow: hidden;}
 
 .invite_row_list .invite_row{background-color:#fff;}
 .invite_row_list .invite_row.decline{opacity:.5}
