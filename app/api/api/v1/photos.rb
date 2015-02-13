@@ -50,6 +50,21 @@ module API
           present :posts, posts, with: API::Entities::Photo
         end
 
+        desc "remove a post"
+        params do
+          requires :id, type: String, desc: "the id of the post"
+          requires :access_token, type: String, desc: "the token of the user"
+        end
+        post "delete_post" do
+          authenticate!
+          post = Photo.find params[:id]
+          if post.destroy
+            present :status, "true"
+          else
+            present :status, "false"
+          end
+        end
+
         desc "search for posts"
         params do
           requires :access_token, type: String, desc: "the token of the user"
@@ -133,8 +148,6 @@ module API
             present :comments_count, photo.comments.count
           end
         end
-
-
       end # end of resources :posts
 
     end
