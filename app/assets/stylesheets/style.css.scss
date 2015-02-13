@@ -817,3 +817,7 @@ ul.tab_link li.ui-tabs-active a{background-color:#fff; color:#333;}
 .card_box .f_bottom aside.card_count span{padding-right:0px;}
 
 }
+
+@media only screen and (min-width:1024px) and (max-width:1170px){
+  .user_info .info_side,.cat_side{width:180px; overflow:hidden;}
+}

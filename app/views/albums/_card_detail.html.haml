@@ -37,5 +37,5 @@
 
     %aside.fr.p10
       - if card.creator == user and card.private?
-        = link_to "Card Delete", card_path(card), method: :delete, data: { confirm: "All content, Images, Comments will be removed if you delete this Card, Do you want to delete" }, class: "btn dull", remote: true
+        = link_to "Delete Card ", card_path(card), method: :delete, data: { confirm: "All content, Images, Comments will be removed if you delete this Card, Do you want to delete" }, class: "btn dull", remote: true
       = card.decorate.follow_btn_link(user)
