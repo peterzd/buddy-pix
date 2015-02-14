@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :notifications, foreign_key: :receiver_id
   has_many :sent_notifications, class_name: "Notification", foreign_key: :maker_id, dependent: :destroy
 
+  enum role: [:admin, :normal]
+
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
