@@ -7,6 +7,17 @@ describe User do
     peter.must_be :valid?
   end
 
+  it "sets default role to normal" do
+    user = User.create email: "test@test.com", password: "password"
+    user.role.must_equal "normal"
+  end
+
+  it "sets default role to normal after update" do
+    user = create :user
+    user.update username: "asdf"
+    user.role.must_equal "normal"
+  end
+
   it "has a username" do
     peter.username.must_equal "peterzd"
   end

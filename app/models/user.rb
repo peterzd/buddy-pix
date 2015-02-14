@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
   before_save :ensure_authentication_token
+  before_save :set_role
 
   class << self
     def all_users
@@ -281,6 +282,10 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
     end
+  end
+
+  def set_role
+    self.role = role.nil? ? "normal" : self.role
   end
 
 end
