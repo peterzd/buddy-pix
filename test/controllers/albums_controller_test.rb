@@ -56,10 +56,10 @@ describe AlbumsController do
         public_album.update creator: peter
       end
 
-      it "everyone can access the page" do
-        get :show, id: public_album.id
-        assert_response :success
-      end
+      # it "everyone can access the page" do
+      #   get :show, id: public_album.id
+      #   assert_response :success
+      # end
     end
 
     describe "the card is private" do
@@ -70,7 +70,7 @@ describe AlbumsController do
       describe "not logged in user" do
         it "can not access the page" do
           get :show, id: private_album.id
-          assert_redirected_to root_path
+          assert_redirected_to new_user_session_path
         end
       end
 

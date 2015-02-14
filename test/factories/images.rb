@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :image do
+    ratio 1
   end
 end
