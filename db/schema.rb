@@ -178,7 +178,6 @@ ActiveRecord::Schema.define(version: 20150214125644) do
     t.string   "last_name"
     t.string   "phone_number"
     t.integer  "cover_image_id"
-    t.string   "type"
     t.integer  "cover_photo_id"
     t.string   "authentication_token"
     t.string   "provider"

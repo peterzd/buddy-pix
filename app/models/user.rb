@@ -122,10 +122,6 @@ class User < ActiveRecord::Base
     self.authentication_token ||= generate_authentication_token
   end
 
-  def admin?
-    instance_of? AdminUser
-  end
-
   def joins_album(album)
     album.joined_by(self)
   end

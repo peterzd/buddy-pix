@@ -6,7 +6,7 @@ namespace :users do
       p "updated user: #{u.email}"
     end
 
-    admin = User.where(type: "AdminUser").first
+    admin = User.where(email: "admin@example.com").first
     admin.update role: :admin
     p "updated admin: #{admin.email}"
   end

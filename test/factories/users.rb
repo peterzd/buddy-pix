@@ -2,10 +2,12 @@
 
 FactoryGirl.define do
   factory :user do
+    role 1
     username "peterzd"
 
-    factory :admin_user, class: AdminUser do
-      username "peterzd"
+    factory :admin_user do
+      role 0
+      username "admin"
     end
   end
 
