@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
   class << self
     def all_users
-      where(type: nil).all
+      where(role: roles[:normal]).all
     end
 
     def all_other_users(myself)
