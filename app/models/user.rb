@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     end
 
     def all_other_users(myself)
-      User.where(type: nil).where.not(id: myself.id)
+      User.where(role: roles[:normal]).where.not(id: myself.id)
     end
 
     # copied from [devise wiki](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview),
