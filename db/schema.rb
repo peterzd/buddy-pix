@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214125644) do
+ActiveRecord::Schema.define(version: 20150216122141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,17 @@ ActiveRecord::Schema.define(version: 20150214125644) do
 
   add_index "likes", ["likeable_id"], name: "index_likes_on_likeable_id", using: :btree
   add_index "likes", ["liker_id"], name: "index_likes_on_liker_id", using: :btree
+
+  create_table "notification_settings", force: true do |t|
+    t.string   "apple_device_token"
+    t.integer  "user_id"
+    t.text     "apn_options"
+    t.text     "email_options"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notification_settings", ["user_id"], name: "index_notification_settings_on_user_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.integer  "maker_id"

@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :notifications, foreign_key: :receiver_id
   has_many :sent_notifications, class_name: "Notification", foreign_key: :maker_id, dependent: :destroy
 
+  has_one :notification_setting
+
   enum role: [:admin, :normal]
 
   devise :database_authenticatable, :registerable, :confirmable,
