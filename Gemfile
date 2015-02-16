@@ -49,4 +49,5 @@ group :development, :test do
   gem 'minitest-rails-capybara'
   gem "simplecov", "~> 0.9.0"
   gem 'rest-client'
+  gem "annotate"
 end
