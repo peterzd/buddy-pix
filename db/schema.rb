@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20150216122141) do
     t.datetime "updated_at"
   end
 
+  add_index "notification_settings", ["apple_device_token"], name: "index_notification_settings_on_apple_device_token", using: :btree
   add_index "notification_settings", ["user_id"], name: "index_notification_settings_on_user_id", using: :btree
 
   create_table "notifications", force: true do |t|

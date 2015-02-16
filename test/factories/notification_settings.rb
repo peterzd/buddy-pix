@@ -2,9 +2,6 @@
 
 FactoryGirl.define do
   factory :notification_setting do
-    devise_token "MyString"
-    user_id nil
-    apn_options "MyText"
-    email_options false
+    apple_device_token "thisisatoken"
   end
 end

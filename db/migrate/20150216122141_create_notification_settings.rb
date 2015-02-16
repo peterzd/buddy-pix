@@ -8,5 +8,7 @@ class CreateNotificationSettings < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :notification_settings, :apple_device_token
   end
 end

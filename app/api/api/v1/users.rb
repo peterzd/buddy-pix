@@ -32,6 +32,7 @@ module API
 
         desc "signs up a user via REST api"
         params do
+          requires :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :first_name, type: String, desc: "user's email"
           requires :last_name, type: String, desc: "user's email"
