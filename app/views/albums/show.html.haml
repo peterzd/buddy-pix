@@ -35,11 +35,9 @@
     #m-container.fl.w100.clearfix
       - if @photos.blank?
         .p10.feed_box.fl.w100.ac.mt20.msg_box
-          / 16 Feb 2015
           %h4 Be the first to share a review for this card
-          %br/
-          %a.btn.inline{:href => "upload_image.html"} create post
-        / 16 Feb 2015
+          %br
+          = link_to "create post", new_card_photo_path(@album), class: "btn inline"
       - else
         = render partial: "photo", collection: @photos, locals: { from: "card" }
     %nav#page-nav
