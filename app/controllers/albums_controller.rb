@@ -33,7 +33,7 @@ class AlbumsController < ApplicationController
   def show
     if user_signed_in?
       authorize @album
-      @album.update hit_count: @album.hit_count + 1
+      @album.update_columns hit_count: @album.hit_count + 1
       @photos = PhotosQuery.album_batch(@album)
       respond_with(@album)
     else
