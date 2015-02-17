@@ -32,7 +32,7 @@ module API
 
         desc "signs up a user via REST api"
         params do
-          requires :apple_device_token, type: String, desc: "the token of the apple device"
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :first_name, type: String, desc: "user's email"
           requires :last_name, type: String, desc: "user's email"
@@ -53,6 +53,8 @@ module API
           if user.save
             image = Image.create image_data: params[:picture]
             user.set_profile_cover image
+            setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+            setting.update user: user if setting
 
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
