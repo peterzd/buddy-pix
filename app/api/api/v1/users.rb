@@ -28,7 +28,7 @@ module API
           end
 
           NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
-            user: user
+            setting.user = user
           end
 
           present :status, "true"
@@ -79,7 +79,7 @@ module API
           error!({ status: "false", message: "Please confirm your account in your email first" }) if user.confirmed_at.nil?
           if user.valid_password?(params[:password])
             NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
-              user: user
+              setting.user = user
             end
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
