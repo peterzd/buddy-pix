@@ -37,8 +37,8 @@ class UsersController < ApplicationController
     @invitations = current_user.my_pending_invitations + current_user.my_rejected_invitations
     @notifications = current_user.unread_notifications
 
-    flash[:hash][:invitations] = { info: "You don't have any alert to display" } if @invitations.empty?
-    flash[:hash][:notifications] = { info: "You don't have any notification to display" } if @notifications.empty?
+    flash[:hash][:invitations] = { info: "You don't have any new invitation" } if @invitations.empty?
+    flash[:hash][:notifications] = { info: "You don't have any notification" } if @notifications.empty?
   end
 
   def update_account_settings
