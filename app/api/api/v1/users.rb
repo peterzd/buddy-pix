@@ -12,6 +12,7 @@ module API
       resources :users do
         desc "log in via omniauth"
         params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :first_name, type: String, desc: "user's first_name"
           requires :last_name, type: String, desc: "user's last_name"
@@ -24,6 +25,10 @@ module API
             user.first_name = params[:first_name]
             user.last_name = params[:last_name]
             user.image_url = params[:image_url]
+          end
+
+          NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
+            user: user
           end
 
           present :status, "true"
@@ -53,8 +58,7 @@ module API
           if user.save
             image = Image.create image_data: params[:picture]
             user.set_profile_cover image
-            setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
-            setting.update user: user if setting
+            NotificationSetting.create apple_device_token: params[:apple_device_token], user: user
 
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
@@ -65,6 +69,7 @@ module API
 
         desc "signs in a registered user"
         params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :password, type: String, desc: "user's password"
         end
@@ -73,6 +78,9 @@ module API
           error!({ status: "false", message: "user not exist" }) unless user
           error!({ status: "false", message: "Please confirm your account in your email first" }) if user.confirmed_at.nil?
           if user.valid_password?(params[:password])
+            NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
+              user: user
+            end
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
