@@ -19,13 +19,24 @@ module API
           requires :image_url, type: String, desc: "the url got from Facebook auth"
         end
         post :omni_login do
-          user = User.where(email: params[:email]).first_or_create do |user|
-            user.email = params[:email]
-            user.password = Devise.friendly_token[0,20]
-            user.first_name = params[:first_name]
-            user.last_name = params[:last_name]
-            user.image_url = params[:image_url]
+          user = where(email: params[:email]).first
+          if user.nil?
+            user = User.new email:      params[:email],
+                            password:   Devise.friendly_token[0,20],
+                            first_name: params[:first_name],
+                            last_name:  params[:last_name],
+                            username:   params[:username],   # assuming the user model has a name
+                            image_url:  params[:image] # assuming the user model has an image
+            user.skip_confirmation!
+            user.save!
           end
+          # user = User.where(email: params[:email]).first_or_create do |user|
+          #   user.email = params[:email]
+          #   user.password = Devise.friendly_token[0,20]
+          #   user.first_name = params[:first_name]
+          #   user.last_name = params[:last_name]
+          #   user.image_url = params[:image_url]
+          # end
 
           NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
             setting.user = user
