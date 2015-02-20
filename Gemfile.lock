@@ -125,6 +125,7 @@ GEM
     grape-entity (0.4.4)
       activesupport
       multi_json (>= 1.3.2)
+    grocer (0.6.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -328,6 +329,7 @@ DEPENDENCIES
   font-awesome-sass (~> 4.2.0)
   grape
   grape-entity
+  grocer
   haml-rails
   hashie_rails
   jbuilder (~> 2.0)

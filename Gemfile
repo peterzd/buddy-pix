@@ -40,6 +40,8 @@ gem 'sidekiq'
 
 gem 'kaminari'
 
+gem 'grocer' # for apple push notification
+
 group :development, :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
