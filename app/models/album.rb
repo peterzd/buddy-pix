@@ -168,6 +168,7 @@ class Album < ActiveRecord::Base
 
   def send_notification(options={})
     Notification.create options
+    ApnsService.send_notification(options[:receiver], "#{options[:maker].user_name} has joined your card, #{options[:object].name}")
   end
 end
 

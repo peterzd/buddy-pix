@@ -14,14 +14,14 @@
 class NotificationSetting < ActiveRecord::Base
   belongs_to :user
 
-  store :apn_options, accessors: [:alert, :badge, :sound, :other], coder: JSON
+  store :apn_options, accessors: [:push_apn, :badge, :sound, :other], coder: JSON
   store :email_options, accessors: [:send_email], coder: JSON
 
   before_save :set_default_values
 
   private
   def set_default_values
-    self.alert ||= ""
+    self.push_apn ||= true
     self.badge ||= 0
     self.sound ||= "default"
     self.other ||= ""
