@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: likes
+#
+#  id          :integer          not null, primary key
+#  liker_id    :integer
+#  mood        :string(255)
+#  likeable_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class Like < ActiveRecord::Base
   MOOD = { happy: "happy", like: "like", cool: "cool", sad: "sad", cheer_up: "cheer up" }
 

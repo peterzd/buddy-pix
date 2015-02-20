@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: albums
+#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  private        :boolean
+#  caption        :text
+#  creator_id     :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  last_name      :string(255)
+#  hidden         :boolean
+#  cover_image_id :integer
+#  hit_count      :integer
+#
+
 require 'elasticsearch/model'
 
 class Album < ActiveRecord::Base

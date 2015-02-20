@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id               :integer          not null, primary key
+#  commenter_id     :integer
+#  commentable_id   :integer
+#  content          :text
+#  created_at       :datetime
+#  updated_at       :datetime
+#  commentable_type :string(255)
+#
+
 class Comment < ActiveRecord::Base
   belongs_to :commenter, class_name: "User", foreign_key: :commenter_id
   # belongs_to :commentable, class_name: "Photo", foreign_key: :commentable_id

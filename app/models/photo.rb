@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: photos
+#
+#  id              :integer          not null, primary key
+#  title           :string(255)
+#  description     :text
+#  album_id        :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  creator_id      :integer
+#  last_updater_id :integer
+#  hidden          :boolean
+#
+
 require 'elasticsearch/model'
 
 class Photo < ActiveRecord::Base

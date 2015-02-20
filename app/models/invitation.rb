@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: invitations
+#
+#  id          :integer          not null, primary key
+#  sender_id   :integer
+#  receiver_id :integer
+#  status      :string(255)
+#  card_id     :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class Invitation < ActiveRecord::Base
   STATUS = { pending: "pending", accepted: "accepted", rejected: "rejected" }
 

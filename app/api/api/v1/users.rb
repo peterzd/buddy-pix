@@ -12,18 +12,34 @@ module API
       resources :users do
         desc "log in via omniauth"
         params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :first_name, type: String, desc: "user's first_name"
           requires :last_name, type: String, desc: "user's last_name"
           requires :image_url, type: String, desc: "the url got from Facebook auth"
         end
         post :omni_login do
-          user = User.where(email: params[:email]).first_or_create do |user|
-            user.email = params[:email]
-            user.password = Devise.friendly_token[0,20]
-            user.first_name = params[:first_name]
-            user.last_name = params[:last_name]
-            user.image_url = params[:image_url]
+          user = where(email: params[:email]).first
+          if user.nil?
+            user = User.new email:      params[:email],
+                            password:   Devise.friendly_token[0,20],
+                            first_name: params[:first_name],
+                            last_name:  params[:last_name],
+                            username:   params[:username],   # assuming the user model has a name
+                            image_url:  params[:image] # assuming the user model has an image
+            user.skip_confirmation!
+            user.save!
+          end
+          # user = User.where(email: params[:email]).first_or_create do |user|
+          #   user.email = params[:email]
+          #   user.password = Devise.friendly_token[0,20]
+          #   user.first_name = params[:first_name]
+          #   user.last_name = params[:last_name]
+          #   user.image_url = params[:image_url]
+          # end
+
+          NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
+            setting.user = user
           end
 
           present :status, "true"
@@ -32,6 +48,7 @@ module API
 
         desc "signs up a user via REST api"
         params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :first_name, type: String, desc: "user's email"
           requires :last_name, type: String, desc: "user's email"
@@ -52,6 +69,7 @@ module API
           if user.save
             image = Image.create image_data: params[:picture]
             user.set_profile_cover image
+            NotificationSetting.create apple_device_token: params[:apple_device_token], user: user
 
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
@@ -62,6 +80,7 @@ module API
 
         desc "signs in a registered user"
         params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
           requires :email, type: String, desc: "user's email"
           requires :password, type: String, desc: "user's password"
         end
@@ -70,6 +89,9 @@ module API
           error!({ status: "false", message: "user not exist" }) unless user
           error!({ status: "false", message: "Please confirm your account in your email first" }) if user.confirmed_at.nil?
           if user.valid_password?(params[:password])
+            NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
+              setting.user = user
+            end
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
