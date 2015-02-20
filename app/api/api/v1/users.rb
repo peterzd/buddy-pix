@@ -19,7 +19,7 @@ module API
           requires :image_url, type: String, desc: "the url got from Facebook auth"
         end
         post :omni_login do
-          user = where(email: params[:email]).first
+          user = User.where(email: params[:email]).first
           if user.nil?
             user = User.new email:      params[:email],
                             password:   Devise.friendly_token[0,20],
