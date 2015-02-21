@@ -21,7 +21,7 @@ class NotificationSetting < ActiveRecord::Base
 
   private
   def set_default_values
-    self.push_apn ||= true
+    self.push_apn ||= "true"
     self.badge ||= 0
     self.sound ||= "default"
     self.other ||= ""

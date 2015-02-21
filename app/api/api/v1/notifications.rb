@@ -27,7 +27,28 @@ module API
           present :status, "true"
         end
 
+        desc "update notification settings"
+        params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
+          optional :sound,              type: String, desc: "set the sound", values: ["true", "false"]
+          optional :apn_push_noti,      type: String, desc: "set if push notifications", values: ["true", "false"]
+          optional :email_noti,         type: String, desc: "set if push notifications", values: ["true", "false"]
+        end
+        post "settings" do
+          noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+          noti_setting.update push_apn: params[:apn_push_noti]
+          sound = if params[:sound] == "true"
+                    "default"
+                  else
+                    ""
+                  end
+
+          noti_setting.update sound: sound
+          noti_setting.update send_email: params[:email_noti]
+          present :status, "true"
+        end
       end # end of resources
+
     end
   end
 end
