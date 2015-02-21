@@ -3,7 +3,7 @@
     = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "mt20 form_box p20 clearfix log_box cm" }) do |f|
       %article.ph10
         %h4 Forgot Password
-        %p Nullam efficitur viverra arcu eget ullamcorper. Vestibulum tincidunt lacinia massa nec lacinia.
+        %p Please enter your email below. You will receive an email with your new password.
       .p10
         = f.email_field :email, placeholder: "Enter Your Email Id", autofocus: true
       .p10
