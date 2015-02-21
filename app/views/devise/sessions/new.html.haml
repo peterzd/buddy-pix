@@ -22,6 +22,6 @@
         = link_to content_tag(:i, "", class: "fa fa-google") + "Google Login", user_omniauth_authorize_path(:google_oauth2), class: "g"
       %p.mt10.fl.w100.ac
         %strong
-          if you Don't have an account?
-          = link_to "Sign Up", new_user_registration_path
+          Don't have an account?
+          = link_to "Sign Up!", new_user_registration_path
 

@@ -11,7 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)
       else
-        flash[:success] = "Buddypix has been send you an activation mail on your register email id, please activate your account"
+        flash[:success] = "You have been sent an email to register your account. Please open this email to register and login"
         expire_data_after_sign_in!
         respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
