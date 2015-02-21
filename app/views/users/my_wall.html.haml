@@ -1,10 +1,10 @@
 %section.clearfix.inner_body
   .pc.cm
     = render 'profile_pics'
-    #m-container#my_wall.fl.w100
+    #m-container.fl.w100
       - if @photos.empty?
         .p10.feed_box.fl.w100.ac.mt20.msg_box
-          %h4 hmmm..your wall is empty because you haven't picked any topics to follow.  Find topics you're interested in or create your own topic cards below
+          %h4 Hmmm..your wall is empty because you haven't picked any topics to follow.  Find topics you're interested in or create your own topic cards below
           %br
           = link_to "Search Cards", search_path, class: "btn inline"
           &nbsp;&nbsp;
