@@ -22,10 +22,10 @@
                     = sanitize "#{album.followers.count} &nbsp;|&nbsp;"
                   %i.fa.fa-picture-o
                     = album.photos.count
-            .f_bottom.clearfix.event_link
+            .f_bottom.clearfix.btn_set2
               = album.decorate.hidden_link
-              = link_to image_tag("invite_user.png") + "Invite Users", new_card_invitation_path(album)
-              = link_to image_tag("add_image.png") + "Add Images", new_card_photo_path(album)
+              = link_to image_tag("invite_user_white.png") + "Invite Users", new_card_invitation_path(album), class: "btn inline"
+              = link_to image_tag("add_image_white.png") + "Add Images", new_card_photo_path(album), class: "btn inline"
 
 :javascript
   jQuery(function($) {
