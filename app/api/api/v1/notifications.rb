@@ -33,8 +33,9 @@ module API
         end
         post "get_settings" do
           noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+          sound = noti_setting.apn_options[:sound] == "default" ? "true" : "false"
           present :status, "true"
-          present :sound, noti_setting.apn_options[:sound]
+          present :sound, sound
           present :push_apn, noti_setting.apn_options[:push_apn]
           present :send_email, noti_setting.send_email
         end
