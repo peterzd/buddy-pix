@@ -12,6 +12,8 @@
 #
 
 class Invitation < ActiveRecord::Base
+  include Pushable
+
   STATUS = { pending: "pending", accepted: "accepted", rejected: "rejected" }
 
   belongs_to :sender, class_name: "User"
@@ -32,5 +34,6 @@ class Invitation < ActiveRecord::Base
   private
   def send_notification(options={})
     Notification.create options
+    push_user_notifications options
   end
 end

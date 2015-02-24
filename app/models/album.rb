@@ -20,6 +20,7 @@ require 'elasticsearch/model'
 class Album < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  include Pushable
 
   belongs_to :creator, class_name: "User"
 
@@ -168,7 +169,8 @@ class Album < ActiveRecord::Base
 
   def send_notification(options={})
     Notification.create options
-    ApnsService.send_notification(options[:receiver], "#{options[:maker].user_name} has joined your card, #{options[:object].name}")
+    push_user_notifications options
+    # ApnsService.send_notification(options[:receiver], "#{options[:maker].user_name} has joined your card, #{options[:object].name}")
   end
 end
 
