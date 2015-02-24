@@ -6,7 +6,8 @@ class ApnsService
         return
       else
         apple_token = notification_setting.apple_device_token
-        push_notification(apple_token, alert, notification_setting.apn_options)
+        apn_options = notification_setting.apn_options
+        push_notification(apple_token, alert, apn_options) if apn_options[:push_apn] == "true"
       end
     end
 

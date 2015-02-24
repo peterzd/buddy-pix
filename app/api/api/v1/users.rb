@@ -38,8 +38,11 @@ module API
           #   user.image_url = params[:image_url]
           # end
 
-          NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
-            setting.user = user
+          noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+          if noti_setting.nil?
+            NotificationSetting.create apple_device_token: params[:apple_device_token], user: user
+          else
+            noti_setting.update user: user
           end
 
           present :status, "true"
@@ -89,9 +92,14 @@ module API
           error!({ status: "false", message: "user not exist" }) unless user
           error!({ status: "false", message: "Please confirm your account in your email first" }) if user.confirmed_at.nil?
           if user.valid_password?(params[:password])
-            NotificationSetting.find_or_create_by(apple_device_token: params[:apple_device_token]) do |setting|
-              setting.user = user
+
+            noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+            if noti_setting.nil?
+              NotificationSetting.create apple_device_token: params[:apple_device_token], user: user
+            else
+              noti_setting.update user: user
             end
+
             present :status, "true"
             present :user, user, with: API::Entities::User, type: :access_token
           else
