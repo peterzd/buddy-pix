@@ -32,7 +32,7 @@ module Pushable
 
         return_str = ""
         if photo
-          return_str = "#{notification.maker.user_name} posts in your #{card.name}"
+          return_str = "#{notification.maker.user_name} posts in your card #{card.name}"
         else
           return_str = "image has been removed by #{notification.maker.user_name}"
         end
