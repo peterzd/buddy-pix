@@ -27,6 +27,18 @@ module API
           present :status, "true"
         end
 
+        desc "get the user's notification settings"
+        params do
+          optional :apple_device_token, type: String, desc: "the token of the apple device"
+        end
+        post "get_settings" do
+          noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
+          present :status, "true"
+          present :sound, noti_setting.apn_options[:sound]
+          present :push_apn, noti_setting.apn_options[:push_apn]
+          present :send_email, noti_setting.send_email
+        end
+
         desc "update notification settings"
         params do
           optional :apple_device_token, type: String, desc: "the token of the apple device"
