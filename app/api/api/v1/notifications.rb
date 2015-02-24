@@ -49,15 +49,15 @@ module API
         end
         post "settings" do
           noti_setting = NotificationSetting.find_by apple_device_token: params[:apple_device_token]
-          noti_setting.update push_apn: params[:apn_push_noti]
+          noti_setting.update push_apn: params[:apn_push_noti] if params[:apn_push_noti]
           sound = if params[:sound] == "true"
                     "default"
                   else
                     ""
                   end
 
-          noti_setting.update sound: sound
-          noti_setting.update send_email: params[:email_noti]
+          noti_setting.update sound: sound if params[:sound]
+          noti_setting.update send_email: params[:email_noti] if params[:email_noti]
           present :status, "true"
         end
       end # end of resources
