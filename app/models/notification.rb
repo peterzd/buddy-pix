@@ -32,6 +32,6 @@ class Notification < ActiveRecord::Base
   end
 
   def push_notifications
-    push_user_notifications maker: self.maker, action: self.action, object: self.object, receiver: self.receiver
+    push_user_notifications self
   end
 end
